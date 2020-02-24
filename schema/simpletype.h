@@ -29,8 +29,7 @@
 #include "xsdtype.h"
 #include <kode_export.h>
 
-namespace XSD
-{
+namespace XSD {
 
 class SimpleTypeList;
 
@@ -55,17 +54,9 @@ public:
         PATTERN = 2048
     };
 
-    enum WhiteSpaceType {
-        PRESERVE,
-        REPLACE,
-        COLLAPSE
-    };
+    enum WhiteSpaceType { PRESERVE, REPLACE, COLLAPSE };
 
-    enum SubType {
-        TypeRestriction,
-        TypeList,
-        TypeUnion
-    };
+    enum SubType { TypeRestriction, TypeList, TypeUnion };
 
     SimpleType();
     SimpleType(const QString &nameSpace);
@@ -127,7 +118,6 @@ public:
     // Mutable lookup (for making changes), returns end() if not found
     iterator findSimpleType(const QName &qualifiedName);
 };
-
 }
 
 #endif

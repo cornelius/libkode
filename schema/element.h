@@ -30,8 +30,7 @@
 #include "compositor.h"
 #include <kode_export.h>
 
-namespace XSD
-{
+namespace XSD {
 
 class ElementList;
 
@@ -116,7 +115,6 @@ public:
     // For debugging
     void dump();
 };
-
 }
 
 SCHEMA_EXPORT QDebug operator<<(QDebug dbg, const XSD::Element &element);

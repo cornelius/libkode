@@ -23,8 +23,7 @@
 #include "element.h"
 #include <QDebug>
 
-namespace XSD
-{
+namespace XSD {
 
 class Element::Private
 {
@@ -37,7 +36,8 @@ public:
           mNillable(false),
           mHasSubstitutions(false),
           mOccurrence(0)
-    {}
+    {
+    }
 
     QName mType;
     QString mDocumentation;
@@ -54,18 +54,11 @@ public:
     Compositor mCompositor;
 };
 
-Element::Element()
-    : XmlElement(), d(new Private)
-{
-}
+Element::Element() : XmlElement(), d(new Private) {}
 
-Element::Element(const QString &nameSpace)
-    : XmlElement(nameSpace), d(new Private)
-{
-}
+Element::Element(const QString &nameSpace) : XmlElement(nameSpace), d(new Private) {}
 
-Element::Element(const Element &other)
-    : XmlElement(other), d(new Private)
+Element::Element(const Element &other) : XmlElement(other), d(new Private)
 {
     *d = *other.d;
 }
@@ -233,7 +226,7 @@ Element ElementList::element(const QName &qualifiedName) const
         if ((*it).qualifiedName() == qualifiedName) {
             return *it;
         }
-    //qDebug() << "Simple type" << qualifiedName << "not found";
+    // qDebug() << "Simple type" << qualifiedName << "not found";
     return Element();
 }
 
@@ -244,7 +237,6 @@ ElementList::iterator ElementList::findElement(const QName &qualifiedName)
             return it;
         }
     return end();
-
 }
 
 void ElementList::dump()

@@ -14,7 +14,7 @@ int main(int argc, char **argv)
         return 1;
     }
 
-    QString filename = argv[ 1 ];
+    QString filename = argv[1];
 
     QFile file(filename);
 
@@ -39,9 +39,8 @@ int main(int argc, char **argv)
 
     const XSD::SimpleType::List simpleTypes = types.simpleTypes();
     for (int i = 0; i < simpleTypes.count(); ++i) {
-        XSD::SimpleType t = simpleTypes[ i ];
-        qDebug() << "SimpleType: " << t.name() << t.baseTypeName().qname()
-                 << t.subType();
+        XSD::SimpleType t = simpleTypes[i];
+        qDebug() << "SimpleType: " << t.name() << t.baseTypeName().qname() << t.subType();
         qDebug() << "FacetType: " << t.facetType();
         if (t.facetType() == XSD::SimpleType::ENUM) {
             qDebug() << "  ENUMS " << t.facetEnums();
@@ -50,33 +49,38 @@ int main(int argc, char **argv)
 
     const XSD::ComplexType::List complexTypes = types.complexTypes();
     for (int i = 0; i < complexTypes.count(); ++i) {
-        qDebug("ComplexType: %s %s", qPrintable(complexTypes[ i ].name()), qPrintable(complexTypes[ i ].baseTypeName().qname()));
-        const XSD::Element::List elements = complexTypes[ i ].elements();
+        qDebug("ComplexType: %s %s", qPrintable(complexTypes[i].name()),
+               qPrintable(complexTypes[i].baseTypeName().qname()));
+        const XSD::Element::List elements = complexTypes[i].elements();
         for (int j = 0; j < elements.count(); ++j) {
-            qDebug("\tElement: %s %s", qPrintable(elements[ j ].name()), qPrintable(elements[ j ].type().qname()));
+            qDebug("\tElement: %s %s", qPrintable(elements[j].name()),
+                   qPrintable(elements[j].type().qname()));
         }
-        const XSD::Attribute::List attributes = complexTypes[ i ].attributes();
+        const XSD::Attribute::List attributes = complexTypes[i].attributes();
         for (int j = 0; j < attributes.count(); ++j) {
-            qDebug("\tAttribute: %s %s", qPrintable(attributes[ j ].name()), qPrintable(attributes[ j ].type().qname()));
+            qDebug("\tAttribute: %s %s", qPrintable(attributes[j].name()),
+                   qPrintable(attributes[j].type().qname()));
         }
     }
 
     const XSD::Element::List elements = types.elements();
     for (int i = 0; i < elements.count(); ++i) {
-        qDebug("Element: %s %s", qPrintable(elements[ i ].name()), qPrintable(elements[ i ].type().qname()));
-        foreach (XSD::Annotation a, elements[ i ].annotations()) {
+        qDebug("Element: %s %s", qPrintable(elements[i].name()),
+               qPrintable(elements[i].type().qname()));
+        foreach (XSD::Annotation a, elements[i].annotations()) {
             qDebug() << "  Annotation:" << a.domElement().tagName();
         }
     }
 
     const XSD::Attribute::List attributes = types.attributes();
     for (int i = 0; i < attributes.count(); ++i) {
-        qDebug("Attribute: %s %s", qPrintable(attributes[ i ].name()), qPrintable(attributes[ i ].type().qname()));
+        qDebug("Attribute: %s %s", qPrintable(attributes[i].name()),
+               qPrintable(attributes[i].type().qname()));
     }
 
     const XSD::AttributeGroup::List attributeGroups = types.attributeGroups();
     for (int i = 0; i < attributeGroups.count(); ++i) {
-        qDebug("AttributeGroup: %s", qPrintable(attributeGroups[ i ].name()));
+        qDebug("AttributeGroup: %s", qPrintable(attributeGroups[i].name()));
     }
 
     foreach (XSD::Annotation a, parser.annotations()) {

@@ -25,76 +25,72 @@ using namespace KODE;
 
 class Style::Private
 {
-  public:
+public:
 };
 
-Style::Style()
-  : d( nullptr )
-{
-}
+Style::Style() : d(nullptr) {}
 
-Style::Style( const Style &/*other*/ )
-  : d( nullptr )
+Style::Style(const Style & /*other*/) : d(nullptr)
 {
-//  *d = *other.d;
+    //  *d = *other.d;
 }
 
 Style::~Style()
 {
-  delete d;
+    delete d;
 }
 
 // cppcheck-suppress operatorEqVarError
-Style& Style::operator=( const Style &other )
+Style &Style::operator=(const Style &other)
 {
-  if ( this == &other )
+    if (this == &other)
+        return *this;
+
+    // *d = *other,d;
+
     return *this;
-
-  // *d = *other,d;
-
-  return *this;
 }
 
-QString Style::className( const QString &str )
+QString Style::className(const QString &str)
 {
-  Q_ASSERT(!str.isEmpty());
-  QString cl = upperFirst( str );
-  cl.replace(QLatin1Char('-'), QLatin1Char('_'));
-  cl.replace(QLatin1Char(';'), QLatin1Char('_'));
-  cl.replace(QLatin1Char(':'), QLatin1Char('_'));
-  return cl;
+    Q_ASSERT(!str.isEmpty());
+    QString cl = upperFirst(str);
+    cl.replace(QLatin1Char('-'), QLatin1Char('_'));
+    cl.replace(QLatin1Char(';'), QLatin1Char('_'));
+    cl.replace(QLatin1Char(':'), QLatin1Char('_'));
+    return cl;
 }
 
-QString Style::upperFirst( const QString &str )
+QString Style::upperFirst(const QString &str)
 {
-  if ( str.isEmpty() )
-    return str;
+    if (str.isEmpty())
+        return str;
 
-  return str[ 0 ].toUpper() + str.mid( 1 );
+    return str[0].toUpper() + str.mid(1);
 }
 
-QString Style::lowerFirst( const QString &str )
+QString Style::lowerFirst(const QString &str)
 {
-  if ( str.isEmpty() )
-    return str;
+    if (str.isEmpty())
+        return str;
 
-  return str[ 0 ].toLower() + str.mid( 1 );
+    return str[0].toLower() + str.mid(1);
 }
 
-QString Style::makeIdentifier( const QString &str )
+QString Style::makeIdentifier(const QString &str)
 {
-  Q_ASSERT(!str.isEmpty());
+    Q_ASSERT(!str.isEmpty());
 
-  QString identifier = str;
-  identifier.replace( "-", "_" );
-  identifier.replace( ".", "_" );
-  identifier.replace( "/", "_" );
-  identifier.replace( ":", "_" ); // xsd:int -> xsd_int  (testcase: salesforce-partner.wsdl)
-  identifier.replace( " ", "_" );
+    QString identifier = str;
+    identifier.replace("-", "_");
+    identifier.replace(".", "_");
+    identifier.replace("/", "_");
+    identifier.replace(":", "_"); // xsd:int -> xsd_int  (testcase: salesforce-partner.wsdl)
+    identifier.replace(" ", "_");
 
-  // Can't start with a number, either.
-  const int firstNum = identifier.at(0).digitValue();
-  identifier = (firstNum != -1)? QLatin1Char('_') + identifier : identifier;
+    // Can't start with a number, either.
+    const int firstNum = identifier.at(0).digitValue();
+    identifier = (firstNum != -1) ? QLatin1Char('_') + identifier : identifier;
 
-  return identifier;
+    return identifier;
 }

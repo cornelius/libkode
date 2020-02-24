@@ -27,8 +27,7 @@
 #include "simpletype.h"
 #include <kode_export.h>
 
-namespace XSD
-{
+namespace XSD {
 
 class SCHEMA_EXPORT Types
 {
@@ -58,7 +57,7 @@ public:
     // unused void setGroups( const Group::List &groups );
     // unused Group::List groups() const;
 
-    //ComplexType complexType( const Element & ) const;
+    // ComplexType complexType( const Element & ) const;
     ComplexType complexType(const QName &) const;
 
     // Call this with derived complex type, to find the root of the hierarchy,
@@ -71,7 +70,6 @@ private:
     class Private;
     Private *d;
 };
-
 }
 
 #endif

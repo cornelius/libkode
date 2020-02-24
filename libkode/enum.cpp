@@ -27,76 +27,68 @@ using namespace KODE;
 
 class Enum::Private
 {
-  public:
-    Private()
-      : mCombinable( false )
-    {
-    }
+public:
+    Private() : mCombinable(false) {}
 
     QString mName;
     QStringList mEnums;
     bool mCombinable;
 };
 
-Enum::Enum()
-  : d( new Private )
+Enum::Enum() : d(new Private) {}
+
+Enum::Enum(const Enum &other) : d(new Private)
 {
+    *d = *other.d;
 }
 
-Enum::Enum( const Enum &other )
-  : d( new Private )
+Enum::Enum(const QString &name, const QStringList &enums, bool combinable) : d(new Private)
 {
-  *d = *other.d;
-}
-
-Enum::Enum( const QString &name, const QStringList &enums, bool combinable )
-  : d( new Private )
-{
-  d->mName = name;
-  d->mEnums = enums;
-  d->mCombinable = combinable;
+    d->mName = name;
+    d->mEnums = enums;
+    d->mCombinable = combinable;
 }
 
 Enum::~Enum()
 {
-  delete d;
+    delete d;
 }
 
-Enum& Enum::operator=( const Enum &other )
+Enum &Enum::operator=(const Enum &other)
 {
-  if ( this == &other )
+    if (this == &other)
+        return *this;
+
+    *d = *other.d;
+
     return *this;
-
-  *d = *other.d;
-
-  return *this;
 }
 
 QString Enum::name() const
 {
-  return d->mName;
+    return d->mName;
 }
 
 QString Enum::declaration() const
 {
-  QString retval( QLatin1String("enum ") + d->mName + QLatin1String(" {") );
-  uint value = 0;
-  QStringList::ConstIterator it;
-  for ( it = d->mEnums.constBegin(); it != d->mEnums.constEnd(); ++it, ++value ) {
-    if ( d->mCombinable ) {
-      if ( it == d->mEnums.constBegin() )
-        retval += QString::fromLatin1( " %1 = %2" ).arg( *it ).arg( 1 << value );
-      else
-        retval += QString::fromLatin1( ", %1 = %2" ).arg( *it ).arg( 1 << value );
-    } else {
-      if ( it == d->mEnums.constBegin() )
-        retval += QLatin1Char(' ') + *it;
-      else
-        retval += QLatin1String(", ") + *it;
+    QString retval(QLatin1String("enum ") + d->mName + QLatin1String(" {"));
+    uint value = 0;
+    QStringList::ConstIterator it;
+    for (it = d->mEnums.constBegin(); it != d->mEnums.constEnd(); ++it, ++value) {
+        if (d->mCombinable) {
+            if (it == d->mEnums.constBegin())
+                retval += QString::fromLatin1(" %1 = %2").arg(*it).arg(1 << value);
+            else
+                retval += QString::fromLatin1(", %1 = %2").arg(*it).arg(1 << value);
+        } else {
+            if (it == d->mEnums.constBegin())
+                retval += QLatin1Char(' ') + *it;
+            else
+                retval += QLatin1String(", ") + *it;
+        }
     }
-  }
 
-  retval += QLatin1String(" };");
+    retval += QLatin1String(" };");
 
-  return retval;
+    return retval;
 }

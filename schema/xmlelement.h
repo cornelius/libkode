@@ -29,8 +29,7 @@
 
 #include <QString>
 
-namespace XSD
-{
+namespace XSD {
 
 class SCHEMA_EXPORT XmlElement
 {
@@ -60,7 +59,6 @@ private:
     class Private;
     Private *d;
 };
-
 }
 
 #endif

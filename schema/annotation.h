@@ -26,8 +26,7 @@
 #include <QList>
 #include <kode_export.h>
 
-namespace XSD
-{
+namespace XSD {
 
 class SCHEMA_EXPORT Annotation
 {
@@ -57,7 +56,6 @@ private:
     class Private;
     Private *d;
 };
-
 }
 
 #endif

@@ -20,8 +20,7 @@
 
 #include "group.h"
 
-namespace XSD
-{
+namespace XSD {
 
 class Group::Private
 {
@@ -30,13 +29,9 @@ public:
     Element::List mElements;
 };
 
-Group::Group()
-    : XmlElement(), d(new Private)
-{
-}
+Group::Group() : XmlElement(), d(new Private) {}
 
-Group::Group(const Group &other)
-    : XmlElement(other), d(new Private)
+Group::Group(const Group &other) : XmlElement(other), d(new Private)
 {
     *d = *other.d;
 }
@@ -81,7 +76,6 @@ bool Group::isResolved() const
 {
     return !d->mElements.isEmpty() || d->mReference.isEmpty();
 }
-
 }
 
 QDebug operator<<(QDebug dbg, const XSD::Group &group)

@@ -34,31 +34,31 @@ class ParserContext;
 
 class KXMLCOMMON_EXPORT NSManager
 {
-  public:
+public:
     NSManager();
     // Called when entering a new XML element. We copy the current namespaces
     // from the context and add the ones defined by the new XML element.
     // Upon destruction, we restore the context.
-    NSManager( ParserContext* context, const QDomElement& child );
+    NSManager(ParserContext *context, const QDomElement &child);
     ~NSManager();
 
-    void enterChild( const QDomElement& element );
+    void enterChild(const QDomElement &element);
 
-    void setCurrentNamespace( const QString& uri );
-    void setPrefix( const QString &prefix, const QString &uri );
+    void setCurrentNamespace(const QString &uri);
+    void setPrefix(const QString &prefix, const QString &uri);
 
-    QString prefix( const QString &uri ) const;
-    QString uri( const QString &prefix ) const;
+    QString prefix(const QString &uri) const;
+    QString uri(const QString &prefix) const;
 
-    QString fullName( const QString &nameSpace, const QString &localname ) const;
-    QString fullName( const QName &name ) const;
+    QString fullName(const QString &nameSpace, const QString &localname) const;
+    QString fullName(const QName &name) const;
 
-    QString nameSpace( const QDomElement& element ) const;
-    QString localName( const QDomElement& element ) const;
+    QString nameSpace(const QDomElement &element) const;
+    QString localName(const QDomElement &element) const;
 
     QStringList prefixes() const;
     QMap<QString, QString> prefixMap() const;
-    void addPrefixes(const QMap<QString, QString>& prefixes);
+    void addPrefixes(const QMap<QString, QString> &prefixes);
 
     void reset();
 
@@ -69,15 +69,15 @@ class KXMLCOMMON_EXPORT NSManager
     static QStringList soapNamespaces();
     static QString xmlNamespace();
 
-  private:
-    void splitName( const QString &qname, QString &prefix, QString &localname ) const;
+private:
+    void splitName(const QString &qname, QString &prefix, QString &localname) const;
 
     typedef QMultiMap<QString, QString> NSMap; // prefix -> URI
     NSMap mMap;
     QString mCurrentNamespace;
 
-    ParserContext* mContext;
-    NSManager* mParentManager;
+    ParserContext *mContext;
+    NSManager *mParentManager;
 };
 
 #endif

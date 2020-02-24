@@ -20,8 +20,7 @@
 
 #include "attributegroup.h"
 
-namespace XSD
-{
+namespace XSD {
 
 class AttributeGroup::Private
 {
@@ -30,13 +29,9 @@ public:
     Attribute::List mAttributes;
 };
 
-AttributeGroup::AttributeGroup()
-    : XmlElement(), d(new Private)
-{
-}
+AttributeGroup::AttributeGroup() : XmlElement(), d(new Private) {}
 
-AttributeGroup::AttributeGroup(const AttributeGroup &other)
-    : XmlElement(other), d(new Private)
+AttributeGroup::AttributeGroup(const AttributeGroup &other) : XmlElement(other), d(new Private)
 {
     *d = *other.d;
 }
@@ -76,5 +71,4 @@ Attribute::List AttributeGroup::attributes() const
 {
     return d->mAttributes;
 }
-
 }

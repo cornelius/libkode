@@ -26,58 +26,53 @@ using namespace KODE;
 
 class MemberVariable::Private
 {
-  public:
+public:
 };
 
-MemberVariable::MemberVariable()
-  : Variable(), d( nullptr )
+MemberVariable::MemberVariable() : Variable(), d(nullptr) {}
+
+MemberVariable::MemberVariable(const MemberVariable &other) : Variable(other), d(nullptr)
 {
+    // *d = *other.d;
 }
 
-MemberVariable::MemberVariable( const MemberVariable &other )
-  : Variable( other ), d( nullptr )
+MemberVariable::MemberVariable(const QString &name, const QString &type, bool isStatic)
+    : Variable(name, type, isStatic), d(nullptr)
 {
-  // *d = *other.d;
-}
-
-MemberVariable::MemberVariable( const QString &name, const QString &type,
-                                bool isStatic )
-  : Variable( name, type, isStatic ), d( nullptr )
-{
-    setName( memberVariableName( name ) );
+    setName(memberVariableName(name));
 }
 
 MemberVariable::~MemberVariable()
 {
-  delete d;
+    delete d;
 }
 
-MemberVariable& MemberVariable::operator=( const MemberVariable &other )
+MemberVariable &MemberVariable::operator=(const MemberVariable &other)
 {
-  if ( this == &other )
+    if (this == &other)
+        return *this;
+
+    Variable::operator=(other);
+    // *d = *other.d;
+
     return *this;
-
-  Variable::operator=( other );
-  // *d = *other.d;
-
-  return *this;
 }
 
-QString MemberVariable::memberVariableName( const QString &name )
+QString MemberVariable::memberVariableName(const QString &name)
 {
     QString n;
 
-    if ( name.isEmpty() ) {
-      n = QLatin1String("mUndefined");
-    } else if ( name.length() >= 2  && name[ 0 ] == QLatin1Char( 'm' ) &&
-                ( name[ 1 ].toUpper() == name[ 1 ] ) ) {
-      n = name;
-    } else if ( name == QLatin1String("q") || name == QLatin1String("d") ) {
-      n = name;
+    if (name.isEmpty()) {
+        n = QLatin1String("mUndefined");
+    } else if (name.length() >= 2 && name[0] == QLatin1Char('m')
+               && (name[1].toUpper() == name[1])) {
+        n = name;
+    } else if (name == QLatin1String("q") || name == QLatin1String("d")) {
+        n = name;
     } else {
-      n = QLatin1String("m");
-      n += name[ 0 ].toUpper();
-      n += name.mid( 1 );
+        n = QLatin1String("m");
+        n += name[0].toUpper();
+        n += name.mid(1);
     }
 
     return Style::makeIdentifier(n);

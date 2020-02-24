@@ -23,16 +23,12 @@
 #include "simpletype.h"
 #include <QDebug>
 
-namespace XSD
-{
+namespace XSD {
 
 class SimpleType::Private
 {
 public:
-    Private()
-        : mFacetId(NONE), mAnonymous(false),
-          mSubType(TypeRestriction)
-    {}
+    Private() : mFacetId(NONE), mAnonymous(false), mSubType(TypeRestriction) {}
 
     QString mDocumentation;
     QName mBaseTypeName;
@@ -43,17 +39,18 @@ public:
 
     QName mListTypeName;
 
-    struct FacetValueType {
-        FacetValueType()
-            : length(0), wsp(PRESERVE), tot(0), frac(0)
-        {}
+    struct FacetValueType
+    {
+        FacetValueType() : length(0), wsp(PRESERVE), tot(0), frac(0) {}
         int length;
-        struct LenRange {
+        struct LenRange
+        {
             LenRange() : minlen(-1), maxlen(-1) {}
             int minlen, maxlen;
         } lenRange;
         WhiteSpaceType wsp;
-        struct ValueRange {
+        struct ValueRange
+        {
             ValueRange() : maxinc(-1), mininc(-1), maxex(-1), minex(-1) {}
             int maxinc, mininc, maxex, minex;
         } valRange;
@@ -65,18 +62,11 @@ public:
     FacetValueType mFacetValue;
 };
 
-SimpleType::SimpleType()
-    : XSDType(), d(new Private)
-{
-}
+SimpleType::SimpleType() : XSDType(), d(new Private) {}
 
-SimpleType::SimpleType(const QString &nameSpace)
-    : XSDType(nameSpace), d(new Private)
-{
-}
+SimpleType::SimpleType(const QString &nameSpace) : XSDType(nameSpace), d(new Private) {}
 
-SimpleType::SimpleType(const SimpleType &other)
-    : XSDType(other), d(new Private)
+SimpleType::SimpleType(const SimpleType &other) : XSDType(other), d(new Private)
 {
     *d = *other.d;
 }
@@ -295,9 +285,10 @@ QString SimpleType::facetPattern() const
 
 bool SimpleType::isRestriction() const
 {
-    static QName XmlAnyType(QLatin1String("http://www.w3.org/2001/XMLSchema"), QLatin1String("any"));
-    return d->mSubType == TypeRestriction && d->mBaseTypeName != XmlAnyType && !d->mBaseTypeName.isEmpty()
-           && !(d->mFacetId & ENUM);
+    static QName XmlAnyType(QLatin1String("http://www.w3.org/2001/XMLSchema"),
+                            QLatin1String("any"));
+    return d->mSubType == TypeRestriction && d->mBaseTypeName != XmlAnyType
+            && !d->mBaseTypeName.isEmpty() && !(d->mFacetId & ENUM);
 }
 
 SimpleType SimpleTypeList::simpleType(const QName &qualifiedName) const
@@ -307,7 +298,7 @@ SimpleType SimpleTypeList::simpleType(const QName &qualifiedName) const
         if ((*it).qualifiedName() == qualifiedName) {
             return *it;
         }
-    //qDebug() << "Simple type" << qualifiedName << "not found";
+    // qDebug() << "Simple type" << qualifiedName << "not found";
     return SimpleType();
 }
 
@@ -319,5 +310,4 @@ SimpleTypeList::iterator SimpleTypeList::findSimpleType(const QName &qualifiedNa
         }
     return end();
 }
-
 }

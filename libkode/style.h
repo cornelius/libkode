@@ -35,7 +35,7 @@ namespace KODE {
  */
 class KODE_EXPORT Style
 {
-  public:
+public:
     /**
      * Creates a new style.
      */
@@ -44,7 +44,7 @@ class KODE_EXPORT Style
     /**
      * Creates a new style from @param other.
      */
-    Style( const Style &other );
+    Style(const Style &other);
 
     /**
      * Destroys the style.
@@ -54,7 +54,7 @@ class KODE_EXPORT Style
     /**
      * Assignment operator.
      */
-    Style& operator=( const Style &other );
+    Style &operator=(const Style &other);
 
     /**
      * Converts the class name.
@@ -62,31 +62,30 @@ class KODE_EXPORT Style
      * The default implementation upper cases the first
      * character of the name.
      */
-    /*virtual*/ Q_REQUIRED_RESULT static QString className( const QString &str );
+    /*virtual*/ Q_REQUIRED_RESULT static QString className(const QString &str);
 
     /**
      * Returns a new version of @param str with the first
      * character be uppercase.
      */
-    Q_REQUIRED_RESULT static QString upperFirst( const QString &str );
+    Q_REQUIRED_RESULT static QString upperFirst(const QString &str);
 
     /**
      * Returns a new version of @param str with the first
      * character be lowercase.
      */
-    Q_REQUIRED_RESULT static QString lowerFirst( const QString &str );
+    Q_REQUIRED_RESULT static QString lowerFirst(const QString &str);
 
     /**
      * Returns a new version of @param str after making it suitable for usage
      * as a C++ identifier.
      */
-    Q_REQUIRED_RESULT static QString makeIdentifier( const QString &str );
+    Q_REQUIRED_RESULT static QString makeIdentifier(const QString &str);
 
-  private:
+private:
     class Private;
     Private *d;
 };
-
 }
 
 #endif

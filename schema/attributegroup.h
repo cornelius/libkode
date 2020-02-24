@@ -26,8 +26,7 @@
 
 #include <kode_export.h>
 
-namespace XSD
-{
+namespace XSD {
 
 class SCHEMA_EXPORT AttributeGroup : public XmlElement
 {
@@ -50,7 +49,6 @@ private:
     class Private;
     Private *d;
 };
-
 }
 
 #endif

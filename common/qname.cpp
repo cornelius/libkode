@@ -23,82 +23,80 @@
 #include "qname.h"
 #include <QDebug>
 
-QName::QName()
+QName::QName() {}
+
+QName::QName(const QString &name)
 {
+    parse(name);
 }
 
-QName::QName( const QString &name )
-{
-  parse( name );
-}
-
-QName::QName( const QString &nameSpace, const QString &localName )
-  : mNameSpace( nameSpace ), mLocalName( localName )
+QName::QName(const QString &nameSpace, const QString &localName)
+    : mNameSpace(nameSpace), mLocalName(localName)
 {
     Q_ASSERT(!localName.contains(QLatin1Char(':')));
 }
 
-void QName::operator=( const QString &name )
+void QName::operator=(const QString &name)
 {
-  parse( name );
+    parse(name);
 }
 
 QString QName::localName() const
 {
-  return mLocalName;
+    return mLocalName;
 }
 
 QString QName::prefix() const
 {
-  return mPrefix;
+    return mPrefix;
 }
 
 QString QName::qname() const
 {
-  if ( mPrefix.isEmpty() )
-    return mLocalName;
-  else
-    return mPrefix + QLatin1Char(':') + mLocalName;
+    if (mPrefix.isEmpty())
+        return mLocalName;
+    else
+        return mPrefix + QLatin1Char(':') + mLocalName;
 }
 
-void QName::setNameSpace( const QString &nameSpace )
+void QName::setNameSpace(const QString &nameSpace)
 {
-  mNameSpace = nameSpace;
+    mNameSpace = nameSpace;
 }
 
 QString QName::nameSpace() const
 {
-  return mNameSpace;
+    return mNameSpace;
 }
 
-bool QName::operator==( const QName &qname ) const
+bool QName::operator==(const QName &qname) const
 {
-  return (qname.nameSpace() == mNameSpace && qname.localName() == mLocalName);
+    return (qname.nameSpace() == mNameSpace && qname.localName() == mLocalName);
 }
 
-bool QName::operator!=( const QName &qname ) const
+bool QName::operator!=(const QName &qname) const
 {
-  return !operator==( qname );
+    return !operator==(qname);
 }
 
 bool QName::isEmpty() const
 {
-  return (mNameSpace.isEmpty() && mLocalName.isEmpty());
+    return (mNameSpace.isEmpty() && mLocalName.isEmpty());
 }
 
-void QName::parse( const QString &str )
+void QName::parse(const QString &str)
 {
-  int pos = str.indexOf( QLatin1Char(':') );
-  if ( pos != -1 ) {
-    mPrefix = str.left( pos );
-    mLocalName = str.mid( pos + 1 );
-  } else {
-    mLocalName = str;
-  }
-  Q_ASSERT(!mLocalName.contains(QLatin1Char(':')));
+    int pos = str.indexOf(QLatin1Char(':'));
+    if (pos != -1) {
+        mPrefix = str.left(pos);
+        mLocalName = str.mid(pos + 1);
+    } else {
+        mLocalName = str;
+    }
+    Q_ASSERT(!mLocalName.contains(QLatin1Char(':')));
 }
 
-QDebug operator <<(QDebug dbg, const QName &qn)
+QDebug operator<<(QDebug dbg, const QName &qn)
 {
     if (qn.prefix().isEmpty())
         dbg << "(" << qn.nameSpace() << "," << qn.localName() << ")";

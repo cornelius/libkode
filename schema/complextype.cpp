@@ -23,17 +23,12 @@
 #include "complextype.h"
 #include <QDebug>
 
-namespace XSD
-{
+namespace XSD {
 
 class ComplexType::Private
 {
 public:
-    Private()
-        : mAnonymous(false),
-          mConflicting(false),
-          mBaseDerivation(Restriction)
-    {}
+    Private() : mAnonymous(false), mConflicting(false), mBaseDerivation(Restriction) {}
 
     QString mDocumentation;
 
@@ -51,18 +46,11 @@ public:
     QList<QName> mDerivedTypes;
 };
 
-ComplexType::ComplexType(const QString &nameSpace)
-    : XSDType(nameSpace), d(new Private)
-{
-}
+ComplexType::ComplexType(const QString &nameSpace) : XSDType(nameSpace), d(new Private) {}
 
-ComplexType::ComplexType()
-    : XSDType(), d(new Private)
-{
-}
+ComplexType::ComplexType() : XSDType(), d(new Private) {}
 
-ComplexType::ComplexType(const ComplexType &other)
-    : XSDType(other), d(new Private)
+ComplexType::ComplexType(const ComplexType &other) : XSDType(other), d(new Private)
 {
     *d = *other.d;
 }
@@ -240,19 +228,20 @@ void ComplexType::addElement(const Element &element)
 
 bool ComplexType::isEmpty() const
 {
-    return d->mAttributeGroups.isEmpty() && d->mGroups.isEmpty() && d->mAttributes.isEmpty() && d->mElements.isEmpty() && d->mBaseTypeName.isEmpty() && d->mArrayType.isEmpty();
+    return d->mAttributeGroups.isEmpty() && d->mGroups.isEmpty() && d->mAttributes.isEmpty()
+            && d->mElements.isEmpty() && d->mBaseTypeName.isEmpty() && d->mArrayType.isEmpty();
 }
 
 ComplexType ComplexTypeList::complexType(const QName &qualifiedName) const
 {
-    //qDebug() << "looking for" << typeName << "ns=" << typeName.nameSpace();
+    // qDebug() << "looking for" << typeName << "ns=" << typeName.nameSpace();
     foreach (const ComplexType &type, *this) {
-        //qDebug() << type.nameSpace() << "qualifiedName=" << type.qualifiedName();
+        // qDebug() << type.nameSpace() << "qualifiedName=" << type.qualifiedName();
         if (qualifiedName == type.qualifiedName()) {
             return type;
         }
     }
-    //qDebug() << "Complex type" << qualifiedName << "not found";
+    // qDebug() << "Complex type" << qualifiedName << "not found";
     return ComplexType();
 }
 

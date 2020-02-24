@@ -38,8 +38,7 @@ QT_END_NAMESPACE
 
 class ParserContext;
 
-namespace XSD
-{
+namespace XSD {
 
 class SCHEMA_EXPORT Parser
 {
@@ -81,7 +80,8 @@ private:
     void parseInclude(ParserContext *context, const QDomElement &element);
     void addGlobalElement(const Element &);
     void addGlobalAttribute(const Attribute &);
-    AttributeGroup parseAttributeGroup(ParserContext *context, const QDomElement &, const QString &nameSpace);
+    AttributeGroup parseAttributeGroup(ParserContext *context, const QDomElement &,
+                                       const QString &nameSpace);
     Group parseGroup(ParserContext *context, const QDomElement &, const QString &nameSpace);
 
     Annotation::List parseAnnotation(ParserContext *context, const QDomElement &);
@@ -91,15 +91,13 @@ private:
     void parseCompositor(ParserContext *context, const QDomElement &element,
                          const QString &nameSpace, Element::List *elements, Group::List *groups);
 
-    void setOccurrenceAttributes(Element &newElement,
-                                 const QDomElement &element);
+    void setOccurrenceAttributes(Element &newElement, const QDomElement &element);
 
-    Element parseElement(ParserContext *context, const QDomElement &,
-                         const QString &nameSpace, const QDomElement &occurrenceElement);
+    Element parseElement(ParserContext *context, const QDomElement &, const QString &nameSpace,
+                         const QDomElement &occurrenceElement);
     void setSubstitutionElementName(const QName &typeName, const QName &elemName);
 
-    Attribute parseAttribute(ParserContext *context, const QDomElement &,
-                             const QString &nameSpace);
+    Attribute parseAttribute(ParserContext *context, const QDomElement &, const QString &nameSpace);
     Element parseAny(ParserContext *context, const QDomElement &, const QString &nameSpace);
     void addAnyAttribute(ParserContext *context, const QDomElement &, ComplexType &);
 
@@ -116,7 +114,8 @@ private:
      */
     void includeSchema(ParserContext *context, const QString &location);
 
-    bool importOrIncludeSchema(ParserContext *context, const QDomElement &element, const QUrl &schemaLocation);
+    bool importOrIncludeSchema(ParserContext *context, const QDomElement &element,
+                               const QUrl &schemaLocation);
 
     Element findElement(const QName &name) const;
     Group findGroup(const QName &name) const;
@@ -128,8 +127,6 @@ private:
     class Private;
     Private *d;
 };
-
 }
 
 #endif
-

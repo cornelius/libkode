@@ -34,8 +34,7 @@
 #include <common/qname.h>
 #include <kode_export.h>
 
-namespace XSD
-{
+namespace XSD {
 class ComplexTypeList;
 
 class SCHEMA_EXPORT ComplexType : public XSDType
@@ -43,10 +42,7 @@ class SCHEMA_EXPORT ComplexType : public XSDType
 public:
     typedef ComplexTypeList List;
 
-    typedef enum {
-        Restriction,
-        Extension
-    } Derivation;
+    typedef enum { Restriction, Extension } Derivation;
 
     ComplexType();
     ComplexType(const QString &nameSpace);

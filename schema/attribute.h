@@ -30,8 +30,7 @@
 #include "xmlelement.h"
 #include <kode_export.h>
 
-namespace XSD
-{
+namespace XSD {
 
 class SCHEMA_EXPORT Attribute : public XmlElement
 {
@@ -78,7 +77,6 @@ private:
     class Private;
     Private *d;
 };
-
 }
 
 SCHEMA_EXPORT QDebug operator<<(QDebug dbg, const XSD::Attribute &attr);

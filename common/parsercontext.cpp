@@ -23,53 +23,47 @@
 #include "nsmanager.h"
 #include <QDebug>
 
-ParserContext::ParserContext()
-  : mNamespaceManager( nullptr ),
-    mMessageHandler( nullptr )
+ParserContext::ParserContext() : mNamespaceManager(nullptr), mMessageHandler(nullptr) {}
+
+ParserContext::~ParserContext() {}
+
+void ParserContext::setNamespaceManager(NSManager *manager)
 {
+    mNamespaceManager = manager;
+    // qDebug() << "ParserContext now points to" << manager << "tns=" << manager->uri("tns");
 }
 
-ParserContext::~ParserContext()
+NSManager *ParserContext::namespaceManager() const
 {
+    return mNamespaceManager;
 }
 
-void ParserContext::setNamespaceManager( NSManager *manager )
+void ParserContext::setMessageHandler(MessageHandler *handler)
 {
-  mNamespaceManager = manager;
-  //qDebug() << "ParserContext now points to" << manager << "tns=" << manager->uri("tns");
+    mMessageHandler = handler;
 }
 
-NSManager* ParserContext::namespaceManager() const
+MessageHandler *ParserContext::messageHandler() const
 {
-  return mNamespaceManager;
+    return mMessageHandler;
 }
 
-void ParserContext::setMessageHandler( MessageHandler *handler )
-{
-  mMessageHandler = handler;
-}
-
-MessageHandler* ParserContext::messageHandler() const
-{
-  return mMessageHandler;
-}
-
-void ParserContext::setDocumentBaseUrl( const QUrl &url )
+void ParserContext::setDocumentBaseUrl(const QUrl &url)
 {
     mDocumentBaseUrl = url;
 }
 
-void ParserContext::setDocumentBaseUrlFromFileUrl( const QUrl &url )
+void ParserContext::setDocumentBaseUrlFromFileUrl(const QUrl &url)
 {
     QString path = url.path();
-    path.truncate( path.lastIndexOf('/') );
+    path.truncate(path.lastIndexOf('/'));
     QUrl newBaseUrl = url;
     newBaseUrl.setPath(path);
-    //qDebug() << "New document base URL" << newBaseUrl;
-    setDocumentBaseUrl( newBaseUrl );
+    // qDebug() << "New document base URL" << newBaseUrl;
+    setDocumentBaseUrl(newBaseUrl);
 }
 
 QUrl ParserContext::documentBaseUrl() const
 {
-  return mDocumentBaseUrl;
+    return mDocumentBaseUrl;
 }

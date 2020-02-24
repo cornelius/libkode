@@ -32,19 +32,14 @@
 
 #include "xmlelement.h"
 
-namespace XSD
-{
+namespace XSD {
 
 class SCHEMA_EXPORT XSDType : public XmlElement
 {
 public:
     typedef QList<const XSDType *> List;
 
-    enum ContentModel {
-        SIMPLE = 0,
-        COMPLEX,
-        MIXED
-    };
+    enum ContentModel { SIMPLE = 0, COMPLEX, MIXED };
     /*
         enum
         {
@@ -92,8 +87,9 @@ public:
     /**
      * Sets the name of the substitution element associated with this type.
      *
-     * Example: <xs:element name="FieldURI" type="t:PathToUnindexedFieldType" substitutionGroup="t:Path"/>
-     * will set the element name to "FieldURI" in the type "PathToUnindexedFieldType".
+     * Example: <xs:element name="FieldURI" type="t:PathToUnindexedFieldType"
+     * substitutionGroup="t:Path"/> will set the element name to "FieldURI" in the type
+     * "PathToUnindexedFieldType".
      *
      * @param name element name
      */
@@ -103,16 +99,12 @@ public:
      */
     QName substitutionElementName() const;
 
-    virtual bool isSimple() const
-    {
-        return true;
-    }
+    virtual bool isSimple() const { return true; }
 
 private:
     class Private;
     Private *d;
 };
-
 }
 
 #endif

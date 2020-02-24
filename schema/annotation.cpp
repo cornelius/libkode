@@ -23,8 +23,7 @@
 
 #include <common/qname.h>
 
-namespace XSD
-{
+namespace XSD {
 
 class Annotation::Private
 {
@@ -32,19 +31,14 @@ public:
     QDomElement mDomElement;
 };
 
-Annotation::Annotation()
-    : d(new Private)
-{
-}
+Annotation::Annotation() : d(new Private) {}
 
-Annotation::Annotation(const QDomElement &element)
-    : d(new Private)
+Annotation::Annotation(const QDomElement &element) : d(new Private)
 {
     d->mDomElement = element;
 }
 
-Annotation::Annotation(const Annotation &other)
-    : d(new Private)
+Annotation::Annotation(const Annotation &other) : d(new Private)
 {
     *d = *other.d;
 }
@@ -105,5 +99,4 @@ QString Annotation::List::documentation() const
 
     return result;
 }
-
 }

@@ -35,7 +35,7 @@ namespace KODE {
  */
 class KODE_EXPORT License
 {
-  public:
+public:
     /**
      * Possible types of licenses
      * @li GPL  - The GNU General Public License.
@@ -43,13 +43,7 @@ class KODE_EXPORT License
      * @li BSD  - Berkeley Software Distribution
      * @li GeneratedNoRestriction - Generated code with no restrictions.
      */
-    enum Type {
-       GPL,
-       LGPL,
-       BSD,
-       GeneratedNoRestriction,
-       NoLicense
-    };
+    enum Type { GPL, LGPL, BSD, GeneratedNoRestriction, NoLicense };
 
     /**
      * Creates a new license.
@@ -59,12 +53,12 @@ class KODE_EXPORT License
     /**
      * Create a new license of the given @param type.
      */
-    License( Type type );
+    License(Type type);
 
     /**
      * Creates a new license from @param other.
      */
-    License( const License &other );
+    License(const License &other);
 
     /**
      * Destroys the license.
@@ -74,7 +68,7 @@ class KODE_EXPORT License
     /**
      * Assignment operator.
      */
-    License& operator=( const License &other );
+    License &operator=(const License &other);
 
     /**
      * Sets whether a Qt expection should be appended to
@@ -82,18 +76,17 @@ class KODE_EXPORT License
      *
      * This is only useful for Qt3 based code.
      */
-    void setQtException( bool useQtException );
+    void setQtException(bool useQtException);
 
     /**
      * Returns the textual presentation of the license.
      */
     QString text() const;
 
-  private:
+private:
     class Private;
     Private *d;
 };
-
 }
 
 #endif

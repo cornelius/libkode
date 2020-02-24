@@ -21,17 +21,12 @@
 
 #include "compositor.h"
 
-namespace XSD
-{
+namespace XSD {
 
 class Compositor::Private
 {
 public:
-    Private()
-        : mType(Invalid),
-          mMinOccurs(1),
-          mMaxOccurs(1)
-    {}
+    Private() : mType(Invalid), mMinOccurs(1), mMaxOccurs(1) {}
 
     Type mType;
     QName::List mChildren;
@@ -39,19 +34,14 @@ public:
     int mMaxOccurs;
 };
 
-Compositor::Compositor()
-    : d(new Private)
-{
-}
+Compositor::Compositor() : d(new Private) {}
 
-Compositor::Compositor(Type type)
-    : d(new Private)
+Compositor::Compositor(Type type) : d(new Private)
 {
     d->mType = type;
 }
 
-Compositor::Compositor(const Compositor &other)
-    : d(new Private)
+Compositor::Compositor(const Compositor &other) : d(new Private)
 {
     *d = *other.d;
 }
@@ -121,5 +111,4 @@ QName::List Compositor::children() const
 {
     return d->mChildren;
 }
-
 }

@@ -27,12 +27,9 @@
 
 // maybe port to QXmlNamespaceSupport?
 
-NSManager::NSManager()
-    : mContext(nullptr), mParentManager(nullptr)
-{
-}
+NSManager::NSManager() : mContext(nullptr), mParentManager(nullptr) {}
 
-NSManager::NSManager( ParserContext* context, const QDomElement& child )
+NSManager::NSManager(ParserContext *context, const QDomElement &child)
 {
     mContext = context;
     mParentManager = context->namespaceManager();
@@ -49,67 +46,67 @@ NSManager::~NSManager()
         mContext->setNamespaceManager(mParentManager);
 
         // Remember the prefixes used for the namespaces, even afterwards
-        //qDebug() << this << "adding prefixes into parent manager" << mParentManager;
-        mParentManager->addPrefixes( mMap );
+        // qDebug() << this << "adding prefixes into parent manager" << mParentManager;
+        mParentManager->addPrefixes(mMap);
     }
 }
 
-void NSManager::setCurrentNamespace( const QString& uri )
+void NSManager::setCurrentNamespace(const QString &uri)
 {
     mCurrentNamespace = uri;
 }
 
-void NSManager::setPrefix( const QString &prefix, const QString &uri )
+void NSManager::setPrefix(const QString &prefix, const QString &uri)
 {
-    mMap.replace( prefix, uri );
+    mMap.replace(prefix, uri);
 }
 
-QString NSManager::prefix( const QString &uri ) const
+QString NSManager::prefix(const QString &uri) const
 {
     // Note that it's allowed to have two prefixes for the same namespace uri.
     // So we just pick one.
-    QString pref = mMap.key( uri ); // linear search
+    QString pref = mMap.key(uri); // linear search
     if (pref.isEmpty() && uri != "http://schemas.xmlsoap.org/wsdl/") {
         qWarning() << "WARNING: No prefix found for" << uri;
     }
     return pref;
 }
 
-QString NSManager::uri( const QString &prefix ) const
+QString NSManager::uri(const QString &prefix) const
 {
     if (prefix.isEmpty())
         return mCurrentNamespace;
-    return mMap.value( prefix );
+    return mMap.value(prefix);
 }
 
-void NSManager::splitName( const QString &qname, QString &prefix, QString &localname ) const
+void NSManager::splitName(const QString &qname, QString &prefix, QString &localname) const
 {
-  int pos = qname.indexOf( QLatin1Char(':') );
-  if ( pos != -1 ) {
-    prefix = qname.left( pos );
-    localname = qname.mid( pos + 1 );
-  } else {
-    prefix = QString();
-    localname = qname;
-  }
+    int pos = qname.indexOf(QLatin1Char(':'));
+    if (pos != -1) {
+        prefix = qname.left(pos);
+        localname = qname.mid(pos + 1);
+    } else {
+        prefix = QString();
+        localname = qname;
+    }
 }
 
-QString NSManager::fullName( const QString &nameSpace, const QString &localname ) const
+QString NSManager::fullName(const QString &nameSpace, const QString &localname) const
 {
-  if ( prefix( nameSpace ).isEmpty() )
-    return localname;
-  else
-    return prefix( nameSpace ) + QLatin1Char(':') + localname;
+    if (prefix(nameSpace).isEmpty())
+        return localname;
+    else
+        return prefix(nameSpace) + QLatin1Char(':') + localname;
 }
 
-QString NSManager::fullName( const QName &name ) const
+QString NSManager::fullName(const QName &name) const
 {
-  return fullName( name.nameSpace(), name.localName() );
+    return fullName(name.nameSpace(), name.localName());
 }
 
 QStringList NSManager::prefixes() const
 {
-  return mMap.keys();
+    return mMap.keys();
 }
 
 QMap<QString, QString> NSManager::prefixMap() const
@@ -119,7 +116,8 @@ QMap<QString, QString> NSManager::prefixMap() const
 
 void NSManager::addPrefixes(const QMap<QString, QString> &prefixes)
 {
-    for (QMap<QString, QString>::const_iterator it = prefixes.constBegin() ; it != prefixes.constEnd() ; ++it) {
+    for (QMap<QString, QString>::const_iterator it = prefixes.constBegin();
+         it != prefixes.constEnd(); ++it) {
         const QString &prefix = it.key();
         const QString &ns = it.value();
         // Only write down this prefix if we don't have it yet
@@ -149,15 +147,15 @@ QString NSManager::xmlNamespace()
 
 void NSManager::reset()
 {
-  mMap.clear();
+    mMap.clear();
 }
 
 void NSManager::dump() const
 {
-  QMap<QString, QString>::ConstIterator it;
-  for ( it = mMap.begin(); it != mMap.end(); ++it ) {
-    qDebug( "%s\t%s", qPrintable( it.key() ), qPrintable( it.value() ) );
-  }
+    QMap<QString, QString>::ConstIterator it;
+    for (it = mMap.begin(); it != mMap.end(); ++it) {
+        qDebug("%s\t%s", qPrintable(it.key()), qPrintable(it.value()));
+    }
 }
 
 QString NSManager::nameSpace(const QDomElement &element) const
@@ -166,8 +164,8 @@ QString NSManager::nameSpace(const QDomElement &element) const
         return element.namespaceURI();
 
     QString prefix, localname;
-    splitName( element.tagName(), prefix, localname );
-    return uri( prefix );
+    splitName(element.tagName(), prefix, localname);
+    return uri(prefix);
 }
 
 QString NSManager::localName(const QDomElement &element) const
@@ -176,22 +174,22 @@ QString NSManager::localName(const QDomElement &element) const
         return element.localName();
 
     QString prefix, localname;
-    splitName( element.tagName(), prefix, localname );
+    splitName(element.tagName(), prefix, localname);
     return localname;
 }
 
 void NSManager::enterChild(const QDomElement &element)
 {
     const QDomNamedNodeMap attributes = element.attributes();
-    for ( int i = 0; i < attributes.count(); ++i ) {
-      QDomAttr attribute = attributes.item( i ).toAttr();
-      if ( attribute.name().startsWith( QLatin1String("xmlns:") ) ) {
-        QString prefix = attribute.name().mid( 6 );
-        //if (prefix == "tns")
-        //    qDebug() << this << "enterChild: setting tns to" << attribute.value();
-        setPrefix( prefix, attribute.value() );
-      } else if ( attribute.name() == QLatin1String("xmlns") ) {
-        setCurrentNamespace( attribute.value() );
-      }
+    for (int i = 0; i < attributes.count(); ++i) {
+        QDomAttr attribute = attributes.item(i).toAttr();
+        if (attribute.name().startsWith(QLatin1String("xmlns:"))) {
+            QString prefix = attribute.name().mid(6);
+            // if (prefix == "tns")
+            //    qDebug() << this << "enterChild: setting tns to" << attribute.value();
+            setPrefix(prefix, attribute.value());
+        } else if (attribute.name() == QLatin1String("xmlns")) {
+            setCurrentNamespace(attribute.value());
+        }
     }
 }

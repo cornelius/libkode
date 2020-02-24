@@ -32,15 +32,15 @@ QT_END_NAMESPACE
 
 class KXMLCOMMON_EXPORT FileProvider : QObject
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public:
+public:
     FileProvider();
 
-    bool get( const QUrl &url, QString &target );
+    bool get(const QUrl &url, QString &target);
     void cleanUp();
 
-  private:
+private:
     QString mFileName;
 };
 

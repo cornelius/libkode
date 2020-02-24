@@ -21,8 +21,7 @@
 
 #include "xmlelement.h"
 
-namespace XSD
-{
+namespace XSD {
 
 class XmlElement::Private
 {
@@ -33,19 +32,14 @@ public:
     Annotation::List mAnnotations;
 };
 
-XmlElement::XmlElement()
-    : d(new Private)
-{
-}
+XmlElement::XmlElement() : d(new Private) {}
 
-XmlElement::XmlElement(const QString &nameSpace)
-    : d(new Private)
+XmlElement::XmlElement(const QString &nameSpace) : d(new Private)
 {
     d->mNameSpace = nameSpace;
 }
 
-XmlElement::XmlElement(const XmlElement &other)
-    : d(new Private)
+XmlElement::XmlElement(const XmlElement &other) : d(new Private)
 {
     *d = *other.d;
 }
@@ -110,5 +104,4 @@ Annotation::List XmlElement::annotations() const
 {
     return d->mAnnotations;
 }
-
 }

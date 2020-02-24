@@ -26,20 +26,14 @@
 #include <common/qname.h>
 #include <kode_export.h>
 
-namespace XSD
-{
+namespace XSD {
 
 class SCHEMA_EXPORT Compositor
 {
 public:
     typedef QList<Compositor> List;
 
-    enum Type {
-        Invalid,
-        Choice,
-        Sequence,
-        All
-    };
+    enum Type { Invalid, Choice, Sequence, All };
 
     Compositor();
     Compositor(Type type);
@@ -66,7 +60,6 @@ private:
     class Private;
     Private *d;
 };
-
 }
 
 #endif

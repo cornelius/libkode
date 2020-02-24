@@ -22,15 +22,12 @@
 
 #include "attribute.h"
 
-namespace XSD
-{
+namespace XSD {
 
 class Attribute::Private
 {
 public:
-    Private()
-        : mQualified(false), mUse(Optional)
-    {}
+    Private() : mQualified(false), mUse(Optional) {}
 
     QName mType;
     QString mDocumentation;
@@ -41,18 +38,11 @@ public:
     QName mReference;
 };
 
-Attribute::Attribute()
-    : XmlElement(), d(new Private)
-{
-}
+Attribute::Attribute() : XmlElement(), d(new Private) {}
 
-Attribute::Attribute(const QString &nameSpace)
-    : XmlElement(nameSpace), d(new Private)
-{
-}
+Attribute::Attribute(const QString &nameSpace) : XmlElement(nameSpace), d(new Private) {}
 
-Attribute::Attribute(const Attribute &other)
-    : XmlElement(other), d(new Private)
+Attribute::Attribute(const Attribute &other) : XmlElement(other), d(new Private)
 {
     *d = *other.d;
 }

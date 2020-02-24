@@ -23,8 +23,7 @@
 
 #include <QDebug>
 
-namespace XSD
-{
+namespace XSD {
 
 class Types::Private
 {
@@ -39,13 +38,9 @@ public:
 #endif
 };
 
-Types::Types()
-    : d(new Private)
-{
-}
+Types::Types() : d(new Private) {}
 
-Types::Types(const Types &other)
-    : d(new Private)
+Types::Types(const Types &other) : d(new Private)
 {
     *d = *other.d;
 }
@@ -66,7 +61,7 @@ Types &Types::operator=(const Types &other)
     return *this;
 }
 
-Types &Types::operator +=(const Types &other)
+Types &Types::operator+=(const Types &other)
 {
     if (this == &other) {
         return *this;
@@ -161,7 +156,7 @@ ComplexType Types::polymorphicBaseClass(const ComplexType &derivedType) const
     }
     ComplexType base = complexType(derivedType.baseTypeName());
     if (!base.isNull()) {
-        return polymorphicBaseClass(base);    // recurse
+        return polymorphicBaseClass(base); // recurse
     }
     return ComplexType();
 }
