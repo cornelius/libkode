@@ -58,6 +58,7 @@ QString Style::className(const QString &str)
     cl.replace(QLatin1Char('-'), QLatin1Char('_'));
     cl.replace(QLatin1Char(';'), QLatin1Char('_'));
     cl.replace(QLatin1Char(':'), QLatin1Char('_'));
+    cl.replace(QLatin1Char('.'), QLatin1Char('_'));
     return cl;
 }
 
