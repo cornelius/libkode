@@ -22,7 +22,7 @@
 #ifndef FILEPROVIDER_H
 #define FILEPROVIDER_H
 
-#include <QObject>
+#include <QMap>
 
 #include <kode_export.h>
 
@@ -30,12 +30,12 @@ QT_BEGIN_NAMESPACE
 class QUrl;
 QT_END_NAMESPACE
 
-class KXMLCOMMON_EXPORT FileProvider : QObject
+class KXMLCOMMON_EXPORT FileProvider
 {
-    Q_OBJECT
-
 public:
-    FileProvider(bool useLocalFilesOnly = false, const QStringList &importPathList = QStringList());
+    FileProvider(bool useLocalFilesOnly = false, const QStringList &importPathList = QStringList(),
+                 const QMap<QUrl, QString> &localSchemas = {});
+    ~FileProvider();
 
     bool get(const QUrl &url, QString &target);
     void cleanUp();
@@ -43,7 +43,8 @@ public:
 private:
     QString mFileName;
     bool mUseLocalFilesOnly = false;
-    QStringList mImportPathList;
+    const QStringList mImportPathList;
+    const QMap<QUrl, QString> mLocalSchemas;
 };
 
 #endif
