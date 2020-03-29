@@ -35,13 +35,15 @@ class KXMLCOMMON_EXPORT FileProvider : QObject
     Q_OBJECT
 
 public:
-    FileProvider();
+    FileProvider(bool useLocalFilesOnly = false, const QStringList &importPathList = QStringList());
 
     bool get(const QUrl &url, QString &target);
     void cleanUp();
 
 private:
     QString mFileName;
+    bool mUseLocalFilesOnly = false;
+    QStringList mImportPathList;
 };
 
 #endif

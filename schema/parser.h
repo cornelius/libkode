@@ -45,7 +45,8 @@ class SCHEMA_EXPORT Parser
 public:
     enum { UNBOUNDED = 100000 };
 
-    Parser(ParserContext *context, const QString &nameSpace = QString());
+    Parser(ParserContext *context, const QString &nameSpace = QString(),
+           bool useLocalFilesOnly = false, const QStringList &includePathList = QStringList());
     Parser(const Parser &other);
     ~Parser();
 
