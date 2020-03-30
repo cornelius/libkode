@@ -31,7 +31,6 @@
 #include <QNetworkRequest>
 #include <QNetworkReply>
 #include <QTemporaryFile>
-#include "src/settings.h"
 
 #ifndef Q_OS_WIN
 #    include <unistd.h>
@@ -39,7 +38,13 @@
 
 static QHash<QUrl, QByteArray> fileProviderCache;
 
-FileProvider::FileProvider() : QObject(nullptr) {}
+FileProvider::FileProvider(bool useLocalFilesOnly, const QStringList &importPathList) :
+    QObject(nullptr),
+    mUseLocalFilesOnly(useLocalFilesOnly),
+    mImportPathList(importPathList)
+{
+
+}
 
 void FileProvider::cleanUp()
 {
@@ -64,8 +69,7 @@ bool FileProvider::get(const QUrl &url, QString &target)
         return true;
     }
 
-    const QStringList importPathList = Settings::self()->importPathList();
-    Q_FOREACH (const QString &importPath, importPathList) {
+    Q_FOREACH (const QString &importPath, mImportPathList) {
         QDir importDir(importPath);
         QString path = importDir.absoluteFilePath(url.host() + QDir::separator() + url.path());
         if (QFile::exists(path)) {
@@ -75,10 +79,10 @@ bool FileProvider::get(const QUrl &url, QString &target)
         }
     }
 
-    if (Settings::self()->useLocalFilesOnly()) {
+    if (mUseLocalFilesOnly) {
         qCritical("ERROR: Could not find the local file for '%s'", qPrintable(url.toEncoded()));
         qCritical("ERROR: Try to download the file using:");
-        qCritical("ERROR:  $ cd %s", qPrintable(importPathList.first()));
+        qCritical("ERROR:  $ cd %s", qPrintable(mImportPathList.first()));
         qCritical("ERROR:  $ wget -r %s", qPrintable(url.toEncoded()));
         qCritical("ERROR: Or use the -import-path argument to set the correct search path");
         QCoreApplication::exit(12);
@@ -102,15 +106,6 @@ bool FileProvider::get(const QUrl &url, QString &target)
 
         QNetworkAccessManager manager;
         QNetworkRequest request(url);
-#if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
-        if (Settings::self()->certificateLoaded()) {
-            QSslConfiguration sslConfig = request.sslConfiguration();
-            sslConfig.setPrivateKey(Settings::self()->sslKey());
-            sslConfig.setLocalCertificate(Settings::self()->certificate());
-            sslConfig.setCaCertificates(Settings::self()->caCertificates());
-            request.setSslConfiguration(sslConfig);
-        }
-#endif
         QNetworkReply *job = manager.get(request);
 
         QEventLoop loop;

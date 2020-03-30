@@ -63,13 +63,20 @@ public:
 
     QStringList mImportedSchemas;
     QStringList mIncludedSchemas;
+
+    bool mUseLocalFilesOnly = false;
+    QStringList mImportPathList;
 };
 
-Parser::Parser(ParserContext *context, const QString &nameSpace) : d(new Private)
+Parser::Parser(ParserContext *context, const QString &nameSpace,
+               bool useLocalFilesOnly, const QStringList &importPathList) :
+    d(new Private)
 {
     d->mNameSpace = nameSpace;
     d->mDefaultQualifiedElements = false;
     d->mDefaultQualifiedAttributes = false;
+    d->mUseLocalFilesOnly = useLocalFilesOnly;
+    d->mImportPathList = importPathList;
     init(context);
 }
 
@@ -1083,7 +1090,7 @@ void Parser::importSchema(ParserContext *context, const QString &location)
         return;
     }
 
-    FileProvider provider;
+    FileProvider provider(d->mUseLocalFilesOnly, d->mImportPathList);
     QString fileName;
     const QUrl schemaLocation = urlForLocation(context, location);
     qDebug("importing schema at %s", schemaLocation.toEncoded().constData());
@@ -1130,7 +1137,7 @@ void Parser::importSchema(ParserContext *context, const QString &location)
 //      target namespace is the same as the including schema's target namespace"
 void Parser::includeSchema(ParserContext *context, const QString &location)
 {
-    FileProvider provider;
+    FileProvider provider(d->mUseLocalFilesOnly, d->mImportPathList);
     QString fileName;
     const QUrl schemaLocation = urlForLocation(context, location);
     qDebug("including schema at %s", schemaLocation.toEncoded().constData());
