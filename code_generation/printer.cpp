@@ -701,24 +701,26 @@ void Printer::printHeader(const File &file)
     out.newLine();
 
     // Create includes
-    QSet<QString> processed;
+    Include::List processedIncludes;
     const Class::List classes = file.classes();
     Q_FOREACH (const Class &cl, classes) {
         Q_ASSERT(!cl.name().isEmpty());
-        QStringList includes = cl.headerIncludes();
+        Include::List includes = cl.headerIncludes();
         if (cl.useSharedData())
-            includes.append("QtCore/QSharedData");
+            includes.append(Include("QtCore/QSharedData"));
         // qDebug() << "includes=" << includes;
-        QStringList::ConstIterator it2;
-        for (it2 = includes.constBegin(); it2 != includes.constEnd(); ++it2) {
-            if (!processed.contains(*it2)) {
-                out += "#include <" + *it2 + '>';
-                processed.insert(*it2);
+        for (auto include : qAsConst(includes)) {
+            if (!processedIncludes.contains(include)) {
+                if (include.type == Include::Relative)
+                    out += "#include \"" + include.includeFileName + '"';
+                else
+                    out += "#include <" + include.includeFileName + '>';
+                processedIncludes.append(include);
             }
         }
     }
 
-    if (!processed.isEmpty())
+    if (!processedIncludes.isEmpty())
         out.newLine();
 
     for (const QString &statement : d->mStatementsAfterIncludes) {
@@ -734,7 +736,7 @@ void Printer::printHeader(const File &file)
     }
 
     // Create forward declarations
-    processed.clear();
+    QSet<QString> processed;
     Class::List::ConstIterator it;
     for (it = classes.constBegin(); it != classes.constEnd(); ++it) {
         const QStringList decls = (*it).forwardDeclarations();

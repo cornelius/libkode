@@ -8,6 +8,7 @@ SOURCES += \
    printer.cpp \
    license.cpp \
    file.cpp \
+   include.cpp \
    class.cpp \
    function.cpp \
    variable.cpp \
