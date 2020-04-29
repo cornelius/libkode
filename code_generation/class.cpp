@@ -41,7 +41,7 @@ public:
     MemberVariable::List mMemberVariables;
     QStringList mIncludes;
     QStringList mForwardDeclarations;
-    QStringList mHeaderIncludes;
+    Include::List mHeaderIncludes;
     Class::List mBaseClasses;
     Typedef::List mTypedefs;
     Enum::List mEnums;
@@ -190,23 +190,23 @@ QStringList Class::forwardDeclarations() const
     return d->mForwardDeclarations;
 }
 
-void Class::addHeaderInclude(const QString &include)
+void Class::addHeaderInclude(const QString &include, Include::IncludeType type)
 {
-    if (include.isEmpty())
+    auto newInclude = Include(include, type);
+    if (include.isEmpty() || d->mHeaderIncludes.contains(newInclude))
         return;
 
-    if (!d->mHeaderIncludes.contains(include))
-        d->mHeaderIncludes.append(include);
+    d->mHeaderIncludes.append(newInclude);
 }
 
-void Class::addHeaderIncludes(const QStringList &includes)
+void Class::addHeaderIncludes(const QStringList &includes, Include::IncludeType type)
 {
     QStringList::ConstIterator it;
     for (it = includes.constBegin(); it != includes.constEnd(); ++it)
-        addHeaderInclude(*it);
+        addHeaderInclude(*it, type);
 }
 
-QStringList Class::headerIncludes() const
+Include::List Class::headerIncludes() const
 {
     return d->mHeaderIncludes;
 }
