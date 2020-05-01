@@ -4,6 +4,7 @@ HEADERS += \
   $$PWD/enum.h \
   $$PWD/file.h \
   $$PWD/function.h \
+  $$PWD/include.h \
   $$PWD/kode_export.h \
   $$PWD/license.h \
   $$PWD/membervariable.h \
@@ -14,15 +15,16 @@ HEADERS += \
   $$PWD/variable.h
 
 SOURCES += \
-  class.cpp \
-  code.cpp \
-  enum.cpp \
-  file.cpp \
-  function.cpp \
-  license.cpp \
-  membervariable.cpp \
-  printer.cpp \
-  statemachine.cpp \
-  style.cpp \
-  typedef.cpp \
-  variable.cpp
+  $$PWD/class.cpp \
+  $$PWD/code.cpp \
+  $$PWD/enum.cpp \
+  $$PWD/file.cpp \
+  $$PWD/function.cpp \
+  $$PWD/include.cpp \
+  $$PWD/license.cpp \
+  $$PWD/membervariable.cpp \
+  $$PWD/printer.cpp \
+  $$PWD/statemachine.cpp \
+  $$PWD/style.cpp \
+  $$PWD/typedef.cpp \
+  $$PWD/variable.cpp

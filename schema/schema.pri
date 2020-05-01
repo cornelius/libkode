@@ -1,3 +1,5 @@
+QT += xml
+
 HEADERS += \
   $$PWD/annotation.h \
   $$PWD/attribute.h \

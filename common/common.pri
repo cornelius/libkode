@@ -1,3 +1,5 @@
+QT += network
+
 HEADERS += \
   $$PWD/fileprovider.h \
   $$PWD/messagehandler.h \

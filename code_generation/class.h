@@ -25,6 +25,7 @@
 #include <QtCore/QStringList>
 
 #include "enum.h"
+#include "include.h"
 #include "function.h"
 #include "membervariable.h"
 #include "typedef.h"
@@ -197,17 +198,17 @@ public:
      *             will be printed as '#include "qfile.h"' in the
      *             implementation.
      */
-    void addHeaderInclude(const QString &file);
+    void addHeaderInclude(const QString &file, Include::IncludeType type = Include::Global);
 
     /**
      * Adds a list of header includes to the class object.
      */
-    void addHeaderIncludes(const QStringList &files);
+    void addHeaderIncludes(const QStringList &files, Include::IncludeType type = Include::Global);
 
     /**
      * Returns the list of header includes.
      */
-    QStringList headerIncludes() const;
+    Include::List headerIncludes() const;
 
     /**
      * Adds a @param function to the class object.
