@@ -8,6 +8,7 @@ HEADERS += \
   $$PWD/kode_export.h \
   $$PWD/license.h \
   $$PWD/membervariable.h \
+  $$PWD/namer.h \
   $$PWD/printer.h \
   $$PWD/statemachine.h \
   $$PWD/style.h \
@@ -23,6 +24,7 @@ SOURCES += \
   $$PWD/include.cpp \
   $$PWD/license.cpp \
   $$PWD/membervariable.cpp \
+  $$PWD/namer.cpp \
   $$PWD/printer.cpp \
   $$PWD/statemachine.cpp \
   $$PWD/style.cpp \

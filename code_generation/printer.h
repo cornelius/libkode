@@ -137,12 +137,6 @@ public:
      */
     void setStatementsAfterIncludes(const QStringList &statements);
 
-    /**
-     * @brief setVerbose enable/disable outputting verbose logs
-     * @param verbose
-     */
-    void setVerbose(bool verbose);
-
 protected:
     /**
      * Returns the creation warning.

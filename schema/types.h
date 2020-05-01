@@ -57,14 +57,14 @@ public:
     // unused void setGroups( const Group::List &groups );
     // unused Group::List groups() const;
 
-    // ComplexType complexType( const Element & ) const;
+    ComplexType complexType(const Element &) const;
     ComplexType complexType(const QName &) const;
 
     // Call this with derived complex type, to find the root of the hierarchy,
     // i.e. the type for which isPolymorphicBaseClass() returns true
     ComplexType polymorphicBaseClass(const ComplexType &derivedType) const;
 
-    SimpleType simpleType(const QName &) const;
+    SimpleType simpleType(const QName &simpleTypeName, const QString &elementFilter = QString()) const;
 
 private:
     class Private;

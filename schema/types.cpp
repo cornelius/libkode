@@ -137,12 +137,12 @@ Group::List Types::groups() const
 {
     return d->mGroups;
 }
+#endif
 
 ComplexType Types::complexType(const Element &element) const
 {
     return complexType(element.type());
 }
-#endif
 
 ComplexType Types::complexType(const QName &typeName) const
 {
@@ -161,9 +161,18 @@ ComplexType Types::polymorphicBaseClass(const ComplexType &derivedType) const
     return ComplexType();
 }
 
-SimpleType Types::simpleType(const QName &typeName) const
+SimpleType Types::simpleType(const QName &simpleTypeName, const QString &elementFilter) const
 {
-    return d->mSimpleTypes.simpleType(typeName);
+    if (elementFilter.isEmpty())
+        return d->mSimpleTypes.simpleType(simpleTypeName);
+
+    for(auto type : qAsConst(d->mSimpleTypes)) {
+        if ( type.qualifiedName() == simpleTypeName
+             && elementFilter == type.elementName())
+            return type;
+    }
+    qDebug() << "Simple type not found";
+    return SimpleType();
 }
 
 } // namespace XSD

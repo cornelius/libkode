@@ -60,6 +60,7 @@ public:
     };
 
     FacetValueType mFacetValue;
+    QString mElementName;
 };
 
 SimpleType::SimpleType() : XSDType(), d(new Private) {}
@@ -310,4 +311,15 @@ SimpleTypeList::iterator SimpleTypeList::findSimpleType(const QName &qualifiedNa
         }
     return end();
 }
+
+QString SimpleType::elementName() const
+{
+    return d->mElementName;
 }
+
+void SimpleType::setElementName(const QString &elementName)
+{
+    d->mElementName = elementName;
+}
+
+} // end namespace XSD
