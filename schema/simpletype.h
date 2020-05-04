@@ -104,6 +104,9 @@ public:
      */
     bool isRestriction() const;
 
+    QString elementName() const;
+    void setElementName(const QString &elementName);
+
 private:
     class Private;
     Private *d;

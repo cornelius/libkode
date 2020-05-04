@@ -63,6 +63,8 @@ public:
     void setIsQualified(bool isQualified);
     bool isQualified() const;
 
+    bool isRequired() const;
+
     enum AttributeUse { Optional, Required, Prohibited };
 
     void setAttributeUse(AttributeUse use);

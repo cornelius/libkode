@@ -47,6 +47,7 @@ public:
 
     Parser(ParserContext *context, const QString &nameSpace = QString(),
            bool useLocalFilesOnly = false, const QStringList &includePathList = QStringList());
+    Parser(const QString &nameSpace = QString());
     Parser(const Parser &other);
     ~Parser();
 
@@ -56,6 +57,8 @@ public:
 
     Annotation::List annotations() const;
 
+    bool parseString(ParserContext *context, const QString &data);
+    bool parseFile(ParserContext *context, QFile &file);
     bool parseSchemaTag(ParserContext *context, const QDomElement &element);
 
     QString targetNamespace() const;
@@ -70,6 +73,8 @@ public:
     static bool debugParsing();
 
 private:
+    bool parse(ParserContext *context, QXmlInputSource *source);
+
     void parseImport(ParserContext *context, const QDomElement &);
     /**
      * @brief Parse include element.

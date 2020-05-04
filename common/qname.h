@@ -37,7 +37,7 @@ public:
     QName();
 
     // Create a QName with prefix+localname
-    explicit QName(const QString &name);
+    QName(const QString &name);
 
     // Create a QName with namespace+localname
     QName(const QString &nameSpace, const QString &localName);

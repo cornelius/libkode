@@ -115,6 +115,11 @@ bool Attribute::isQualified() const
     return d->mQualified;
 }
 
+bool Attribute::isRequired() const
+{
+    return d->mUse == Required;
+}
+
 // https://www.w3.org/TR/xmlschema-0/#ref36
 void Attribute::setAttributeUse(AttributeUse use)
 {
