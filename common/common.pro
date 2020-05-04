@@ -1,14 +1,8 @@
 TEMPLATE = lib
 TARGET = xmlcommon
 CONFIG += staticlib
-SOURCES = \
-   fileprovider.cpp \
-   messagehandler.cpp \
-   nsmanager.cpp \
-   parsercontext.cpp \
-   qname.cpp
 
-HEADERS = fileprovider.h
+include(common.pri)
 
 QT -= gui
 QT += xml network
