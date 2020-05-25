@@ -6,20 +6,26 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [macos-latest, ubuntu-latest, windows-latest]
-    runs-on: ${{ matrix.os }}
-
+        config:
+          - { os: macos-latest, cxx: "clang++" }
+          - { os: ubuntu-latest, cxx: "g++" }
+          - { os: windows-latest, cxx: "cl" }
+    runs-on: ${{ matrix.config.os }}
     steps:
       - name: Checkout
         uses: actions/checkout@v1
       - name: Install Qt
         uses: jurplel/install-qt-action@v2.6.2
-      - name: Build with CMake in ${{ matrix.os }}
+      - name: Build with CMake in ${{ matrix.config.os }} / ${{ matrix.config.cxx }}
+        env:
+          CXX: ${{ matrix.config.cxx }}
         run: |
-          mkdir cmake_build && cd cmake_build
-          cmake ..
-          make -j2
-      - name: Build with QMake in ${{ matrix.os }}
+          cmake -B cmake_build
+          cmake --build cmake_build -j2
+      - name: Build with QMake in ${{ matrix.config.os }} / ${{ matrix.config.cxx }}
+        if: matrix.config.os != 'windows-latest'
+        env:
+          CXX: ${{ matrix.config.cxx }}
         run: |
           qmake
           make -j2
