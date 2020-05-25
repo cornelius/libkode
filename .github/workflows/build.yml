@@ -1,0 +1,25 @@
+name: build
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v2.6.2
+      - name: Build with CMake in ${{ matrix.os }}
+        run: |
+          mkdir cmake_build && cd cmake_build
+          cmake ..
+          make -j2
+      - name: Build with QMake in ${{ matrix.os }}
+        run: |
+          qmake
+          make -j2
