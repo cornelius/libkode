@@ -25,7 +25,6 @@ using namespace KODE;
 Include::Include(const QString &fileName, Include::IncludeType type_)
     : includeFileName(fileName), type(type_)
 {
-
 }
 
 bool Include::operator==(const Include &other) const

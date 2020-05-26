@@ -70,9 +70,9 @@ public:
     QStringList mImportPathList;
 };
 
-Parser::Parser(ParserContext *context, const QString &nameSpace,
-               bool useLocalFilesOnly, const QStringList &importPathList) :
-    d(new Private)
+Parser::Parser(ParserContext *context, const QString &nameSpace, bool useLocalFilesOnly,
+               const QStringList &importPathList)
+    : d(new Private)
 {
     d->mNameSpace = nameSpace;
     d->mUseLocalFilesOnly = useLocalFilesOnly;
@@ -80,8 +80,7 @@ Parser::Parser(ParserContext *context, const QString &nameSpace,
     init(context);
 }
 
-Parser::Parser(const QString &nameSpace)
-    : d(new Private)
+Parser::Parser(const QString &nameSpace) : d(new Private)
 {
     d->mNameSpace = nameSpace;
 }
@@ -870,9 +869,9 @@ void Parser::parseComplexContent(ParserContext *context, const QDomElement &elem
             } else {
 
                 if (typeName
-                    != QName(XMLSchemaURI,
-                             QString::fromLatin1(
-                                     "anyType"))) { // don't do this for anyType or Array
+                    != QName(
+                            XMLSchemaURI,
+                            QString::fromLatin1("anyType"))) { // don't do this for anyType or Array
                     complexType.setBaseTypeName(typeName);
                 }
 
@@ -1381,7 +1380,7 @@ bool Parser::debugParsing()
 bool Parser::parse(ParserContext *context, QXmlInputSource *source)
 {
     QXmlSimpleReader reader;
-    reader.setFeature( QLatin1String("http://xml.org/sax/features/namespace-prefixes"), true);
+    reader.setFeature(QLatin1String("http://xml.org/sax/features/namespace-prefixes"), true);
 
     QDomDocument document(QLatin1String("KWSDL"));
 
@@ -1389,18 +1388,18 @@ bool Parser::parse(ParserContext *context, QXmlInputSource *source)
     int errorLine, errorCol;
     QDomDocument doc;
     if (!doc.setContent(source, &reader, &errorMsg, &errorLine, &errorCol)) {
-        qDebug( "%s at (%d,%d)", qPrintable( errorMsg ), errorLine, errorCol);
+        qDebug("%s at (%d,%d)", qPrintable(errorMsg), errorLine, errorCol);
         return false;
     }
 
     QDomElement element = doc.documentElement();
     const QName name = element.tagName();
-    if ( name.localName() != QLatin1String("schema") ) {
-        qDebug("document element is '%s'", qPrintable( element.tagName()));
+    if (name.localName() != QLatin1String("schema")) {
+        qDebug("document element is '%s'", qPrintable(element.tagName()));
         return false;
     }
 
-    return parseSchemaTag( context, element );
+    return parseSchemaTag(context, element);
 }
 
 bool Parser::parseFile(ParserContext *context, QFile &file)
@@ -1409,7 +1408,7 @@ bool Parser::parseFile(ParserContext *context, QFile &file)
     return parse(context, &source);
 }
 
-bool Parser::parseString( ParserContext *context, const QString &data )
+bool Parser::parseString(ParserContext *context, const QString &data)
 {
     QXmlInputSource source;
     source.setData(data);

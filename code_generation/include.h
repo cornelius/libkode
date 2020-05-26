@@ -31,13 +31,10 @@ namespace KODE {
 class KODE_EXPORT Include
 {
 public:
-    enum IncludeType {
-        Global,
-        Relative
-    };
+    enum IncludeType { Global, Relative };
     Include() = default;
-    Include(const QString & fileName, IncludeType type_ = Global);
-    bool operator== (const Include &other) const;
+    Include(const QString &fileName, IncludeType type_ = Global);
+    bool operator==(const Include &other) const;
     QString includeFileName;
     IncludeType type = Global;
 

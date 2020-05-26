@@ -166,9 +166,8 @@ SimpleType Types::simpleType(const QName &simpleTypeName, const QString &element
     if (elementFilter.isEmpty())
         return d->mSimpleTypes.simpleType(simpleTypeName);
 
-    for(auto type : qAsConst(d->mSimpleTypes)) {
-        if ( type.qualifiedName() == simpleTypeName
-             && elementFilter == type.elementName())
+    for (auto type : qAsConst(d->mSimpleTypes)) {
+        if (type.qualifiedName() == simpleTypeName && elementFilter == type.elementName())
             return type;
     }
     qDebug() << "Simple type not found";

@@ -64,7 +64,8 @@ public:
     // i.e. the type for which isPolymorphicBaseClass() returns true
     ComplexType polymorphicBaseClass(const ComplexType &derivedType) const;
 
-    SimpleType simpleType(const QName &simpleTypeName, const QString &elementFilter = QString()) const;
+    SimpleType simpleType(const QName &simpleTypeName,
+                          const QString &elementFilter = QString()) const;
 
 private:
     class Private;

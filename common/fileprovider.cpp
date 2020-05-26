@@ -39,10 +39,10 @@
 static QHash<QUrl, QByteArray> fileProviderCache;
 
 FileProvider::FileProvider(bool useLocalFilesOnly, const QStringList &importPathList,
-                           const QMap<QUrl, QString> &localSchemas) :
-    mUseLocalFilesOnly(useLocalFilesOnly),
-    mImportPathList(importPathList),
-    mLocalSchemas(localSchemas)
+                           const QMap<QUrl, QString> &localSchemas)
+    : mUseLocalFilesOnly(useLocalFilesOnly),
+      mImportPathList(importPathList),
+      mLocalSchemas(localSchemas)
 {
 }
 
