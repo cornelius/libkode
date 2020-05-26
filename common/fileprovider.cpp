@@ -38,12 +38,17 @@
 
 static QHash<QUrl, QByteArray> fileProviderCache;
 
-FileProvider::FileProvider(bool useLocalFilesOnly, const QStringList &importPathList) :
-    QObject(nullptr),
+FileProvider::FileProvider(bool useLocalFilesOnly, const QStringList &importPathList,
+                           const QMap<QUrl, QString> &localSchemas) :
     mUseLocalFilesOnly(useLocalFilesOnly),
-    mImportPathList(importPathList)
+    mImportPathList(importPathList),
+    mLocalSchemas(localSchemas)
 {
+}
 
+FileProvider::~FileProvider()
+{
+    cleanUp();
 }
 
 void FileProvider::cleanUp()
@@ -60,12 +65,18 @@ bool FileProvider::get(const QUrl &url, QString &target)
         cleanUp();
     }
 
-    if (url.scheme() == QLatin1String("file")) {
+    if (url.isLocalFile()) {
         target = url.toLocalFile();
         return true;
     }
     if (url.scheme() == QLatin1String("qrc")) {
         target = QLatin1String(":") + url.path();
+        return true;
+    }
+
+    const auto localSchemaIt = mLocalSchemas.constFind(url);
+    if (localSchemaIt != mLocalSchemas.constEnd()) {
+        target = localSchemaIt.value();
         return true;
     }
 
@@ -109,7 +120,7 @@ bool FileProvider::get(const QUrl &url, QString &target)
         QNetworkReply *job = manager.get(request);
 
         QEventLoop loop;
-        connect(job, SIGNAL(finished()), &loop, SLOT(quit()));
+        QObject::connect(job, SIGNAL(finished()), &loop, SLOT(quit()));
         loop.exec();
 
         if (job->error()) {
@@ -134,5 +145,3 @@ bool FileProvider::get(const QUrl &url, QString &target)
 
     return true;
 }
-
-#include "moc_fileprovider.cpp"

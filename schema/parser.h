@@ -53,6 +53,13 @@ public:
 
     Parser &operator=(const Parser &other);
 
+    /**
+     * Configures the parser to use some local files instead of downloading specific schemas.
+     * @param localSchemas a map where the key is the schema URI and the value is the local path
+     * The local path can start with :/ to use the Qt resource system.
+     */
+    void setLocalSchemas(const QMap<QUrl, QString>& localSchemas);
+
     Types types() const;
 
     Annotation::List annotations() const;
