@@ -19,6 +19,7 @@
     Boston, MA 02110-1301, USA.
 */
 
+#include <QtCore/QMetaEnum>
 #include "license.h"
 
 using namespace KODE;
@@ -135,4 +136,39 @@ QString License::text() const
     }
 
     return txt;
+}
+
+License::Type License::type() const
+{
+    return d->mType;
+}
+
+QString License::typeName() const
+{
+    QMetaEnum metaEnum = QMetaEnum::fromType<License::Type>();
+    return metaEnum.valueToKey(d->mType);
+}
+
+License License::licenseByTypeName(const QString &typeName)
+{
+    bool result;
+    QMetaEnum metaEnum = QMetaEnum::fromType<License::Type>();
+    License::Type license_enum = static_cast<License::Type>(
+            metaEnum.keyToValue(typeName.toLatin1().constData(), &result));
+    if (result) {
+        return License(license_enum);
+    } else {
+        return License(License::Type::NoLicense);
+    }
+}
+
+QStringList License::getSupportedLicenses()
+{
+    QStringList result;
+    QMetaEnum metaEnum = QMetaEnum::fromType<License::Type>();
+    result.reserve(metaEnum.keyCount());
+    for (int i = 0; i < metaEnum.keyCount(); i++) {
+        result << metaEnum.valueToKey(i);
+    }
+    return result;
 }
