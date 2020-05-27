@@ -23,6 +23,7 @@
 
 #include <kode_export.h>
 
+#include <QtCore/QArgument>
 #include <QtCore/QString>
 
 namespace KODE {
@@ -35,6 +36,7 @@ namespace KODE {
  */
 class KODE_EXPORT License
 {
+    Q_GADGET
 public:
     /**
      * Possible types of licenses
@@ -42,8 +44,10 @@ public:
      * @li LGPL - The GNU Lesser/Library General Public License.
      * @li BSD  - Berkeley Software Distribution
      * @li GeneratedNoRestriction - Generated code with no restrictions.
+     * @li NoLicense - No license specified
      */
     enum Type { GPL, LGPL, BSD, GeneratedNoRestriction, NoLicense };
+    Q_ENUM(Type)
 
     /**
      * Creates a new license.
@@ -82,6 +86,31 @@ public:
      * Returns the textual presentation of the license.
      */
     QString text() const;
+
+    /**
+     * Returns type of license.
+     */
+    Type type() const;
+
+    /**
+     * Return license name.
+     * @return name of license
+     */
+    QString typeName() const;
+
+    /**
+     * Returns license Type element by name. If there no such license,
+     * NoLicense will be returned
+     * @param license_string Name of license
+     * @return one of Type elements
+     */
+    static License licenseByTypeName(const QString &typeName);
+
+    /**
+     * Returns list of supported licenses
+     * @return vector of license names
+     */
+    static QStringList getSupportedLicenses();
 
 private:
     class Private;
