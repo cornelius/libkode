@@ -741,9 +741,14 @@ void Printer::printHeader(const File &file)
     Class::List::ConstIterator it;
     for (it = classes.constBegin(); it != classes.constEnd(); ++it) {
         const QStringList decls = (*it).forwardDeclarations();
+#if QT_VERSION > QT_VERSION_CHECK(5, 14, 0)
+        auto newProcessed = QSet<QString>(decls.begin(), decls.end());
+        processed += newProcessed;
+#else
         processed += decls.toSet();
+#endif
     }
-    QStringList fwdClasses = processed.toList();
+    auto fwdClasses = processed.values();
     fwdClasses.sort();
     fwdClasses += QString(); // for proper closing of the namespace blocks below
 
