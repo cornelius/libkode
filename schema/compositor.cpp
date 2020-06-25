@@ -19,6 +19,8 @@
     Boston, MA 02110-1301, USA.
  */
 
+#include <QMetaEnum>
+
 #include "compositor.h"
 
 namespace XSD {
@@ -95,6 +97,12 @@ void Compositor::setType(Type type)
 Compositor::Type Compositor::type() const
 {
     return d->mType;
+}
+
+QString Compositor::typeName() const
+{
+    QMetaEnum metaEnum = QMetaEnum::fromType<Compositor::Type>();
+    return metaEnum.valueToKey(d->mType);
 }
 
 void Compositor::addChild(const QName &child)
