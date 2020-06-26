@@ -195,6 +195,10 @@ bool Parser::parseSchemaTag(ParserContext *context, const QDomElement &root)
             addGlobalElement(parseElement(context, element, d->mNameSpace, element));
         } else if (name.localName() == QLatin1String("complexType")) {
             ComplexType ct = parseComplexType(context, element);
+            // add elements from parsed complexType into mElements too
+            for (const auto &subelem : ct.elements()) {
+                d->mElements.append(subelem);
+            }
             d->mComplexTypes.append(ct);
         } else if (name.localName() == QLatin1String("simpleType")) {
             SimpleType st = parseSimpleType(context, element);
