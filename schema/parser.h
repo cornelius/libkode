@@ -70,6 +70,10 @@ public:
 
     QString targetNamespace() const;
 
+    /**
+     * Resolve all references for elements and attributes
+     * @return false if one of references has no declaration (error)
+     */
     bool resolveForwardDeclarations();
 
     /**

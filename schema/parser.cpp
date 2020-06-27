@@ -220,6 +220,8 @@ bool Parser::parseSchemaTag(ParserContext *context, const QDomElement &root)
         element = element.nextSiblingElement();
     }
 
+    resolveForwardDeclarations();
+
     d->mImportedSchemas.append(d->mNameSpace);
     d->mNameSpace = oldNamespace;
     d->mDefaultQualifiedElements = oldDefaultQualifiedElements;
