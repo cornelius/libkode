@@ -22,6 +22,7 @@
 #ifndef SCHEMA_COMPOSITOR_H
 #define SCHEMA_COMPOSITOR_H
 
+#include <QObject>
 #include <QString>
 #include <common/qname.h>
 #include <kode_export.h>
@@ -30,10 +31,12 @@ namespace XSD {
 
 class SCHEMA_EXPORT Compositor
 {
+    Q_GADGET
 public:
     typedef QList<Compositor> List;
 
     enum Type { Invalid, Choice, Sequence, All };
+    Q_ENUM(Type)
 
     Compositor();
     Compositor(Type type);
@@ -51,6 +54,7 @@ public:
 
     void setType(Type type);
     Type type() const;
+    QString typeName() const;
 
     void addChild(const QName &childName);
     void setChildren(const QName::List &children);
