@@ -67,7 +67,7 @@ int main(int argc, char **argv)
     for (int i = 0; i < elements.count(); ++i) {
         qDebug("Element: %s %s", qPrintable(elements[i].name()),
                qPrintable(elements[i].type().qname()));
-        foreach (XSD::Annotation a, elements[i].annotations()) {
+        for (XSD::Annotation &a : elements[i].annotations()) {
             qDebug() << "  Annotation:" << a.domElement().tagName();
         }
     }
@@ -83,7 +83,7 @@ int main(int argc, char **argv)
         qDebug("AttributeGroup: %s", qPrintable(attributeGroups[i].name()));
     }
 
-    foreach (XSD::Annotation a, parser.annotations()) {
+    for (XSD::Annotation &a : parser.annotations()) {
         qDebug() << "Annotation:" << a.domElement().tagName();
     }
 

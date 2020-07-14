@@ -332,7 +332,7 @@ ComplexType Parser::parseComplexType(ParserContext *context, const QDomElement &
                    || name.localName() == QLatin1String("choice")) {
             Element::List elems;
             parseCompositor(context, childElement, newType.nameSpace(), &elems, &groups);
-            foreach (const Element &elem, elems) {
+            for (const Element &elem : qAsConst(elems)) {
                 newType.addElement(elem);
             }
         } else if (name.localName() == QLatin1String("attribute")) {
@@ -894,10 +894,10 @@ void Parser::parseComplexContent(ParserContext *context, const QDomElement &elem
                         Group::List groups;
                         parseCompositor(context, ctElement, complexType.nameSpace(), &elems,
                                         &groups);
-                        foreach (const Element &elem, elems) {
+                        for (const Element &elem : qAsConst(elems)) {
                             complexType.addElement(elem);
                         }
-                        foreach (const Group &group, groups) {
+                        for (const Group &group : qAsConst(groups)) {
                             complexType.addGroup(group);
                         }
                     } else if (name.localName() == QLatin1String("attribute")) {
@@ -1217,7 +1217,7 @@ QString Parser::schemaUri()
 
 Element Parser::findElement(const QName &name) const
 {
-    foreach (const Element &e, d->mElements) {
+    for (const Element &e : qAsConst(d->mElements)) {
         if (e.nameSpace() == name.nameSpace() && e.name() == name.localName()) {
             return e;
         }
@@ -1228,7 +1228,7 @@ Element Parser::findElement(const QName &name) const
 
 Group Parser::findGroup(const QName &name) const
 {
-    foreach (const Group &g, d->mGroups) {
+    for (const Group &g : qAsConst(d->mGroups)) {
         if (g.nameSpace() == name.nameSpace() && g.name() == name.localName()) {
             return g;
         }
@@ -1239,7 +1239,7 @@ Group Parser::findGroup(const QName &name) const
 
 Attribute Parser::findAttribute(const QName &name) const
 {
-    foreach (const Attribute &attr, d->mAttributes) {
+    for (const Attribute &attr : qAsConst(d->mAttributes)) {
         if (attr.nameSpace() == name.nameSpace() && attr.name() == name.localName()) {
             return attr;
         }
@@ -1250,7 +1250,7 @@ Attribute Parser::findAttribute(const QName &name) const
 
 AttributeGroup Parser::findAttributeGroup(const QName &name) const
 {
-    foreach (const AttributeGroup &g, d->mAttributeGroups) {
+    for (const AttributeGroup &g : qAsConst(d->mAttributeGroups)) {
         if (g.nameSpace() == name.nameSpace() && g.name() == name.localName()) {
             return g;
         }
@@ -1305,13 +1305,13 @@ bool Parser::resolveForwardDeclarations()
             }
         }
 
-        foreach (const Group &group, complexType.groups()) {
+        for (const Group &group : complexType.groups()) {
             if (!group.isResolved()) {
                 const Group refGroup = findGroup(group.reference());
                 if (!refGroup.isNull()) {
                     // qDebug() << "  resolved group" << group.reference() << "got these elements"
                     // << refGroup.elements();
-                    foreach (const Element &elem, refGroup.elements()) {
+                    for (const Element &elem : refGroup.elements()) {
                         Q_ASSERT(!elem.type().isEmpty());
                         finalElementList.append(elem);
                     }
@@ -1340,11 +1340,11 @@ bool Parser::resolveForwardDeclarations()
                 }
             }
         }
-        foreach (const AttributeGroup &group, complexType.attributeGroups()) {
+        for (const AttributeGroup &group : complexType.attributeGroups()) {
             Q_ASSERT(!group.reference().isEmpty());
             AttributeGroup refAttributeGroup = findAttributeGroup(group.reference());
             Attribute::List groupAttributes = refAttributeGroup.attributes();
-            foreach (const Attribute &ga, groupAttributes) {
+            for (const Attribute &ga : qAsConst(groupAttributes)) {
                 attributes.append(ga);
             }
         }

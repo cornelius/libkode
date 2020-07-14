@@ -464,8 +464,8 @@ QString Printer::Private::classImplementation(const Class &classObject, bool nes
 
     // Generate nested class functions
     if (!classObject.nestedClasses().isEmpty()) {
-        foreach (Class nestedClass, classObject.nestedClasses()) {
-            code += classImplementation(nestedClass, true);
+        for (const Class &nested : classObject.nestedClasses()) {
+            code += classImplementation(nested, true);
         }
     }
 
@@ -591,7 +591,7 @@ QString Printer::functionSignature(const Function &function, const QString &clas
     s += '(';
     if (function.hasArguments()) {
         QStringList arguments;
-        foreach (Function::Argument argument, function.arguments()) {
+        for (Function::Argument &argument : function.arguments()) {
             if (!forImplementation) {
                 arguments.append(argument.headerDeclaration());
             } else {
