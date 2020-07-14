@@ -235,7 +235,7 @@ bool ComplexType::isEmpty() const
 ComplexType ComplexTypeList::complexType(const QName &qualifiedName) const
 {
     // qDebug() << "looking for" << typeName << "ns=" << typeName.nameSpace();
-    foreach (const ComplexType &type, *this) {
+    for (const ComplexType &type : qAsConst(*this)) {
         // qDebug() << type.nameSpace() << "qualifiedName=" << type.qualifiedName();
         if (qualifiedName == type.qualifiedName()) {
             return type;

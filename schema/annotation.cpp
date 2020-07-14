@@ -93,7 +93,7 @@ QString Annotation::List::documentation() const
 {
     QString result;
 
-    foreach (Annotation a, *this) {
+    for (const Annotation &a : qAsConst(*this)) {
         result.append(a.documentation());
     }
 
