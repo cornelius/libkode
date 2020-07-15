@@ -463,8 +463,9 @@ QString Printer::Private::classImplementation(const Class &classObject, bool nes
     }
 
     // Generate nested class functions
-    if (!classObject.nestedClasses().isEmpty()) {
-        for (const Class &nested : classObject.nestedClasses()) {
+    const auto nestedClasses = classObject.nestedClasses();
+    if (!nestedClasses.isEmpty()) {
+        for (const Class &nested : nestedClasses) {
             code += classImplementation(nested, true);
         }
     }

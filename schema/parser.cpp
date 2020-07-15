@@ -1305,13 +1305,15 @@ bool Parser::resolveForwardDeclarations()
             }
         }
 
-        for (const Group &group : complexType.groups()) {
+        const auto groups = complexType.groups();
+        for (const Group &group : groups) {
             if (!group.isResolved()) {
                 const Group refGroup = findGroup(group.reference());
                 if (!refGroup.isNull()) {
                     // qDebug() << "  resolved group" << group.reference() << "got these elements"
                     // << refGroup.elements();
-                    for (const Element &elem : refGroup.elements()) {
+                    const auto elements = refGroup.elements();
+                    for (const Element &elem : elements) {
                         Q_ASSERT(!elem.type().isEmpty());
                         finalElementList.append(elem);
                     }
@@ -1340,7 +1342,9 @@ bool Parser::resolveForwardDeclarations()
                 }
             }
         }
-        for (const AttributeGroup &group : complexType.attributeGroups()) {
+
+        const auto attributeGroups = complexType.attributeGroups();
+        for (const AttributeGroup &group : attributeGroups) {
             Q_ASSERT(!group.reference().isEmpty());
             AttributeGroup refAttributeGroup = findAttributeGroup(group.reference());
             Attribute::List groupAttributes = refAttributeGroup.attributes();

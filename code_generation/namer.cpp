@@ -154,8 +154,8 @@ QString Namer::lowerFirst(const QString &str)
 QString Namer::getClassName(const QString &elementName)
 {
     QString name;
-    QStringList parts = removeInvalidCharacters(elementName).split("_");
-    for (const QString &part : qAsConst(parts)) {
+    const auto parts = removeInvalidCharacters(elementName).split("_");
+    for (const QString &part : parts) {
         name += upperFirst(part);
     }
 
