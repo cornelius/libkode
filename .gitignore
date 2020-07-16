@@ -72,4 +72,7 @@ CMakeLists.txt.user*
 mocs*
 kxml_compiler/kxml_compiler*
 
+# cmake generates Codeblocks project???
+*.cbp
+
 # test generated codes

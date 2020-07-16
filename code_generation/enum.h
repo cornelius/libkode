@@ -72,6 +72,11 @@ public:
      */
     QString declaration() const;
 
+    /**
+     * Returns the list of the enum values
+     */
+    QStringList enumValues() const;
+
 private:
     class Private;
     Private *d;

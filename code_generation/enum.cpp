@@ -88,7 +88,18 @@ QString Enum::declaration() const
         }
     }
 
+    if (!d->mEnums.isEmpty())
+        retval += QStringLiteral(", ");
+    if (d->mCombinable)
+        retval += QString("Invalid = %1").arg(value);
+    else
+        retval += QStringLiteral("Invalid");
     retval += QLatin1String(" };");
 
     return retval;
+}
+
+QStringList Enum::enumValues() const
+{
+    return d->mEnums;
 }
