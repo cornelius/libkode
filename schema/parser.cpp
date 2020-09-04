@@ -39,6 +39,8 @@ static const QString WSDLSchemaURI(QLatin1String("http://schemas.xmlsoap.org/wsd
 static const QString soapEncNs = QLatin1String("http://schemas.xmlsoap.org/soap/encoding/");
 static const QString soap12EncNs = QLatin1String("http://www.w3.org/2003/05/soap-encoding");
 
+Q_LOGGING_CATEGORY(parser, "libkode.parser")
+
 namespace XSD {
 
 static bool stringToBoolean(const QString &str)
@@ -186,9 +188,8 @@ bool Parser::parseSchemaTag(ParserContext *context, const QDomElement &root)
     while (!element.isNull()) {
         NSManager namespaceManager(context, element);
         const QName name(element.tagName());
-        if (debugParsing()) {
-            qDebug() << "Schema: parsing" << name.localName();
-        }
+        qCDebug(parser) << "Schema: parsing" << name.localName();
+
         if (name.localName() == QLatin1String("import")) {
             parseImport(context, element);
         } else if (name.localName() == QLatin1String("element")) {
@@ -310,9 +311,7 @@ ComplexType Parser::parseComplexType(ParserContext *context, const QDomElement &
 
     newType.setName(element.attribute(QLatin1String("name")));
 
-    if (debugParsing()) {
-        qDebug() << "complexType:" << d->mNameSpace << newType.name();
-    }
+    qCDebug(parser) << "complexType:" << d->mNameSpace << newType.name();
 
     if (element.hasAttribute(QLatin1String("mixed"))) {
         newType.setContentModel(XSDType::MIXED);
@@ -456,10 +455,8 @@ Element Parser::parseElement(ParserContext *context, const QDomElement &element,
     Element newElement(nameSpace);
 
     newElement.setName(element.attribute(QLatin1String("name")));
-    if (debugParsing()) {
-        qDebug() << "newElement namespace=" << nameSpace << "name=" << newElement.name()
-                 << "defaultQualified=" << d->mDefaultQualifiedElements;
-    }
+    qCDebug(parser) << "newElement namespace=" << nameSpace << "name=" << newElement.name()
+                    << "defaultQualified=" << d->mDefaultQualifiedElements;
 
     // https://www.w3.org/TR/xmlschema-0/#NS
     if (element.hasAttribute(QLatin1String("form"))) {
@@ -484,10 +481,8 @@ Element Parser::parseElement(ParserContext *context, const QDomElement &element,
     if (element.hasAttribute(QLatin1String("type"))) {
         QName typeName(element.attribute(QLatin1String("type")).trimmed());
         typeName.setNameSpace(context->namespaceManager()->uri(typeName.prefix()));
-        if (debugParsing()) {
-            qDebug() << "typeName=" << typeName.qname()
-                     << "namespace=" << context->namespaceManager()->uri(typeName.prefix());
-        }
+        qCDebug(parser) << "typeName=" << typeName.qname()
+                        << "namespace=" << context->namespaceManager()->uri(typeName.prefix());
         newElement.setType(typeName);
 
         if (element.hasAttribute(QLatin1String("substitutionGroup"))) {
@@ -523,12 +518,9 @@ Element Parser::parseElement(ParserContext *context, const QDomElement &element,
                 ct.setName(newElement.name());
                 ct.setAnonymous(true);
                 d->mComplexTypes.append(ct);
-
-                if (debugParsing()) {
-                    qDebug() << " found nested complexType element, type name is now element name, "
-                                "i.e. "
-                             << ct.name() << "newElement.setType" << ct.qualifiedName();
-                }
+                qCDebug(parser)
+                        << " found nested complexType element, type name is now element name, i.e. "
+                        << ct.name() << "newElement.setType" << ct.qualifiedName();
                 newElement.setType(ct.qualifiedName());
             } else if (childName.localName() == QLatin1String("simpleType")) {
                 SimpleType st = parseSimpleType(context, childElement);
@@ -690,9 +682,7 @@ SimpleType Parser::parseSimpleType(ParserContext *context, const QDomElement &el
 
     st.setName(element.attribute(QLatin1String("name")));
 
-    if (debugParsing()) {
-        qDebug() << "simpleType:" << d->mNameSpace << st.name();
-    }
+    qCDebug(parser) << "simpleType:" << d->mNameSpace << st.name();
 
     QDomElement childElement = element.firstChildElement();
 
@@ -1379,12 +1369,6 @@ Types Parser::types() const
 Annotation::List Parser::annotations() const
 {
     return d->mAnnotations;
-}
-
-bool Parser::debugParsing()
-{
-    static bool s_debug = qgetenv("KDSOAP_DEBUG_PARSER").toInt();
-    return s_debug;
 }
 
 bool Parser::parse(ParserContext *context, QXmlInputSource *source)
