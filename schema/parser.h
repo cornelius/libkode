@@ -26,6 +26,7 @@
 
 #include <QDomElement>
 #include <QList>
+#include <QLoggingCategory>
 #include <QFile>
 
 #include "types.h"
@@ -37,6 +38,8 @@ class QUrl;
 QT_END_NAMESPACE
 
 class ParserContext;
+
+Q_DECLARE_LOGGING_CATEGORY(parser)
 
 namespace XSD {
 
@@ -80,8 +83,6 @@ public:
       Returns the default schema URI.
      */
     static QString schemaUri();
-
-    static bool debugParsing();
 
 private:
     bool parse(ParserContext *context, QXmlInputSource *source);
