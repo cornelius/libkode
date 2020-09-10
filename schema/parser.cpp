@@ -1073,12 +1073,10 @@ QString Parser::targetNamespace() const
 static QUrl urlForLocation(ParserContext *context, const QString &location)
 {
     QUrl url(location);
-    if ((url.scheme().isEmpty() || url.scheme() == QLatin1String("file"))) {
+    if (url.isRelative() || url.scheme() == QLatin1String("file")) {
         QDir dir(location);
-        if (dir.isRelative()) {
-            url = context->documentBaseUrl();
-            url.setPath(url.path() + QLatin1Char('/') + location);
-        }
+        url = context->documentBaseUrl();
+        return QUrl::fromLocalFile(QDir(url.path()).filePath(location));
     }
     return url;
 }
