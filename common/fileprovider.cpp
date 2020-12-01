@@ -116,6 +116,7 @@ bool FileProvider::get(const QUrl &url, QString &target)
         qDebug("Downloading '%s'", url.toEncoded().constData());
 
         QNetworkAccessManager manager;
+        manager.setRedirectPolicy(QNetworkRequest::NoLessSafeRedirectPolicy);
         QNetworkRequest request(url);
         QNetworkReply *job = manager.get(request);
 
