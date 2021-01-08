@@ -24,8 +24,7 @@
 #include <QDir>
 #include <QFile>
 #include <QUrl>
-#include <QXmlSimpleReader>
-#include <QtDebug>
+#include <QXmlStreamReader>
 #include <QtCore/QLatin1String>
 
 #include <common/fileprovider.h>
@@ -1105,14 +1104,12 @@ void Parser::importSchema(ParserContext *context, const QString &location)
             return;
         }
 
-        QXmlInputSource source(&file);
-        QXmlSimpleReader reader;
-        reader.setFeature(QLatin1String("http://xml.org/sax/features/namespace-prefixes"), true);
+        QXmlStreamReader source(&file);
 
         QDomDocument doc(QLatin1String("kwsdl"));
         QString errorMsg;
         int errorLine, errorColumn;
-        bool ok = doc.setContent(&source, &reader, &errorMsg, &errorLine, &errorColumn);
+        bool ok = doc.setContent(&source, true, &errorMsg, &errorLine, &errorColumn);
         if (!ok) {
             qDebug("Error[%d:%d] %s", errorLine, errorColumn, qPrintable(errorMsg));
             return;
@@ -1150,14 +1147,12 @@ void Parser::includeSchema(ParserContext *context, const QString &location)
             return;
         }
 
-        QXmlInputSource source(&file);
-        QXmlSimpleReader reader;
-        reader.setFeature(QLatin1String("http://xml.org/sax/features/namespace-prefixes"), true);
+        QXmlStreamReader source(&file);
 
         QDomDocument doc(QLatin1String("kwsdl"));
         QString errorMsg;
         int errorLine, errorColumn;
-        bool ok = doc.setContent(&source, &reader, &errorMsg, &errorLine, &errorColumn);
+        bool ok = doc.setContent(&source, true, &errorMsg, &errorLine, &errorColumn);
         if (!ok) {
             qDebug("Error[%d:%d] %s", errorLine, errorColumn, qPrintable(errorMsg));
             return;
@@ -1369,17 +1364,14 @@ Annotation::List Parser::annotations() const
     return d->mAnnotations;
 }
 
-bool Parser::parse(ParserContext *context, QXmlInputSource *source)
+bool Parser::parse(ParserContext *context, QXmlStreamReader *source)
 {
-    QXmlSimpleReader reader;
-    reader.setFeature(QLatin1String("http://xml.org/sax/features/namespace-prefixes"), true);
-
     QDomDocument document(QLatin1String("KWSDL"));
 
     QString errorMsg;
     int errorLine, errorCol;
     QDomDocument doc;
-    if (!doc.setContent(source, &reader, &errorMsg, &errorLine, &errorCol)) {
+    if (!doc.setContent(source, true, &errorMsg, &errorLine, &errorCol)) {
         qDebug("%s at (%d,%d)", qPrintable(errorMsg), errorLine, errorCol);
         return false;
     }
@@ -1396,14 +1388,14 @@ bool Parser::parse(ParserContext *context, QXmlInputSource *source)
 
 bool Parser::parseFile(ParserContext *context, QFile &file)
 {
-    QXmlInputSource source(&file);
+    QXmlStreamReader source(&file);
     return parse(context, &source);
 }
 
 bool Parser::parseString(ParserContext *context, const QString &data)
 {
-    QXmlInputSource source;
-    source.setData(data);
+    QXmlStreamReader source;
+    source.addData(data);
     return parse(context, &source);
 }
 

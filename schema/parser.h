@@ -85,7 +85,7 @@ public:
     static QString schemaUri();
 
 private:
-    bool parse(ParserContext *context, QXmlInputSource *source);
+    bool parse(ParserContext *context, QXmlStreamReader *source);
 
     void parseImport(ParserContext *context, const QDomElement &);
     /**
