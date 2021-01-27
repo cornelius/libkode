@@ -34,14 +34,7 @@ using namespace KODE;
 class Printer::Private
 {
 public:
-    Private(Printer *parent)
-        : mParent(parent),
-          mCreationWarning(false),
-          mLabelsDefineIndent(true),
-          mIndentLabels(true),
-          mGenerator("libkode")
-    {
-    }
+    Private(Printer *parent) : mParent(parent) {}
 
     void addLabel(Code &code, const QString &label);
     QString classHeader(const Class &classObject, bool publicMembers, bool nestedClass = false);
@@ -52,10 +45,10 @@ public:
 
     Printer *mParent;
     Style mStyle;
-    bool mCreationWarning;
-    bool mLabelsDefineIndent;
-    bool mIndentLabels;
-    QString mGenerator;
+    bool mCreationWarning = false;
+    bool mLabelsDefineIndent = true;
+    bool mIndentLabels = true;
+    QString mGenerator = QStringLiteral("libkode");
     QString mOutputDirectory;
     QString mSourceFile;
     QStringList mStatementsAfterIncludes;
@@ -695,16 +688,7 @@ void Printer::printHeader(const File &file)
     className = headerInfo.fileName(); // remove path, keep only filename
     className.replace('-', "_");
 
-    QString includeGuard;
-    if (!file.nameSpace().isEmpty())
-        includeGuard += file.nameSpace().toUpper() + '_';
-
-    includeGuard += className.toUpper();
-    includeGuard.replace('.', "_");
-
-    out += "#ifndef " + includeGuard;
-    out += "#define " + includeGuard;
-
+    out.addLine(QStringLiteral("#pragma once"));
     out.newLine();
 
     // Create includes
@@ -807,9 +791,6 @@ void Printer::printHeader(const File &file)
         out += '}';
         out.newLine();
     }
-
-    // Finish file
-    out += "#endif";
 
     // Print to file
     QString filename = file.filenameHeader();
