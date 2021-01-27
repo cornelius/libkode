@@ -22,17 +22,17 @@
 #include <QtCore/QStringList>
 
 #include "enum.h"
+#include "code.h"
 
 using namespace KODE;
 
 class Enum::Private
 {
 public:
-    Private() : mCombinable(false) {}
-
     QString mName;
     QStringList mEnums;
-    bool mCombinable;
+    bool mCombinable = false;
+    bool mIsQENUM = false;
 };
 
 Enum::Enum() : d(new Private) {}
@@ -89,6 +89,38 @@ QString Enum::declaration() const
     }
 
     retval += QLatin1String(" };");
+    if (d->mIsQENUM)
+        retval += QStringLiteral("\nQ_ENUM(%1)").arg(d->mName);
 
     return retval;
+}
+
+void Enum::printDeclaration(Code &code) const
+{
+    code.addLine(QStringLiteral("enum %1 {").arg(d->mName));
+    code.indent();
+    auto last = (d->mEnums.count() - 1);
+    for (int value = 0; value <= last; value++) {
+        if (d->mCombinable) {
+            if (value != last)
+                code.addLine(QString::fromLatin1("%1 = %2,").arg(d->mEnums[value]).arg(1 << value));
+            else
+                code.addLine(QString::fromLatin1("%1 = %2").arg(d->mEnums[value]).arg(1 << value));
+        } else {
+            if (value != last)
+                code.addLine(d->mEnums[value] + QLatin1String(", "));
+            else
+                code.addLine(d->mEnums[value]);
+        }
+    }
+    code.unindent();
+    code.addLine("};");
+    if (d->mIsQENUM)
+        code.addLine(QStringLiteral("Q_ENUM(%1)").arg(d->mName));
+    code.newLine();
+}
+
+void Enum::setIsQENUM(bool qenum)
+{
+    d->mIsQENUM = qenum;
 }

@@ -27,6 +27,8 @@
 
 namespace KODE {
 
+class Code;
+
 class KODE_EXPORT Enum
 {
 public:
@@ -71,6 +73,21 @@ public:
      * Returns the textual presentation of the enum.
      */
     QString declaration() const;
+
+    /**
+     * Prints the declaration of the enum to the code
+     */
+    void printDeclaration(Code &code) const;
+
+    /**
+     * @brief setIsQENUM
+     * This method can be used to mark enums to have a Q_ENUM(enumname) macro generated after the
+     * declaration. If you add an enum with isQENUM set to a class make sure that the isQGadget
+     * or the isQObject property of the class is set before code generation.
+     * (The latter got set automatically if a signal or slot declaration to the class.)
+     * @param qenum
+     */
+    void setIsQENUM(bool qenum = true);
 
 private:
     class Private;
