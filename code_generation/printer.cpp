@@ -199,7 +199,7 @@ QString Printer::Private::classHeader(const Class &classObject, bool publicMembe
 
         Enum::List::ConstIterator it;
         for (it = enums.constBegin(); it != enums.constEnd(); ++it)
-            code += (*it).declaration();
+            (*it).printDeclaration(code);
 
         if (mLabelsDefineIndent)
             code.unindent();
@@ -722,8 +722,7 @@ void Printer::printHeader(const File &file)
     Enum::List enums = file.fileEnums();
     Enum::List::ConstIterator enumIt;
     for (enumIt = enums.constBegin(); enumIt != enums.constEnd(); ++enumIt) {
-        out += (*enumIt).declaration();
-        out.newLine();
+        (*enumIt).printDeclaration(out);
     }
 
     // Create forward declarations
