@@ -70,11 +70,6 @@ public:
     QString name() const;
 
     /**
-     * Returns the textual presentation of the enum.
-     */
-    QString declaration() const;
-
-    /**
      * Prints the declaration of the enum to the code
      */
     void printDeclaration(Code &code) const;
