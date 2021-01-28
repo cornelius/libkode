@@ -69,32 +69,6 @@ QString Enum::name() const
     return d->mName;
 }
 
-QString Enum::declaration() const
-{
-    QString retval(QLatin1String("enum ") + d->mName + QLatin1String(" {"));
-    uint value = 0;
-    QStringList::ConstIterator it;
-    for (it = d->mEnums.constBegin(); it != d->mEnums.constEnd(); ++it, ++value) {
-        if (d->mCombinable) {
-            if (it == d->mEnums.constBegin())
-                retval += QString::fromLatin1(" %1 = %2").arg(*it).arg(1 << value);
-            else
-                retval += QString::fromLatin1(", %1 = %2").arg(*it).arg(1 << value);
-        } else {
-            if (it == d->mEnums.constBegin())
-                retval += QLatin1Char(' ') + *it;
-            else
-                retval += QLatin1String(", ") + *it;
-        }
-    }
-
-    retval += QLatin1String(" };");
-    if (d->mIsQENUM)
-        retval += QStringLiteral("\nQ_ENUM(%1)").arg(d->mName);
-
-    return retval;
-}
-
 void Enum::printDeclaration(Code &code) const
 {
     code.addLine(QStringLiteral("enum %1 {").arg(d->mName));
