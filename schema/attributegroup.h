@@ -49,6 +49,13 @@ private:
     class Private;
     Private *d;
 };
+
+bool operator==(const AttributeGroup& lhs, const AttributeGroup& rhs);
+inline bool operator!=(const AttributeGroup& lhs, const AttributeGroup& rhs)
+{
+    return !(lhs == rhs);
+}
+
 }
 
 #endif

@@ -33,6 +33,13 @@ private:
     class Private;
     Private *d;
 };
+
+bool operator==(const Group& lhs, const Group& rhs);
+inline bool operator!=(const Group& lhs, const Group& rhs)
+{
+    return !(lhs == rhs);
+}
+
 }
 
 SCHEMA_EXPORT QDebug operator<<(QDebug dbg, const XSD::Group &group);
