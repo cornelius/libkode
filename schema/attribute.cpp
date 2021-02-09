@@ -154,16 +154,16 @@ void Attribute::List::dump()
     }
 }
 
-bool operator==(const Attribute& lhs, const Attribute& rhs)
+bool operator==(const Attribute &lhs, const Attribute &rhs)
 {
     return ( // XmlElement:
             lhs.isNull() == rhs.isNull() && lhs.name() == rhs.name()
-             && lhs.nameSpace() == rhs.nameSpace()
+            && lhs.nameSpace() == rhs.nameSpace()
             // Attribute:
             && lhs.type() == rhs.type() && lhs.defaultValue() == rhs.defaultValue()
             && lhs.fixedValue() == rhs.fixedValue() && lhs.isQualified() == rhs.isQualified()
             && lhs.attributeUse() == rhs.attributeUse() && lhs.reference() == rhs.reference());
-    //Note: Ignoring documentation()
+    // Note: Ignoring documentation()
 }
 
 } // namespace XSD

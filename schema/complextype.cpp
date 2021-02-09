@@ -257,7 +257,7 @@ ComplexTypeList::iterator ComplexTypeList::findComplexType(const QName &qualifie
 
 bool operator==(const ComplexType &lhs, const ComplexType &rhs)
 {
-    return (// XmlElement:
+    return ( // XmlElement:
             lhs.isNull() == rhs.isNull() && lhs.name() == rhs.name()
             && lhs.nameSpace() == rhs.nameSpace()
             // XsdType:

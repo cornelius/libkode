@@ -540,8 +540,8 @@ Element Parser::parseElement(ParserContext *context, const QDomElement &element,
                                 << "  Detected type collision for nested complexType, updated name"
                                 << newElement.name() << "to" << ct.name();
                     qCDebug(parser) << " found nested complexType element, type name is now "
-                                    << "element name, i.e. "
-                                    << ct.name() << "newElement.setType" << ct.qualifiedName();
+                                    << "element name, i.e. " << ct.name() << "newElement.setType"
+                                    << ct.qualifiedName();
                 }
                 newElement.setType(ct.qualifiedName());
             } else if (childName.localName() == QLatin1String("simpleType")) {

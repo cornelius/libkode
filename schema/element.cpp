@@ -259,7 +259,7 @@ bool operator==(const Element &lhs, const Element &rhs)
             && lhs.reference() == rhs.reference()
             && lhs.compositor().type() == rhs.compositor().type()
             && lhs.hasSubstitutions() == rhs.hasSubstitutions());
-    //Note: Ignoring documentation
+    // Note: Ignoring documentation
 }
 
 bool operator==(const ElementList &lhs, const ElementList &rhs)
