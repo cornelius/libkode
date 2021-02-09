@@ -39,7 +39,7 @@ static const QString WSDLSchemaURI(QLatin1String("http://schemas.xmlsoap.org/wsd
 static const QString soapEncNs = QLatin1String("http://schemas.xmlsoap.org/soap/encoding/");
 static const QString soap12EncNs = QLatin1String("http://www.w3.org/2003/05/soap-encoding");
 
-Q_LOGGING_CATEGORY(parser, "libkode.parser")
+Q_LOGGING_CATEGORY(parser, "libkode.parser", QtWarningMsg)
 
 namespace XSD {
 
