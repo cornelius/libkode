@@ -116,8 +116,8 @@ public:
     iterator findComplexType(const QName &qualifiedName);
 };
 
-bool operator==(const ComplexType& lhs, const ComplexType& rhs);
-inline bool operator!=(const ComplexType& lhs, const ComplexType& rhs)
+bool operator==(const ComplexType &lhs, const ComplexType &rhs);
+inline bool operator!=(const ComplexType &lhs, const ComplexType &rhs)
 {
     return !(lhs == rhs);
 }

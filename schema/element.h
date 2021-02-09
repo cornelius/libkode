@@ -116,14 +116,14 @@ public:
     void dump();
 };
 
-bool operator==(const Element& lhs, const Element& rhs);
-inline bool operator!=(const Element& lhs, const Element& rhs)
+bool operator==(const Element &lhs, const Element &rhs);
+inline bool operator!=(const Element &lhs, const Element &rhs)
 {
     return !(lhs == rhs);
 }
 
-bool operator==(const ElementList& lhs, const ElementList& rhs);
-inline bool operator!=(const ElementList& lhs, const ElementList& rhs)
+bool operator==(const ElementList &lhs, const ElementList &rhs);
+inline bool operator!=(const ElementList &lhs, const ElementList &rhs)
 {
     return !(lhs == rhs);
 }

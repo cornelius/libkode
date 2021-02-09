@@ -246,28 +246,23 @@ void ElementList::dump()
     }
 }
 
-bool operator==(const Element& lhs, const Element& rhs)
+bool operator==(const Element &lhs, const Element &rhs)
 {
-    return (// XmlElement:
-            lhs.isNull() == rhs.isNull()
-            && lhs.name() == rhs.name()
+    return ( // XmlElement:
+            lhs.isNull() == rhs.isNull() && lhs.name() == rhs.name()
             && lhs.nameSpace() == rhs.nameSpace()
             // Element:
-            && lhs.type() == rhs.type()
-            && lhs.groupId() == rhs.groupId()
-            && lhs.minOccurs() == rhs.minOccurs()
-            && lhs.maxOccurs() == rhs.maxOccurs()
-            && lhs.defaultValue() == rhs.defaultValue()
-            && lhs.isQualified() == rhs.isQualified()
-            && lhs.nillable() == rhs.nillable()
-            && lhs.occurrence() == rhs.occurrence()
+            && lhs.type() == rhs.type() && lhs.groupId() == rhs.groupId()
+            && lhs.minOccurs() == rhs.minOccurs() && lhs.maxOccurs() == rhs.maxOccurs()
+            && lhs.defaultValue() == rhs.defaultValue() && lhs.isQualified() == rhs.isQualified()
+            && lhs.nillable() == rhs.nillable() && lhs.occurrence() == rhs.occurrence()
             && lhs.reference() == rhs.reference()
             && lhs.compositor().type() == rhs.compositor().type()
             && lhs.hasSubstitutions() == rhs.hasSubstitutions());
     //Note: Ignoring documentation
 }
 
-bool operator==(const ElementList& lhs, const ElementList& rhs)
+bool operator==(const ElementList &lhs, const ElementList &rhs)
 {
     if (lhs.count() != rhs.count())
         return false;
@@ -276,12 +271,12 @@ bool operator==(const ElementList& lhs, const ElementList& rhs)
     // as the Compositor::Type is determined during parsing (per element)
     // comparing per element should be semantically identic:
     for (int i = 0; i < lhs.count(); i++) {
-        const Element& e = lhs.at(i);
-        if (e.compositor().type() == Compositor::Sequence  // ordered
-                && rhs.at(i) != e)
+        const Element &e = lhs.at(i);
+        // ordered
+        if (e.compositor().type() == Compositor::Sequence && rhs.at(i) != e)
             return false;
-        else if (e.compositor().type() != Compositor::Sequence  // unordered
-                 && !rhs.contains(e))
+        // unordered
+        else if (e.compositor().type() != Compositor::Sequence && !rhs.contains(e))
             return false;
     }
     return true;

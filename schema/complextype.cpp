@@ -255,21 +255,18 @@ ComplexTypeList::iterator ComplexTypeList::findComplexType(const QName &qualifie
     return end();
 }
 
-bool operator==(const ComplexType& lhs, const ComplexType& rhs)
+bool operator==(const ComplexType &lhs, const ComplexType &rhs)
 {
     return (// XmlElement:
-            lhs.isNull() == rhs.isNull()
-            && lhs.name() == rhs.name()
+            lhs.isNull() == rhs.isNull() && lhs.name() == rhs.name()
             && lhs.nameSpace() == rhs.nameSpace()
             // XsdType:
             && lhs.contentModel() == rhs.contentModel()
             && lhs.substitutionElementName() == rhs.substitutionElementName()
             // ComplexType:
             && lhs.baseDerivation() == rhs.baseDerivation()
-            && lhs.baseTypeName() == rhs.baseTypeName()
-            && lhs.arrayType() == rhs.arrayType()
-            && lhs.elements() == rhs.elements()
-            && lhs.attributes() == rhs.attributes()
+            && lhs.baseTypeName() == rhs.baseTypeName() && lhs.arrayType() == rhs.arrayType()
+            && lhs.elements() == rhs.elements() && lhs.attributes() == rhs.attributes()
             && lhs.attributeGroups() == rhs.attributeGroups());
     // Note: Ignoring XmlElement::annotations(),
     // ComplexType::documentation(), isAnonymous(), isConflicting(), derivedTypes()

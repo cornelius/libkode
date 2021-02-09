@@ -80,8 +80,8 @@ private:
     Private *d;
 };
 
-bool operator==(const Attribute& lhs, const Attribute& rhs);
-inline bool operator!=(const Attribute& lhs, const Attribute& rhs)
+bool operator==(const Attribute &lhs, const Attribute &rhs);
+inline bool operator!=(const Attribute &lhs, const Attribute &rhs)
 {
     return !(lhs == rhs);
 }
