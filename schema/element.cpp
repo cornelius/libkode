@@ -219,6 +219,19 @@ bool Element::hasSubstitutions() const
     return d->mHasSubstitutions;
 }
 
+bool Element::operator==(const Element &other) const
+{
+    return (XmlElement::operator==(other)
+            // Element:
+            && type() == other.type() && groupId() == other.groupId()
+            && minOccurs() == other.minOccurs() && maxOccurs() == other.maxOccurs()
+            && defaultValue() == other.defaultValue() && isQualified() == other.isQualified()
+            && nillable() == other.nillable() && occurrence() == other.occurrence()
+            && reference() == other.reference() && compositor().type() == other.compositor().type()
+            && hasSubstitutions() == other.hasSubstitutions());
+    // Note: Ignoring documentation
+}
+
 Element ElementList::element(const QName &qualifiedName) const
 {
     const_iterator it = constBegin();
@@ -246,37 +259,21 @@ void ElementList::dump()
     }
 }
 
-bool operator==(const Element &lhs, const Element &rhs)
+bool ElementList::operator==(const ElementList &other) const
 {
-    return ( // XmlElement:
-            lhs.isNull() == rhs.isNull() && lhs.name() == rhs.name()
-            && lhs.nameSpace() == rhs.nameSpace()
-            // Element:
-            && lhs.type() == rhs.type() && lhs.groupId() == rhs.groupId()
-            && lhs.minOccurs() == rhs.minOccurs() && lhs.maxOccurs() == rhs.maxOccurs()
-            && lhs.defaultValue() == rhs.defaultValue() && lhs.isQualified() == rhs.isQualified()
-            && lhs.nillable() == rhs.nillable() && lhs.occurrence() == rhs.occurrence()
-            && lhs.reference() == rhs.reference()
-            && lhs.compositor().type() == rhs.compositor().type()
-            && lhs.hasSubstitutions() == rhs.hasSubstitutions());
-    // Note: Ignoring documentation
-}
-
-bool operator==(const ElementList &lhs, const ElementList &rhs)
-{
-    if (lhs.count() != rhs.count())
+    if (count() != other.count())
         return false;
 
     // Ordered vs. unordered composition should be specified for a whole composition, but
     // as the Compositor::Type is determined during parsing (per element)
     // comparing per element should be semantically identic:
-    for (int i = 0; i < lhs.count(); i++) {
-        const Element &e = lhs.at(i);
+    for (int i = 0; i < count(); i++) {
+        const Element &e = at(i);
         // ordered
-        if (e.compositor().type() == Compositor::Sequence && rhs.at(i) != e)
+        if (e.compositor().type() == Compositor::Sequence && other.at(i) != e)
             return false;
         // unordered
-        else if (e.compositor().type() != Compositor::Sequence && !rhs.contains(e))
+        else if (e.compositor().type() != Compositor::Sequence && !other.contains(e))
             return false;
     }
     return true;

@@ -98,6 +98,12 @@ public:
 
     bool isEmpty() const;
 
+    bool operator==(const ComplexType &other) const;
+    inline bool operator!=(const ComplexType &other) const
+    {
+        return !(*this == other);
+    }
+
 private:
     class Private;
     Private *d;
@@ -115,12 +121,6 @@ public:
     // Mutable lookup (for making changes), returns end() if not found
     iterator findComplexType(const QName &qualifiedName);
 };
-
-bool operator==(const ComplexType &lhs, const ComplexType &rhs);
-inline bool operator!=(const ComplexType &lhs, const ComplexType &rhs)
-{
-    return !(lhs == rhs);
-}
 
 } // namespace XSD
 

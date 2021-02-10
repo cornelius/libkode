@@ -49,11 +49,11 @@ XSDType::~XSDType()
 
 XSDType &XSDType::operator=(const XSDType &other)
 {
-    XmlElement::operator=(other);
     if (this == &other) {
         return *this;
     }
 
+    XmlElement::operator=(other);
     *d = *other.d;
 
     return *this;
@@ -77,6 +77,12 @@ void XSDType::setSubstitutionElementName(const QName &name)
 QName XSDType::substitutionElementName() const
 {
     return d->mSubstitutionElementName;
+}
+
+bool XSDType::operator==(const XSDType &other) const
+{
+    return (XmlElement::operator==(other) && contentModel() == other.contentModel()
+            && substitutionElementName() == other.substitutionElementName());
 }
 
 } // namespace XSD

@@ -75,16 +75,18 @@ public:
 
     bool isResolved() const;
 
+    bool operator==(const Attribute &other) const;
+    inline bool operator!=(const Attribute &other) const
+    {
+        return !(*this == other);
+    }
+
 private:
     class Private;
     Private *d;
 };
 
-bool operator==(const Attribute &lhs, const Attribute &rhs);
-inline bool operator!=(const Attribute &lhs, const Attribute &rhs)
-{
-    return !(lhs == rhs);
-}
+
 
 }
 

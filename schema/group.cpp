@@ -77,9 +77,10 @@ bool Group::isResolved() const
     return !d->mElements.isEmpty() || d->mReference.isEmpty();
 }
 
-bool operator==(const Group &lhs, const Group &rhs)
+bool Group::operator==(const Group &other) const
 {
-    return (lhs.reference() == rhs.reference() && lhs.elements() == rhs.elements());
+    return (XmlElement::operator==(other) && reference() == other.reference()
+            && elements() == other.elements());
 }
 
 }

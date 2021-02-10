@@ -104,4 +104,10 @@ Annotation::List XmlElement::annotations() const
 {
     return d->mAnnotations;
 }
+
+bool XmlElement::operator==(const XmlElement &other) const
+{
+    return (isNull() == other.isNull() && name() == other.name());
+}
+
 }

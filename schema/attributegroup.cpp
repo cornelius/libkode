@@ -72,13 +72,11 @@ Attribute::List AttributeGroup::attributes() const
     return d->mAttributes;
 }
 
-bool operator==(const AttributeGroup &lhs, const AttributeGroup &rhs)
+bool AttributeGroup::operator==(const AttributeGroup &other) const
 {
-    return ( // XmlElement:
-            lhs.isNull() == rhs.isNull() && lhs.name() == rhs.name()
-            && lhs.nameSpace() == rhs.nameSpace()
+    return (XmlElement::operator==(other) && nameSpace() == other.nameSpace()
             // AttributeGroup:
-            && lhs.reference() == rhs.reference() && lhs.attributes() == rhs.attributes());
+            && reference() == other.reference() && attributes() == other.attributes());
 }
 
 }

@@ -154,15 +154,13 @@ void Attribute::List::dump()
     }
 }
 
-bool operator==(const Attribute &lhs, const Attribute &rhs)
+bool Attribute::operator==(const Attribute &other) const
 {
-    return ( // XmlElement:
-            lhs.isNull() == rhs.isNull() && lhs.name() == rhs.name()
-            && lhs.nameSpace() == rhs.nameSpace()
+    return (XmlElement::operator==(other) && nameSpace() == other.nameSpace()
             // Attribute:
-            && lhs.type() == rhs.type() && lhs.defaultValue() == rhs.defaultValue()
-            && lhs.fixedValue() == rhs.fixedValue() && lhs.isQualified() == rhs.isQualified()
-            && lhs.attributeUse() == rhs.attributeUse() && lhs.reference() == rhs.reference());
+            && type() == other.type() && defaultValue() == other.defaultValue()
+            && fixedValue() == other.fixedValue() && isQualified() == other.isQualified()
+            && attributeUse() == other.attributeUse() && reference() == other.reference());
     // Note: Ignoring documentation()
 }
 

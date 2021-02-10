@@ -101,6 +101,12 @@ public:
 
     virtual bool isSimple() const { return true; }
 
+    bool operator==(const XSDType &other) const;
+    inline bool operator!=(const XSDType &other) const
+    {
+        return !(*this == other);
+    }
+
 private:
     class Private;
     Private *d;

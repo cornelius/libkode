@@ -45,16 +45,18 @@ public:
     void setAttributes(const Attribute::List &attributes);
     Attribute::List attributes() const;
 
+    bool operator==(const AttributeGroup &other) const;
+    inline bool operator!=(const AttributeGroup &other) const
+    {
+        return !(*this == other);
+    }
+
 private:
     class Private;
     Private *d;
 };
 
-bool operator==(const AttributeGroup &lhs, const AttributeGroup &rhs);
-inline bool operator!=(const AttributeGroup &lhs, const AttributeGroup &rhs)
-{
-    return !(lhs == rhs);
-}
+
 
 }
 

@@ -98,6 +98,12 @@ public:
      */
     bool hasSubstitutions() const;
 
+    bool operator==(const Element &other) const;
+    inline bool operator!=(const Element &other) const
+    {
+        return !(*this == other);
+    }
+
 private:
     class Private;
     Private *d;
@@ -114,19 +120,13 @@ public:
 
     // For debugging
     void dump();
+
+    bool operator==(const ElementList &other) const;
+    inline bool operator!=(const ElementList &other) const
+    {
+        return !(*this == other);
+    }
 };
-
-bool operator==(const Element &lhs, const Element &rhs);
-inline bool operator!=(const Element &lhs, const Element &rhs)
-{
-    return !(lhs == rhs);
-}
-
-bool operator==(const ElementList &lhs, const ElementList &rhs);
-inline bool operator!=(const ElementList &lhs, const ElementList &rhs)
-{
-    return !(lhs == rhs);
-}
 
 }
 
