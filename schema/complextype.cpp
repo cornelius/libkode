@@ -235,7 +235,8 @@ bool ComplexType::isEmpty() const
 
 bool ComplexType::operator==(const ComplexType &other) const
 {
-    return (XSDType::operator==(other) && nameSpace() == other.nameSpace()
+    return (XSDType::operator==(other)
+            && nameSpace() == other.nameSpace()
             // ComplexType:
             && baseDerivation() == other.baseDerivation() && baseTypeName() == other.baseTypeName()
             && arrayType() == other.arrayType() && elements() == other.elements()

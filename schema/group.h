@@ -30,16 +30,11 @@ public:
     bool isResolved() const;
 
     bool operator==(const Group &other) const;
-    inline bool operator!=(const Group &other) const
-    {
-        return !(*this == other);
-    }
+    inline bool operator!=(const Group &other) const { return !(*this == other); }
 private:
     class Private;
     Private *d;
 };
-
-
 
 }
 

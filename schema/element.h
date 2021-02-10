@@ -99,10 +99,7 @@ public:
     bool hasSubstitutions() const;
 
     bool operator==(const Element &other) const;
-    inline bool operator!=(const Element &other) const
-    {
-        return !(*this == other);
-    }
+    inline bool operator!=(const Element &other) const { return !(*this == other); }
 
 private:
     class Private;
@@ -122,10 +119,7 @@ public:
     void dump();
 
     bool operator==(const ElementList &other) const;
-    inline bool operator!=(const ElementList &other) const
-    {
-        return !(*this == other);
-    }
+    inline bool operator!=(const ElementList &other) const { return !(*this == other); }
 };
 
 }

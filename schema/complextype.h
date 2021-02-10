@@ -99,10 +99,7 @@ public:
     bool isEmpty() const;
 
     bool operator==(const ComplexType &other) const;
-    inline bool operator!=(const ComplexType &other) const
-    {
-        return !(*this == other);
-    }
+    inline bool operator!=(const ComplexType &other) const { return !(*this == other); }
 
 private:
     class Private;

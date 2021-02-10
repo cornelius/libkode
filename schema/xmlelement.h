@@ -56,17 +56,12 @@ public:
     Annotation::List annotations() const;
 
     bool operator==(const XmlElement &other) const;
-    inline bool operator!=(const XmlElement &other) const
-    {
-        return !(*this == other);
-    }
+    inline bool operator!=(const XmlElement &other) const { return !(*this == other); }
 
 private:
     class Private;
     Private *d;
 };
-
-
 
 }
 

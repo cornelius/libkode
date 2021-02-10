@@ -46,17 +46,12 @@ public:
     Attribute::List attributes() const;
 
     bool operator==(const AttributeGroup &other) const;
-    inline bool operator!=(const AttributeGroup &other) const
-    {
-        return !(*this == other);
-    }
+    inline bool operator!=(const AttributeGroup &other) const { return !(*this == other); }
 
 private:
     class Private;
     Private *d;
 };
-
-
 
 }
 
