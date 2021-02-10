@@ -520,7 +520,7 @@ Element Parser::parseElement(ParserContext *context, const QDomElement &element,
                 bool typeExists = false;
                 ComplexType existingType =
                         d->mComplexTypes.complexType(QName(ct.nameSpace(), ct.name()));
-                while (existingType != ComplexType()) {
+                while (!existingType.isNull()) {
                     if (existingType == ct) {
                         qCDebug(parser) << "  Nested complexType of name" << ct.name()
                                         << "is structurally identical with existing complexType of "

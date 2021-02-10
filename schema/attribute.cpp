@@ -156,13 +156,10 @@ void Attribute::List::dump()
 
 bool Attribute::operator==(const Attribute &other) const
 {
-    return (XmlElement::operator==(other)
-            && nameSpace() == other.nameSpace()
-            // Attribute:
-            && type() == other.type() && defaultValue() == other.defaultValue()
-            && fixedValue() == other.fixedValue() && isQualified() == other.isQualified()
-            && attributeUse() == other.attributeUse() && reference() == other.reference());
-    // Note: Ignoring documentation()
+    return (XmlElement::operator==(other) && type() == other.type()
+            && defaultValue() == other.defaultValue() && fixedValue() == other.fixedValue()
+            && isQualified() == other.isQualified() && attributeUse() == other.attributeUse()
+            && reference() == other.reference());
 }
 
 } // namespace XSD

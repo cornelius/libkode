@@ -74,10 +74,8 @@ Attribute::List AttributeGroup::attributes() const
 
 bool AttributeGroup::operator==(const AttributeGroup &other) const
 {
-    return (XmlElement::operator==(other)
-            && nameSpace() == other.nameSpace()
-            // AttributeGroup:
-            && reference() == other.reference() && attributes() == other.attributes());
+    return (XmlElement::operator==(other) && reference() == other.reference()
+            && attributes() == other.attributes());
 }
 
 }

@@ -241,8 +241,7 @@ bool ComplexType::operator==(const ComplexType &other) const
             && baseDerivation() == other.baseDerivation() && baseTypeName() == other.baseTypeName()
             && arrayType() == other.arrayType() && elements() == other.elements()
             && attributes() == other.attributes() && attributeGroups() == other.attributeGroups());
-    // Note: Ignoring XmlElement::annotations(),
-    // ComplexType::documentation(), isAnonymous(), isConflicting(), derivedTypes()
+    // Note: Ignoring documentation(), isAnonymous(), isConflicting(), derivedTypes()
 }
 
 ComplexType ComplexTypeList::complexType(const QName &qualifiedName) const
