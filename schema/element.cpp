@@ -222,12 +222,13 @@ bool Element::hasSubstitutions() const
 bool Element::operator==(const Element &other) const
 {
     return (XmlElement::operator==(other)
-            // Element:
             && type() == other.type() && groupId() == other.groupId()
             && minOccurs() == other.minOccurs() && maxOccurs() == other.maxOccurs()
-            && defaultValue() == other.defaultValue() && isQualified() == other.isQualified()
-            && nillable() == other.nillable() && occurrence() == other.occurrence()
-            && reference() == other.reference() && compositor().type() == other.compositor().type()
+            && defaultValue() == other.defaultValue() && fixedValue() == other.fixedValue()
+            && isQualified() == other.isQualified() && nillable() == other.nillable()
+            && occurrence() == other.occurrence() && reference() == other.reference()
+            && isResolved() == other.isResolved()
+            && compositor().type() == other.compositor().type()
             && hasSubstitutions() == other.hasSubstitutions());
     // Note: Ignoring documentation
 }

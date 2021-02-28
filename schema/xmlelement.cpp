@@ -107,7 +107,7 @@ Annotation::List XmlElement::annotations() const
 
 bool XmlElement::operator==(const XmlElement &other) const
 {
-    return name() == other.name();
+    return name() == other.name() && nameSpace() == other.nameSpace();
     // Note: Ignoring annotations()
 }
 

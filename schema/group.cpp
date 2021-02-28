@@ -80,7 +80,7 @@ bool Group::isResolved() const
 bool Group::operator==(const Group &other) const
 {
     return (XmlElement::operator==(other) && reference() == other.reference()
-            && elements() == other.elements());
+            && elements() == other.elements() && isResolved() == other.isResolved());
 }
 
 }
