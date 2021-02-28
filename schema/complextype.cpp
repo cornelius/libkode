@@ -235,10 +235,10 @@ bool ComplexType::isEmpty() const
 
 bool ComplexType::operator==(const ComplexType &other) const
 {
-    return (XSDType::operator==(other)
-            && baseDerivation() == other.baseDerivation() && baseTypeName() == other.baseTypeName()
-            && arrayType() == other.arrayType() && elements() == other.elements()
-            && attributes() == other.attributes() && attributeGroups() == other.attributeGroups());
+    return (XSDType::operator==(other) && baseDerivation() == other.baseDerivation()
+            && baseTypeName() == other.baseTypeName() && arrayType() == other.arrayType()
+            && elements() == other.elements() && attributes() == other.attributes()
+            && attributeGroups() == other.attributeGroups());
     // Note: Ignoring documentation(), isAnonymous(), isConflicting(), derivedTypes()
 }
 
