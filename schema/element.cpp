@@ -221,8 +221,7 @@ bool Element::hasSubstitutions() const
 
 bool Element::operator==(const Element &other) const
 {
-    return (XmlElement::operator==(other)
-            && type() == other.type() && groupId() == other.groupId()
+    return (XmlElement::operator==(other) && type() == other.type() && groupId() == other.groupId()
             && minOccurs() == other.minOccurs() && maxOccurs() == other.maxOccurs()
             && defaultValue() == other.defaultValue() && fixedValue() == other.fixedValue()
             && isQualified() == other.isQualified() && nillable() == other.nillable()
