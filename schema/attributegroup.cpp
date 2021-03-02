@@ -28,7 +28,8 @@ public:
     QName mReference;
     Attribute::List mAttributes;
 
-    bool operator==(const AttributeGroup::Private &other) const {
+    bool operator==(const AttributeGroup::Private &other) const
+    {
         return mReference == other.mReference && mAttributes == other.mAttributes;
     }
     inline bool operator!=(const AttributeGroup::Private &other) const { return !(*this == other); }

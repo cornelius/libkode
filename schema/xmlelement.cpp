@@ -31,7 +31,8 @@ public:
 
     Annotation::List mAnnotations;
 
-    bool operator==(const XmlElement::Private &other) const {
+    bool operator==(const XmlElement::Private &other) const
+    {
         return mName == other.mName && mNameSpace == other.mNameSpace;
     }
     inline bool operator!=(const XmlElement::Private &other) const { return !(*this == other); }

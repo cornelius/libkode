@@ -37,7 +37,8 @@ public:
     AttributeUse mUse;
     QName mReference;
 
-    bool operator==(const Attribute::Private &other) const {
+    bool operator==(const Attribute::Private &other) const
+    {
         return mType == other.mType && mDefaultValue == other.mDefaultValue
                 && mFixedValue == other.mFixedValue && mQualified == other.mQualified
                 && mUse == other.mUse && mReference == other.mReference;

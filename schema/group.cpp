@@ -28,7 +28,8 @@ public:
     QName mReference;
     Element::List mElements;
 
-    bool operator==(const Group::Private &other) const {
+    bool operator==(const Group::Private &other) const
+    {
         return mReference == other.mReference && mElements == other.mElements;
     }
     inline bool operator!=(const Group::Private &other) const { return !(*this == other); }

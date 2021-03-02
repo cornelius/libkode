@@ -53,7 +53,8 @@ public:
     QName mReference;
     Compositor mCompositor;
 
-    bool operator==(const Element::Private &other) const {
+    bool operator==(const Element::Private &other) const
+    {
         return mType == other.mType && mGroupId == other.mGroupId && mMinOccurs == other.mMinOccurs
                 && mMaxOccurs == other.mMaxOccurs && mQualified == other.mQualified
                 && mNillable == other.mNillable && mHasSubstitutions == other.mHasSubstitutions

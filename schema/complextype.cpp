@@ -45,7 +45,8 @@ public:
     QName mArrayType;
     QList<QName> mDerivedTypes;
 
-    bool operator==(const ComplexType::Private &other) const {
+    bool operator==(const ComplexType::Private &other) const
+    {
         return mElements == other.mElements && mAttributes == other.mAttributes
                 && mGroups == other.mGroups && mAttributeGroups == other.mAttributeGroups
                 && mBaseDerivation == other.mBaseDerivation && mBaseTypeName == other.mBaseTypeName
