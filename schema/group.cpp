@@ -27,6 +27,11 @@ class Group::Private
 public:
     QName mReference;
     Element::List mElements;
+
+    bool operator==(const Group::Private &other) const {
+        return mReference == other.mReference && mElements == other.mElements;
+    }
+    inline bool operator!=(const Group::Private &other) const { return !(*this == other); }
 };
 
 Group::Group() : XmlElement(), d(new Private) {}
@@ -79,8 +84,7 @@ bool Group::isResolved() const
 
 bool Group::operator==(const Group &other) const
 {
-    return (XmlElement::operator==(other) && reference() == other.reference()
-            && elements() == other.elements() && isResolved() == other.isResolved());
+    return XmlElement::operator==(other) && *d == *other.d;
 }
 
 }

@@ -27,6 +27,11 @@ class AttributeGroup::Private
 public:
     QName mReference;
     Attribute::List mAttributes;
+
+    bool operator==(const AttributeGroup::Private &other) const {
+        return mReference == other.mReference && mAttributes == other.mAttributes;
+    }
+    inline bool operator!=(const AttributeGroup::Private &other) const { return !(*this == other); }
 };
 
 AttributeGroup::AttributeGroup() : XmlElement(), d(new Private) {}
@@ -74,8 +79,7 @@ Attribute::List AttributeGroup::attributes() const
 
 bool AttributeGroup::operator==(const AttributeGroup &other) const
 {
-    return (XmlElement::operator==(other) && reference() == other.reference()
-            && attributes() == other.attributes());
+    return XmlElement::operator==(other) && *d == *other.d;
 }
 
 }
