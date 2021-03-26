@@ -52,6 +52,17 @@ public:
     int mOccurrence;
     QName mReference;
     Compositor mCompositor;
+
+    bool operator==(const Element::Private &other) const
+    {
+        return mType == other.mType && mGroupId == other.mGroupId && mMinOccurs == other.mMinOccurs
+                && mMaxOccurs == other.mMaxOccurs && mQualified == other.mQualified
+                && mNillable == other.mNillable && mHasSubstitutions == other.mHasSubstitutions
+                && mDefaultValue == other.mDefaultValue && mFixedValue == other.mFixedValue
+                && mOccurrence == other.mOccurrence && mReference == other.mReference
+                && mCompositor.type() == other.mCompositor.type();
+    }
+    inline bool operator!=(const Element::Private &other) const { return !(*this == other); }
 };
 
 Element::Element() : XmlElement(), d(new Private) {}
@@ -221,15 +232,7 @@ bool Element::hasSubstitutions() const
 
 bool Element::operator==(const Element &other) const
 {
-    return (XmlElement::operator==(other)
-            // Element:
-            && type() == other.type() && groupId() == other.groupId()
-            && minOccurs() == other.minOccurs() && maxOccurs() == other.maxOccurs()
-            && defaultValue() == other.defaultValue() && isQualified() == other.isQualified()
-            && nillable() == other.nillable() && occurrence() == other.occurrence()
-            && reference() == other.reference() && compositor().type() == other.compositor().type()
-            && hasSubstitutions() == other.hasSubstitutions());
-    // Note: Ignoring documentation
+    return XmlElement::operator==(other) && *d == *other.d;
 }
 
 Element ElementList::element(const QName &qualifiedName) const
