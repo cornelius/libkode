@@ -75,10 +75,14 @@ public:
 
     bool isResolved() const;
 
+    bool operator==(const Attribute &other) const;
+    inline bool operator!=(const Attribute &other) const { return !(*this == other); }
+
 private:
     class Private;
     Private *d;
 };
+
 }
 
 SCHEMA_EXPORT QDebug operator<<(QDebug dbg, const XSD::Attribute &attr);

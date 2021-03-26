@@ -52,6 +52,17 @@ public:
     int mOccurrence;
     QName mReference;
     Compositor mCompositor;
+
+    bool operator==(const Element::Private &other) const
+    {
+        return mType == other.mType && mGroupId == other.mGroupId && mMinOccurs == other.mMinOccurs
+                && mMaxOccurs == other.mMaxOccurs && mQualified == other.mQualified
+                && mNillable == other.mNillable && mHasSubstitutions == other.mHasSubstitutions
+                && mDefaultValue == other.mDefaultValue && mFixedValue == other.mFixedValue
+                && mOccurrence == other.mOccurrence && mReference == other.mReference
+                && mCompositor.type() == other.mCompositor.type();
+    }
+    inline bool operator!=(const Element::Private &other) const { return !(*this == other); }
 };
 
 Element::Element() : XmlElement(), d(new Private) {}
@@ -219,6 +230,11 @@ bool Element::hasSubstitutions() const
     return d->mHasSubstitutions;
 }
 
+bool Element::operator==(const Element &other) const
+{
+    return XmlElement::operator==(other) && *d == *other.d;
+}
+
 Element ElementList::element(const QName &qualifiedName) const
 {
     const_iterator it = constBegin();
@@ -244,6 +260,26 @@ void ElementList::dump()
     Q_FOREACH (const Element &element, *this) {
         qDebug() << element.nameSpace() << element.name();
     }
+}
+
+bool ElementList::operator==(const ElementList &other) const
+{
+    if (count() != other.count())
+        return false;
+
+    // Ordered vs. unordered composition should be specified for a whole composition, but
+    // as the Compositor::Type is determined during parsing (per element)
+    // comparing per element should be semantically identic:
+    for (int i = 0; i < count(); i++) {
+        const Element &e = at(i);
+        // ordered
+        if (e.compositor().type() == Compositor::Sequence && other.at(i) != e)
+            return false;
+        // unordered
+        else if (e.compositor().type() != Compositor::Sequence && !other.contains(e))
+            return false;
+    }
+    return true;
 }
 
 } // namespace XSD

@@ -29,10 +29,14 @@ public:
 
     bool isResolved() const;
 
+    bool operator==(const Group &other) const;
+    inline bool operator!=(const Group &other) const { return !(*this == other); }
+
 private:
     class Private;
     Private *d;
 };
+
 }
 
 SCHEMA_EXPORT QDebug operator<<(QDebug dbg, const XSD::Group &group);

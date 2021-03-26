@@ -36,6 +36,14 @@ public:
     bool mQualified;
     AttributeUse mUse;
     QName mReference;
+
+    bool operator==(const Attribute::Private &other) const
+    {
+        return mType == other.mType && mDefaultValue == other.mDefaultValue
+                && mFixedValue == other.mFixedValue && mQualified == other.mQualified
+                && mUse == other.mUse && mReference == other.mReference;
+    }
+    inline bool operator!=(const Attribute::Private &other) const { return !(*this == other); }
 };
 
 Attribute::Attribute() : XmlElement(), d(new Private) {}
@@ -152,6 +160,11 @@ void Attribute::List::dump()
     Q_FOREACH (const Attribute &attr, *this) {
         qDebug() << attr.nameSpace() << attr.name();
     }
+}
+
+bool Attribute::operator==(const Attribute &other) const
+{
+    return XmlElement::operator==(other) && *d == *other.d;
 }
 
 } // namespace XSD

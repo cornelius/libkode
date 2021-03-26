@@ -44,6 +44,15 @@ public:
     QName mBaseTypeName;
     QName mArrayType;
     QList<QName> mDerivedTypes;
+
+    bool operator==(const ComplexType::Private &other) const
+    {
+        return mElements == other.mElements && mAttributes == other.mAttributes
+                && mGroups == other.mGroups && mAttributeGroups == other.mAttributeGroups
+                && mBaseDerivation == other.mBaseDerivation && mBaseTypeName == other.mBaseTypeName
+                && mArrayType == other.mArrayType;
+    }
+    inline bool operator!=(const ComplexType::Private &other) const { return !(*this == other); }
 };
 
 ComplexType::ComplexType(const QString &nameSpace) : XSDType(nameSpace), d(new Private) {}
@@ -66,6 +75,7 @@ ComplexType &ComplexType::operator=(const ComplexType &other)
         return *this;
     }
 
+    XSDType::operator=(other);
     *d = *other.d;
 
     return *this;
@@ -230,6 +240,11 @@ bool ComplexType::isEmpty() const
 {
     return d->mAttributeGroups.isEmpty() && d->mGroups.isEmpty() && d->mAttributes.isEmpty()
             && d->mElements.isEmpty() && d->mBaseTypeName.isEmpty() && d->mArrayType.isEmpty();
+}
+
+bool ComplexType::operator==(const ComplexType &other) const
+{
+    return XSDType::operator==(other) && *d == *other.d;
 }
 
 ComplexType ComplexTypeList::complexType(const QName &qualifiedName) const

@@ -30,6 +30,12 @@ public:
     QString mNameSpace;
 
     Annotation::List mAnnotations;
+
+    bool operator==(const XmlElement::Private &other) const
+    {
+        return mName == other.mName && mNameSpace == other.mNameSpace;
+    }
+    inline bool operator!=(const XmlElement::Private &other) const { return !(*this == other); }
 };
 
 XmlElement::XmlElement() : d(new Private) {}
@@ -104,4 +110,10 @@ Annotation::List XmlElement::annotations() const
 {
     return d->mAnnotations;
 }
+
+bool XmlElement::operator==(const XmlElement &other) const
+{
+    return *d == *other.d;
+}
+
 }

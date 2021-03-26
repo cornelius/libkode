@@ -98,6 +98,9 @@ public:
      */
     bool hasSubstitutions() const;
 
+    bool operator==(const Element &other) const;
+    inline bool operator!=(const Element &other) const { return !(*this == other); }
+
 private:
     class Private;
     Private *d;
@@ -114,7 +117,11 @@ public:
 
     // For debugging
     void dump();
+
+    bool operator==(const ElementList &other) const;
+    inline bool operator!=(const ElementList &other) const { return !(*this == other); }
 };
+
 }
 
 SCHEMA_EXPORT QDebug operator<<(QDebug dbg, const XSD::Element &element);
