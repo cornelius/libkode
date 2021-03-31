@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 project(libkode)
 
 # Qt 5.9 required for QNetworkRequest::NoLessSafeRedirectPolicy
-find_package(Qt5 5.9.0 CONFIG REQUIRED COMPONENTS Core Network Xml)
+find_package(Qt5 5.9.0 CONFIG REQUIRED COMPONENTS Core Network Xml Test)
 
 set(CMAKE_AUTOMOC ON)
 
@@ -17,6 +17,9 @@ include_directories(SYSTEM
 	${CMAKE_CURRENT_SOURCE_DIR}/code_generation
 )
 
+enable_testing()
+
 add_subdirectory(code_generation)
 add_subdirectory(common)
 add_subdirectory(schema)
+add_subdirectory(autotests)

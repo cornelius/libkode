@@ -33,10 +33,11 @@ add_library(xmlschema STATIC
 	${SCHEMA_SOURCES} ${SCHEMA_HEADERS}
 )
 
-target_link_libraries(xmlschema
+target_link_libraries(xmlschema PUBLIC
 	Qt5::Xml
+        xmlcommon
 )
 
 target_include_directories(xmlschema PUBLIC
-	Qt5::Xml
+   "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>"
 )
