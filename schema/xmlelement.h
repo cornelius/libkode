@@ -35,11 +35,14 @@ class SCHEMA_EXPORT XmlElement
 {
 public:
     XmlElement();
-    XmlElement(const QString &nameSpace);
+    explicit XmlElement(const QString &nameSpace);
     XmlElement(const XmlElement &other);
+    XmlElement(XmlElement &&other);
     ~XmlElement();
 
     XmlElement &operator=(const XmlElement &other);
+    XmlElement &operator=(XmlElement &&other) noexcept;
+    void swap(XmlElement &other) noexcept;
 
     bool isNull() const;
 
