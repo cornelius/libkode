@@ -92,10 +92,11 @@ Parser::Parser(const Parser &other) : d(new Private)
     *d = *other.d;
 }
 
+Parser::Parser(Parser &&other) : d(std::move(other.d)) {}
+
 Parser::~Parser()
 {
-    clear();
-    delete d;
+    clear(); // why?
 }
 
 Parser &Parser::operator=(const Parser &other)
@@ -108,6 +109,8 @@ Parser &Parser::operator=(const Parser &other)
 
     return *this;
 }
+
+Parser &Parser::operator=(Parser &&other) noexcept = default;
 
 void Parser::setLocalSchemas(const QMap<QUrl, QString> &localSchemas)
 {

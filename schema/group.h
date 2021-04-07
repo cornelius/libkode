@@ -17,9 +17,12 @@ public:
 
     Group();
     Group(const Group &other);
-    ~Group();
+    Group(Group &&other);
+
+    ~Group() override;
 
     Group &operator=(const Group &other);
+    Group &operator=(Group &&other) noexcept;
 
     void setReference(const QName &reference);
     QName reference() const;
@@ -34,7 +37,7 @@ public:
 
 private:
     class Private;
-    Private *d;
+    std::unique_ptr<Private> d;
 };
 
 }

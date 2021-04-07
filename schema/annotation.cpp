@@ -43,10 +43,9 @@ Annotation::Annotation(const Annotation &other) : d(new Private)
     *d = *other.d;
 }
 
-Annotation::~Annotation()
-{
-    delete d;
-}
+Annotation::Annotation(Annotation &&other) : d(std::move(other.d)) {}
+
+Annotation::~Annotation() = default;
 
 Annotation &Annotation::operator=(const Annotation &other)
 {
@@ -58,6 +57,9 @@ Annotation &Annotation::operator=(const Annotation &other)
 
     return *this;
 }
+
+Annotation &Annotation::operator=(Annotation &&other) noexcept = default;
+
 void Annotation::setDomElement(const QDomElement &element)
 {
     d->mDomElement = element;

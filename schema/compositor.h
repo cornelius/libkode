@@ -26,6 +26,7 @@
 #include <QString>
 #include <common/qname.h>
 #include <kode_export.h>
+#include <memory>
 
 namespace XSD {
 
@@ -39,11 +40,14 @@ public:
     Q_ENUM(Type)
 
     Compositor();
-    Compositor(Type type);
+    explicit Compositor(Type type);
     Compositor(const Compositor &other);
+    Compositor(Compositor &&other);
+
     ~Compositor();
 
     Compositor &operator=(const Compositor &other);
+    Compositor &operator=(Compositor &&other) noexcept;
 
     bool isValid() const;
 
@@ -62,7 +66,7 @@ public:
 
 private:
     class Private;
-    Private *d;
+    std::unique_ptr<Private> d;
 };
 }
 

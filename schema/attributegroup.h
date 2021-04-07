@@ -35,9 +35,11 @@ public:
 
     AttributeGroup();
     AttributeGroup(const AttributeGroup &other);
+    AttributeGroup(AttributeGroup &&other);
     ~AttributeGroup();
 
     AttributeGroup &operator=(const AttributeGroup &other);
+    AttributeGroup &operator=(AttributeGroup &&other) noexcept;
 
     void setReference(const QName &reference);
     QName reference() const;
@@ -50,7 +52,7 @@ public:
 
 private:
     class Private;
-    Private *d;
+    std::unique_ptr<Private> d;
 };
 
 }

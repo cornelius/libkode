@@ -42,10 +42,9 @@ XSDType::XSDType(const XSDType &other) : XmlElement(other), d(new Private)
     *d = *other.d;
 }
 
-XSDType::~XSDType()
-{
-    delete d;
-}
+XSDType::XSDType(XSDType &&other) : XmlElement(other), d(std::move(other.d)) {}
+
+XSDType::~XSDType() = default;
 
 XSDType &XSDType::operator=(const XSDType &other)
 {
@@ -58,6 +57,8 @@ XSDType &XSDType::operator=(const XSDType &other)
 
     return *this;
 }
+
+XSDType &XSDType::operator=(XSDType &&other) noexcept = default;
 
 void XSDType::setContentModel(ContentModel contentModel)
 {

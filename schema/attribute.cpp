@@ -55,10 +55,9 @@ Attribute::Attribute(const Attribute &other) : XmlElement(other), d(new Private)
     *d = *other.d;
 }
 
-Attribute::~Attribute()
-{
-    delete d;
-}
+Attribute::Attribute(Attribute &&other) : XmlElement(other), d(std::move(other.d)) {}
+
+Attribute::~Attribute() = default;
 
 Attribute &Attribute::operator=(const Attribute &other)
 {
@@ -71,6 +70,8 @@ Attribute &Attribute::operator=(const Attribute &other)
 
     return *this;
 }
+
+Attribute &Attribute::operator=(Attribute &&other) noexcept = default;
 
 void Attribute::setType(const QName &type)
 {

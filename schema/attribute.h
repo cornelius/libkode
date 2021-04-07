@@ -42,11 +42,13 @@ public:
     };
 
     Attribute();
-    Attribute(const QString &nameSpace);
+    explicit Attribute(const QString &nameSpace);
     Attribute(const Attribute &other);
+    Attribute(Attribute &&other);
     ~Attribute();
 
     Attribute &operator=(const Attribute &other);
+    Attribute &operator=(Attribute &&other) noexcept;
 
     void setType(const QName &type);
     QName type() const;
@@ -80,7 +82,7 @@ public:
 
 private:
     class Private;
-    Private *d;
+    std::unique_ptr<Private> d;
 };
 
 }

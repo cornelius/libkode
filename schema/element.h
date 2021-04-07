@@ -40,11 +40,13 @@ public:
     typedef ElementList List;
 
     Element();
-    Element(const QString &nameSpace);
+    explicit Element(const QString &nameSpace);
     Element(const Element &other);
+    Element(Element &&other);
     ~Element();
 
     Element &operator=(const Element &other);
+    Element &operator=(Element &&other) noexcept;
 
     void setType(const QName &type);
     QName type() const;
@@ -103,7 +105,7 @@ public:
 
 private:
     class Private;
-    Private *d;
+    std::unique_ptr<Private> d;
 };
 
 class SCHEMA_EXPORT ElementList : public QList<Element>

@@ -50,37 +50,20 @@ XmlElement::XmlElement(const XmlElement &other) : d(new Private)
     *d = *other.d;
 }
 
-XmlElement::XmlElement(XmlElement &&other) : d(new Private)
-{
-    *d = std::move(*other.d);
-}
+XmlElement::XmlElement(XmlElement &&other) : d(std::move(other.d)) {}
 
-XmlElement::~XmlElement()
-{
-    delete d;
-}
+XmlElement::~XmlElement() = default;
 
 XmlElement &XmlElement::operator=(const XmlElement &other)
 {
-    // copy+swap idiom, exception safe
-    XmlElement copy(other);
-    swap(copy);
+    if (this == &other) {
+        return *this;
+    }
+    *d = *other.d;
     return *this;
 }
 
-XmlElement &XmlElement::operator=(XmlElement &&other) noexcept
-{
-    // move+swap idiom, exception safe
-    XmlElement moved(std::move(other));
-    swap(moved);
-    return *this;
-}
-
-void XmlElement::swap(XmlElement &other) noexcept
-{
-    using std::swap;
-    swap(*d, *other.d);
-}
+XmlElement &XmlElement::operator=(XmlElement &&other) noexcept = default;
 
 bool XmlElement::isNull() const
 {
