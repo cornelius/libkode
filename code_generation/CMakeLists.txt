@@ -38,9 +38,11 @@ add_library(kode STATIC
 )
 
 target_link_libraries(kode
-	Qt5::Core
+        Qt${QT_MAJOR_VERSION}::Core
 )
 
 target_include_directories(kode PUBLIC
-	Qt5::Core
+        Qt${QT_MAJOR_VERSION}::Core
 )
+
+set_target_properties(kode PROPERTIES OUTPUT_NAME "kode${kode_LIBRARY_QTID}")

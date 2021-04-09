@@ -34,10 +34,12 @@ add_library(xmlschema STATIC
 )
 
 target_link_libraries(xmlschema PUBLIC
-	Qt5::Xml
+        Qt${QT_MAJOR_VERSION}::Xml
         xmlcommon
 )
 
 target_include_directories(xmlschema PUBLIC
    "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>"
 )
+
+set_target_properties(xmlschema PROPERTIES OUTPUT_NAME "xmlschema${kode_LIBRARY_QTID}")

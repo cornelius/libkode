@@ -19,9 +19,11 @@ add_library(xmlcommon STATIC
 )
 
 target_link_libraries(xmlcommon
-	Qt5::Network Qt5::Xml
+        Qt${QT_MAJOR_VERSION}::Network Qt${QT_MAJOR_VERSION}::Xml
 )
 
 target_include_directories(xmlcommon PUBLIC
-	Qt5::Network Qt5::Xml
+   "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>"
 )
+
+set_target_properties(xmlcommon PROPERTIES OUTPUT_NAME "xmlcommon${kode_LIBRARY_QTID}")
