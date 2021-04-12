@@ -22,7 +22,9 @@
 
 #include <QtCore/QFile>
 #include <QtCore/QStringList>
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 #include <QtCore/QTextCodec>
+#endif
 #include <QtCore/QTextStream>
 #include <QtCore/QFileInfo>
 #include <QDebug>
@@ -945,7 +947,9 @@ void Printer::Private::printCodeIntoFile(const Code &code, QFile *file)
         }
 
         QTextStream fileReaderStream(file);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
         fileReaderStream.setCodec(QTextCodec::codecForName("UTF-8"));
+#endif
 
         QTextStream codeStream(outText.toUtf8());
         QString fileLine, outLine;
@@ -981,7 +985,9 @@ void Printer::Private::printCodeIntoFile(const Code &code, QFile *file)
         }
 
         QTextStream fileWriterStream(file);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
         fileWriterStream.setCodec(QTextCodec::codecForName("UTF-8"));
+#endif
         fileWriterStream << outText;
 
         file->close();
