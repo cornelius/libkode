@@ -67,7 +67,7 @@ public:
 
     Annotation::List annotations() const;
 
-    bool parseString(ParserContext *context, const QString &data);
+    bool parseString(ParserContext *context, const QByteArray &data);
     bool parseFile(ParserContext *context, QFile &file);
     bool parseSchemaTag(ParserContext *context, const QDomElement &element);
 
@@ -85,7 +85,7 @@ public:
     static QString schemaUri();
 
 private:
-    bool parse(ParserContext *context, QXmlInputSource *source);
+    bool parse(ParserContext *context, QIODevice *sourceDevice);
 
     void parseImport(ParserContext *context, const QDomElement &);
     /**
