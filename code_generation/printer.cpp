@@ -23,7 +23,7 @@
 #include <QtCore/QFile>
 #include <QtCore/QStringList>
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-#include <QtCore/QTextCodec>
+#    include <QtCore/QTextCodec>
 #endif
 #include <QtCore/QTextStream>
 #include <QtCore/QFileInfo>
