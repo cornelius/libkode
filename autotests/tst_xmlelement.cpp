@@ -17,9 +17,9 @@ void XmlElementTest::constructors()
     XmlElement e("ns1");
     e.setName("elem");
     XmlElement copy(e);
-    QCOMPARE(copy.name(), "elem");
+    QCOMPARE(copy.name(), QString("elem"));
     XmlElement moved = std::move(e);
-    QCOMPARE(moved.name(), "elem");
+    QCOMPARE(moved.name(), QString("elem"));
 }
 
 void XmlElementTest::assignment()
@@ -28,10 +28,10 @@ void XmlElementTest::assignment()
     e.setName("elem");
     XmlElement copy;
     copy = e;
-    QCOMPARE(copy.name(), "elem");
+    QCOMPARE(copy.name(), QString("elem"));
     XmlElement moved;
     moved = std::move(e);
-    QCOMPARE(moved.name(), "elem");
+    QCOMPARE(moved.name(), QString("elem"));
 }
 
 QTEST_MAIN(XmlElementTest)
