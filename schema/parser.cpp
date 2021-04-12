@@ -1418,6 +1418,7 @@ bool Parser::parse(ParserContext *context, QXmlInputSource *source)
 
 bool Parser::parseFile(ParserContext *context, QFile &file)
 {
+    context->setDocumentBaseUrlFromFileUrl(QUrl::fromLocalFile(file.fileName()));
     QXmlInputSource source(&file);
     return parse(context, &source);
 }
