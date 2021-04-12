@@ -170,7 +170,11 @@ void Code::addFormattedText(const QString &text)
     int lineLength = 0;
 
     QString line;
+#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
+    const QStringList words = text.split(QLatin1Char(' '), Qt::SkipEmptyParts);
+#else
     const QStringList words = text.split(QLatin1Char(' '), QString::SkipEmptyParts);
+#endif
 
     QStringList::ConstIterator it;
     for (it = words.constBegin(); it != words.constEnd(); ++it) {
