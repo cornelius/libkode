@@ -21,6 +21,7 @@
     Boston, MA 02110-1301, USA.
  */
 
+#include <QBuffer>
 #include <QDir>
 #include <QFile>
 #include <QUrl>
@@ -1127,14 +1128,10 @@ void Parser::importSchema(ParserContext *context, const QString &location)
             return;
         }
 
-        QXmlInputSource source(&file);
-        QXmlSimpleReader reader;
-        reader.setFeature(QLatin1String("http://xml.org/sax/features/namespace-prefixes"), true);
-
         QDomDocument doc(QLatin1String("kwsdl"));
         QString errorMsg;
         int errorLine, errorColumn;
-        bool ok = doc.setContent(&source, &reader, &errorMsg, &errorLine, &errorColumn);
+        bool ok = doc.setContent(&file, false, &errorMsg, &errorLine, &errorColumn);
         if (!ok) {
             qDebug("Error[%d:%d] %s", errorLine, errorColumn, qPrintable(errorMsg));
             return;
@@ -1172,14 +1169,10 @@ void Parser::includeSchema(ParserContext *context, const QString &location)
             return;
         }
 
-        QXmlInputSource source(&file);
-        QXmlSimpleReader reader;
-        reader.setFeature(QLatin1String("http://xml.org/sax/features/namespace-prefixes"), true);
-
         QDomDocument doc(QLatin1String("kwsdl"));
         QString errorMsg;
         int errorLine, errorColumn;
-        bool ok = doc.setContent(&source, &reader, &errorMsg, &errorLine, &errorColumn);
+        bool ok = doc.setContent(&file, false, &errorMsg, &errorLine, &errorColumn);
         if (!ok) {
             qDebug("Error[%d:%d] %s", errorLine, errorColumn, qPrintable(errorMsg));
             return;
@@ -1391,17 +1384,14 @@ Annotation::List Parser::annotations() const
     return d->mAnnotations;
 }
 
-bool Parser::parse(ParserContext *context, QXmlInputSource *source)
+bool Parser::parse(ParserContext *context, QIODevice *sourceDevice)
 {
-    QXmlSimpleReader reader;
-    reader.setFeature(QLatin1String("http://xml.org/sax/features/namespace-prefixes"), true);
-
     QDomDocument document(QLatin1String("KWSDL"));
 
     QString errorMsg;
     int errorLine, errorCol;
     QDomDocument doc;
-    if (!doc.setContent(source, &reader, &errorMsg, &errorLine, &errorCol)) {
+    if (!doc.setContent(sourceDevice, false, &errorMsg, &errorLine, &errorCol)) {
         qDebug("%s at (%d,%d)", qPrintable(errorMsg), errorLine, errorCol);
         return false;
     }
@@ -1418,15 +1408,14 @@ bool Parser::parse(ParserContext *context, QXmlInputSource *source)
 
 bool Parser::parseFile(ParserContext *context, QFile &file)
 {
-    QXmlInputSource source(&file);
-    return parse(context, &source);
+    return parse(context, &file);
 }
 
-bool Parser::parseString(ParserContext *context, const QString &data)
+bool Parser::parseString(ParserContext *context, const QByteArray &data)
 {
-    QXmlInputSource source;
-    source.setData(data);
-    return parse(context, &source);
+    QBuffer buffer;
+    buffer.setData(data);
+    return parse(context, &buffer);
 }
 
 } // end namespace XSD
