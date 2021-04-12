@@ -58,7 +58,7 @@ void NSManager::setCurrentNamespace(const QString &uri)
 
 void NSManager::setPrefix(const QString &prefix, const QString &uri)
 {
-    mMap.replace(prefix, uri);
+    mMap.insert(prefix, uri);
 }
 
 QString NSManager::prefix(const QString &uri) const

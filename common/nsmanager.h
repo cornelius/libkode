@@ -72,7 +72,7 @@ public:
 private:
     void splitName(const QString &qname, QString &prefix, QString &localname) const;
 
-    typedef QMultiMap<QString, QString> NSMap; // prefix -> URI
+    typedef QMap<QString, QString> NSMap; // prefix -> URI
     NSMap mMap;
     QString mCurrentNamespace;
 
