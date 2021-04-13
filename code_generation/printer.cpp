@@ -939,8 +939,11 @@ void Printer::printImplementation(const File &file, bool createHeaderInclude)
 void Printer::Private::printCodeIntoFile(const Code &code, QFile *file)
 {
     const QString outText = code.text();
-    bool identical = true;
-    if (file->exists()) {
+
+    static bool s_compareOutput = qEnvironmentVariableIsSet("LIBKODE_COMPARE_OUTPUT");
+
+    bool identical = false;
+    if (s_compareOutput && file->exists()) {
         if (!file->open(QIODevice::ReadOnly)) {
             qWarning("Can't open '%s' for reading.", qPrintable(file->fileName()));
             return;
@@ -953,29 +956,16 @@ void Printer::Private::printCodeIntoFile(const Code &code, QFile *file)
 
         QTextStream codeStream(outText.toUtf8());
         QString fileLine, outLine;
-#if QT_VERSION >= QT_VERSION_CHECK(5, 5, 0)
+        identical = true;
         while (fileReaderStream.readLineInto(&fileLine) && codeStream.readLineInto(&outLine)) {
             if (fileLine != outLine) {
                 identical = false;
                 break;
             }
         }
-#else
-        while (!fileReaderStream.atEnd() && !codeStream.atEnd()) {
-            fileLine = fileReaderStream.readLine();
-            outLine = codeStream.readLine();
-            if (fileLine != outLine) {
-                identical = false;
-                break;
-            }
-        }
-#endif
-
         if (identical)
             identical = fileReaderStream.atEnd() && codeStream.atEnd();
         file->close();
-    } else {
-        identical = false;
     }
 
     if (!identical) {
