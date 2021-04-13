@@ -42,10 +42,9 @@ AttributeGroup::AttributeGroup(const AttributeGroup &other) : XmlElement(other),
     *d = *other.d;
 }
 
-AttributeGroup::~AttributeGroup()
-{
-    delete d;
-}
+AttributeGroup::AttributeGroup(AttributeGroup &&other) : XmlElement(other), d(std::move(other.d)) {}
+
+AttributeGroup::~AttributeGroup() = default;
 
 AttributeGroup &AttributeGroup::operator=(const AttributeGroup &other)
 {
@@ -54,9 +53,12 @@ AttributeGroup &AttributeGroup::operator=(const AttributeGroup &other)
     }
 
     *d = *other.d;
+    XmlElement::operator=(other);
 
     return *this;
 }
+
+AttributeGroup &AttributeGroup::operator=(AttributeGroup &&other) noexcept = default;
 
 void AttributeGroup::setReference(const QName &reference)
 {

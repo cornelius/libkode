@@ -34,9 +34,11 @@ class SCHEMA_EXPORT Types
 public:
     Types();
     Types(const Types &other);
+    Types(Types &&other);
     ~Types();
 
     Types &operator=(const Types &other);
+    Types &operator=(Types &&other) noexcept;
     Types &operator+=(const Types &other);
 
     void setSimpleTypes(const SimpleType::List &simpleTypes);
@@ -69,7 +71,7 @@ public:
 
 private:
     class Private;
-    Private *d;
+    std::unique_ptr<Private> d;
 };
 }
 

@@ -64,10 +64,9 @@ ComplexType::ComplexType(const ComplexType &other) : XSDType(other), d(new Priva
     *d = *other.d;
 }
 
-ComplexType::~ComplexType()
-{
-    delete d;
-}
+ComplexType::ComplexType(ComplexType &&other) : XSDType(other), d(std::move(other.d)) {}
+
+ComplexType::~ComplexType() = default;
 
 ComplexType &ComplexType::operator=(const ComplexType &other)
 {
@@ -80,6 +79,8 @@ ComplexType &ComplexType::operator=(const ComplexType &other)
 
     return *this;
 }
+
+ComplexType &ComplexType::operator=(ComplexType &&other) noexcept = default;
 
 void ComplexType::setDocumentation(const QString &documentation)
 {

@@ -74,10 +74,9 @@ Element::Element(const Element &other) : XmlElement(other), d(new Private)
     *d = *other.d;
 }
 
-Element::~Element()
-{
-    delete d;
-}
+Element::Element(Element &&other) : XmlElement(other), d(std::move(other.d)) {}
+
+Element::~Element() = default;
 
 Element &Element::operator=(const Element &other)
 {
@@ -90,6 +89,8 @@ Element &Element::operator=(const Element &other)
 
     return *this;
 }
+
+Element &Element::operator=(Element &&other) noexcept = default;
 
 void Element::setType(const QName &type)
 {

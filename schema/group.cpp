@@ -42,10 +42,9 @@ Group::Group(const Group &other) : XmlElement(other), d(new Private)
     *d = *other.d;
 }
 
-Group::~Group()
-{
-    delete d;
-}
+Group::Group(Group &&other) : XmlElement(other), d(std::move(other.d)) {}
+
+Group::~Group() = default;
 
 Group &Group::operator=(const Group &other)
 {
@@ -54,9 +53,12 @@ Group &Group::operator=(const Group &other)
     }
 
     *d = *other.d;
+    XmlElement::operator=(other);
 
     return *this;
 }
+
+Group &Group::operator=(Group &&other) noexcept = default;
 
 void Group::setReference(const QName &reference)
 {

@@ -72,10 +72,9 @@ SimpleType::SimpleType(const SimpleType &other) : XSDType(other), d(new Private)
     *d = *other.d;
 }
 
-SimpleType::~SimpleType()
-{
-    delete d;
-}
+SimpleType::SimpleType(SimpleType &&other) : XSDType(other), d(std::move(other.d)) {}
+
+SimpleType::~SimpleType() = default;
 
 SimpleType &SimpleType::operator=(const SimpleType &other)
 {
@@ -84,9 +83,12 @@ SimpleType &SimpleType::operator=(const SimpleType &other)
     }
 
     *d = *other.d;
+    XSDType::operator=(other);
 
     return *this;
 }
+
+SimpleType &SimpleType::operator=(SimpleType &&other) noexcept = default;
 
 void SimpleType::setDocumentation(const QString &documentation)
 {

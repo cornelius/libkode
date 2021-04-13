@@ -75,10 +75,13 @@ public:
         };
     */
     XSDType();
-    XSDType(const QString &);
+    explicit XSDType(const QString &);
     XSDType(const XSDType &other);
-    virtual ~XSDType();
+    XSDType(XSDType &&other);
 
+    ~XSDType() override;
+
+    XSDType &operator=(XSDType &&other) noexcept;
     XSDType &operator=(const XSDType &other);
 
     void setContentModel(ContentModel contentModel);
@@ -106,7 +109,7 @@ public:
 
 private:
     class Private;
-    Private *d;
+    std::unique_ptr<Private> d;
 };
 }
 

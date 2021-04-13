@@ -25,6 +25,7 @@
 #include <QDomElement>
 #include <QList>
 #include <kode_export.h>
+#include <memory>
 
 namespace XSD {
 
@@ -38,11 +39,14 @@ public:
     };
 
     Annotation();
-    Annotation(const QDomElement &element);
+    explicit Annotation(const QDomElement &element);
     Annotation(const Annotation &other);
+    Annotation(Annotation &&other);
+
     ~Annotation();
 
     Annotation &operator=(const Annotation &other);
+    Annotation &operator=(Annotation &&other) noexcept;
 
     void setDomElement(const QDomElement &element);
     QDomElement domElement() const;
@@ -54,7 +58,7 @@ public:
 
 private:
     class Private;
-    Private *d;
+    std::unique_ptr<Private> d;
 };
 }
 

@@ -27,6 +27,7 @@
 #include <common/qname.h>
 #include <kode_export.h>
 
+#include <memory>
 #include <QString>
 
 namespace XSD {
@@ -38,11 +39,10 @@ public:
     explicit XmlElement(const QString &nameSpace);
     XmlElement(const XmlElement &other);
     XmlElement(XmlElement &&other);
-    ~XmlElement();
+    virtual ~XmlElement();
 
     XmlElement &operator=(const XmlElement &other);
     XmlElement &operator=(XmlElement &&other) noexcept;
-    void swap(XmlElement &other) noexcept;
 
     bool isNull() const;
 
@@ -63,7 +63,7 @@ public:
 
 private:
     class Private;
-    Private *d;
+    std::unique_ptr<Private> d;
 };
 
 }

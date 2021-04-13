@@ -59,11 +59,14 @@ public:
     enum SubType { TypeRestriction, TypeList, TypeUnion };
 
     SimpleType();
-    SimpleType(const QString &nameSpace);
+    explicit SimpleType(const QString &nameSpace);
     SimpleType(const SimpleType &other);
+    SimpleType(SimpleType &&other);
+
     ~SimpleType();
 
     SimpleType &operator=(const SimpleType &other);
+    SimpleType &operator=(SimpleType &&other) noexcept;
 
     void setDocumentation(const QString &documentation);
     QString documentation() const;
@@ -109,7 +112,7 @@ public:
 
 private:
     class Private;
-    Private *d;
+    std::unique_ptr<Private> d;
 };
 
 class SCHEMA_EXPORT SimpleTypeList : public QList<SimpleType>

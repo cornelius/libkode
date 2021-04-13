@@ -48,13 +48,17 @@ class SCHEMA_EXPORT Parser
 public:
     enum { UNBOUNDED = 100000 };
 
-    Parser(ParserContext *context, const QString &nameSpace = QString(),
-           bool useLocalFilesOnly = false, const QStringList &includePathList = QStringList());
-    Parser(const QString &nameSpace = QString());
+    explicit Parser(ParserContext *context, const QString &nameSpace = QString(),
+                    bool useLocalFilesOnly = false,
+                    const QStringList &includePathList = QStringList());
+    explicit Parser(const QString &nameSpace = QString());
     Parser(const Parser &other);
+    Parser(Parser &&other);
+
     ~Parser();
 
     Parser &operator=(const Parser &other);
+    Parser &operator=(Parser &&other) noexcept;
 
     /**
      * Configures the parser to use some local files instead of downloading specific schemas.
@@ -143,7 +147,7 @@ private:
     void clear();
 
     class Private;
-    Private *d;
+    std::unique_ptr<Private> d;
 };
 }
 

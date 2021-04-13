@@ -45,10 +45,9 @@ Types::Types(const Types &other) : d(new Private)
     *d = *other.d;
 }
 
-Types::~Types()
-{
-    delete d;
-}
+Types::Types(Types &&other) : d(std::move(other.d)) {}
+
+Types::~Types() = default;
 
 Types &Types::operator=(const Types &other)
 {
@@ -60,6 +59,8 @@ Types &Types::operator=(const Types &other)
 
     return *this;
 }
+
+Types &Types::operator=(Types &&other) noexcept = default;
 
 Types &Types::operator+=(const Types &other)
 {

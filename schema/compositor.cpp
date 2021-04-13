@@ -48,10 +48,9 @@ Compositor::Compositor(const Compositor &other) : d(new Private)
     *d = *other.d;
 }
 
-Compositor::~Compositor()
-{
-    delete d;
-}
+Compositor::Compositor(Compositor &&other) : d(std::move(other.d)) {}
+
+Compositor::~Compositor() = default;
 
 Compositor &Compositor::operator=(const Compositor &other)
 {
@@ -63,6 +62,8 @@ Compositor &Compositor::operator=(const Compositor &other)
 
     return *this;
 }
+
+Compositor &Compositor::operator=(Compositor &&other) noexcept = default;
 
 bool Compositor::isValid() const
 {

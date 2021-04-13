@@ -45,11 +45,13 @@ public:
     typedef enum { Restriction, Extension } Derivation;
 
     ComplexType();
-    ComplexType(const QString &nameSpace);
+    explicit ComplexType(const QString &nameSpace);
     ComplexType(const ComplexType &other);
+    ComplexType(ComplexType &&other);
     ~ComplexType();
 
     ComplexType &operator=(const ComplexType &other);
+    ComplexType &operator=(ComplexType &&other) noexcept;
 
     void setDocumentation(const QString &documentation);
     QString documentation() const;
@@ -103,7 +105,7 @@ public:
 
 private:
     class Private;
-    Private *d;
+    std::unique_ptr<Private> d;
 };
 
 class SCHEMA_EXPORT ComplexTypeList : public QList<ComplexType>
