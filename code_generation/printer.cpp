@@ -611,6 +611,10 @@ QString Printer::functionSignature(const Function &function, const QString &clas
         s += " override";
     }
 
+    if (function.virtualMode() == Function::Final && !forImplementation) {
+        s += " final";
+    }
+
     if (function.virtualMode() == Function::PureVirtual)
         s += " = 0";
 
