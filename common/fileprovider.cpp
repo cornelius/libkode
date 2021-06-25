@@ -121,7 +121,7 @@ bool FileProvider::get(const QUrl &url, QString &target)
         QNetworkReply *job = manager.get(request);
 
         QEventLoop loop;
-        QObject::connect(job, SIGNAL(finished()), &loop, SLOT(quit()));
+        QObject::connect(job, &QNetworkReply::finished, &loop, &QEventLoop::quit);
         loop.exec();
 
         if (job->error()) {
