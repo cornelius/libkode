@@ -50,6 +50,7 @@ public:
     QString mParentClassName;
     QStringList mDeclMacros;
     bool mIsQGadget = false;
+    bool mIsQObject = false;
 };
 
 Class::Class() : d(new Private) {}
@@ -225,6 +226,10 @@ Class::List Class::baseClasses() const
 void Class::addFunction(const Function &function)
 {
     d->mFunctions.append(function);
+    if (!d->mIsQObject) {
+        if (function.access() & Function::Signal || function.access() & Function::Slot)
+            d->mIsQObject = true;
+    }
 }
 
 Function::List Class::functions() const
@@ -287,15 +292,14 @@ bool Class::hasFunction(const QString &functionName) const
     return false;
 }
 
+void Class::setQObject(bool isQObject)
+{
+    d->mIsQObject = isQObject;
+}
+
 bool Class::isQObject() const
 {
-    Function::List::ConstIterator it;
-    for (it = d->mFunctions.constBegin(); it != d->mFunctions.constEnd(); ++it) {
-        if ((*it).access() & Function::Signal || (*it).access() & Function::Slot)
-            return true;
-    }
-
-    return false;
+    return d->mIsQObject;
 }
 
 bool Class::isQGadget() const
