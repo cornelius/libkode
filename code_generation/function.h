@@ -137,7 +137,7 @@ public:
      */
     bool isStatic() const;
 
-    enum VirtualMode { NotVirtual, Virtual, PureVirtual, Override };
+    enum VirtualMode { NotVirtual, Virtual, PureVirtual, Override, Final };
     /**
      * Sets whether the function is marked as virtual or pure virtual.
      */
