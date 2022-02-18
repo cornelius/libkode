@@ -285,6 +285,15 @@ public:
     bool hasFunction(const QString &name) const;
 
     /**
+     * Sets whether the Q_OBJECT macro should be generated at the first private
+     * section. The Q_OBJECT macro will be generated if any signals or slots
+     * added to the class, so this function is mainly useful when generating
+     * intermediate classes derived from QObject, but not having any added signals
+     * or slots.
+     */
+    void setQObject(bool isQObject);
+
+    /**
      * Returns whether the class object is a QObject.
      *
      * That's the case when one of its functions has the Signal
@@ -298,7 +307,7 @@ public:
     bool isQGadget() const;
 
     /**
-     * Sets whether the Q_GADGET macro should be genrated at the first private
+     * Sets whether the Q_GADGET macro should be generated at the first private
      * section. Please note if isQObject is set only the Q_OBJECT macro will
      * be genrated since adding Q_GADGET is useless this case.
      */
