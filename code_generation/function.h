@@ -230,6 +230,16 @@ public:
      */
     QString docs() const;
 
+    /**
+     * Sets whether the function is marked with explicit specifier.
+     */
+    void setExplicit(bool isExplicit = true);
+
+    /**
+     * Returns whether the function is marked with explicit specifier.
+     */
+    bool isExplicit() const;
+
 private:
     class FunctionPrivate;
     FunctionPrivate *d;
