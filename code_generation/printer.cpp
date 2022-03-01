@@ -573,11 +573,15 @@ QString Printer::functionSignature(const Function &function, const QString &clas
     QString s;
 
     if (function.isStatic() && !forImplementation) {
-        s += "static ";
+        s += QStringLiteral("static ");
     }
 
     if (function.virtualMode() != Function::NotVirtual && !forImplementation) {
-        s += "virtual ";
+        s += QStringLiteral("virtual ");
+    }
+
+    if (function.isExplicit() && !forImplementation) {
+        s += QStringLiteral("explicit ");
     }
 
     QString ret = function.returnType();

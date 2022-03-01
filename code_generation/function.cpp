@@ -78,20 +78,17 @@ Function::Argument::~Argument()
 class Function::FunctionPrivate
 {
 public:
-    FunctionPrivate() : mAccess(Public), mIsConst(false), mIsStatic(false), mVirtualMode(NotVirtual)
-    {
-    }
-
-    int mAccess;
-    bool mIsConst;
-    bool mIsStatic;
+    int mAccess = Public;
+    bool mIsConst = false;
+    bool mIsStatic = false;
+    bool mIsExplicit = false;
     QString mReturnType;
     QString mName;
     Argument::List mArguments;
     QStringList mInitializers;
     QString mBody;
     QString mDocs;
-    Function::VirtualMode mVirtualMode;
+    Function::VirtualMode mVirtualMode = NotVirtual;
 };
 
 Function::Function() : d(new FunctionPrivate) {}
@@ -261,6 +258,16 @@ void Function::setDocs(const QString &docs)
 QString Function::docs() const
 {
     return d->mDocs;
+}
+
+bool Function::isExplicit() const
+{
+    return d->mIsExplicit;
+}
+
+void Function::setExplicit(bool isExplicit)
+{
+    d->mIsExplicit = isExplicit;
 }
 
 bool Function::hasArguments() const

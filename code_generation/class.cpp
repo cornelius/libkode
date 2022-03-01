@@ -29,14 +29,12 @@ using namespace KODE;
 class Class::Private
 {
 public:
-    Private() : mDPointer(), mUseSharedData(false), mCanBeCopied(false) {}
-
     QString mName;
     QString mNameSpace;
     QString mExportDeclaration;
     QString mDPointer;
-    bool mUseSharedData;
-    bool mCanBeCopied;
+    bool mUseSharedData = false;
+    bool mCanBeCopied = false;
     Function::List mFunctions;
     MemberVariable::List mMemberVariables;
     QStringList mIncludes;
