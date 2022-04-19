@@ -770,7 +770,7 @@ void Printer::printHeader(const File &file)
             out.indent();
         }
 
-        if (!clas.isNull()) {
+        if (!clas.isEmpty()) {
             const bool isQtClass =
                     clas.startsWith(QLatin1Char('Q')) && !clas.contains(QLatin1Char('_'));
             if (isQtClass)
