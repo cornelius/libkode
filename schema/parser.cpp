@@ -1287,7 +1287,8 @@ bool Parser::resolveForwardDeclarations()
                     if (qEnvironmentVariableIsSet("LIBKODE_VERBOSE_ERRORS")) {
                         d->mElements.dump();
                     } else {
-                        qWarning() << "Set the environment variable LIBKODE_VERBOSE_ERRORS to see the list of all available elements";
+                        qWarning() << "Set the environment variable LIBKODE_VERBOSE_ERRORS to see "
+                                      "the list of all available elements";
                     }
                     return false;
                 } else {
@@ -1347,7 +1348,8 @@ bool Parser::resolveForwardDeclarations()
                     if (qEnvironmentVariableIsSet("LIBKODE_VERBOSE_ERRORS")) {
                         d->mAttributes.dump();
                     } else {
-                        qWarning() << "Set the environment variable LIBKODE_VERBOSE_ERRORS to see the list of all available attributes";
+                        qWarning() << "Set the environment variable LIBKODE_VERBOSE_ERRORS to see "
+                                      "the list of all available attributes";
                     }
                     return false;
                 } else {
