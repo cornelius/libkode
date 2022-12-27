@@ -1284,7 +1284,11 @@ bool Parser::resolveForwardDeclarations()
                     qWarning("ERROR in %s: resolving element ref to '%s': not found!",
                              qPrintable(complexType.qualifiedName().qname()),
                              qPrintable(element.reference().qname()));
-                    d->mElements.dump();
+                    if (qEnvironmentVariableIsSet("LIBKODE_VERBOSE_ERRORS")) {
+                        d->mElements.dump();
+                    } else {
+                        qWarning() << "Set the environment variable LIBKODE_VERBOSE_ERRORS to see the list of all available elements";
+                    }
                     return false;
                 } else {
                     resolvedElement.setMinOccurs(element.minOccurs());
@@ -1340,7 +1344,11 @@ bool Parser::resolveForwardDeclarations()
                     qWarning("ERROR in %s: resolving attribute ref to '%s': not found!",
                              qPrintable(d->mComplexTypes[i].qualifiedName().qname()),
                              qPrintable(attribute.reference().qname()));
-                    d->mAttributes.dump();
+                    if (qEnvironmentVariableIsSet("LIBKODE_VERBOSE_ERRORS")) {
+                        d->mAttributes.dump();
+                    } else {
+                        qWarning() << "Set the environment variable LIBKODE_VERBOSE_ERRORS to see the list of all available attributes";
+                    }
                     return false;
                 } else {
                     attributes[j] = refAttribute;
