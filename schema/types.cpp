@@ -167,7 +167,7 @@ SimpleType Types::simpleType(const QName &simpleTypeName, const QString &element
     if (elementFilter.isEmpty())
         return d->mSimpleTypes.simpleType(simpleTypeName);
 
-    for (auto type : qAsConst(d->mSimpleTypes)) {
+    for (auto type : std::as_const(d->mSimpleTypes)) {
         if (type.qualifiedName() == simpleTypeName && elementFilter == type.elementName())
             return type;
     }

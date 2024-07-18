@@ -267,7 +267,7 @@ Enum::List Class::enums() const
 
 bool Class::hasEnum(const QString &name) const
 {
-    for (const Enum &e : qAsConst(d->mEnums)) {
+    for (const Enum &e : std::as_const(d->mEnums)) {
         if (e.name() == name)
             return true;
     }

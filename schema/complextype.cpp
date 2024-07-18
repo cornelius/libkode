@@ -251,7 +251,7 @@ bool ComplexType::operator==(const ComplexType &other) const
 ComplexType ComplexTypeList::complexType(const QName &qualifiedName) const
 {
     // qDebug() << "looking for" << typeName << "ns=" << typeName.nameSpace();
-    for (const ComplexType &type : qAsConst(*this)) {
+    for (const ComplexType &type : std::as_const(*this)) {
         // qDebug() << type.nameSpace() << "qualifiedName=" << type.qualifiedName();
         if (qualifiedName == type.qualifiedName()) {
             return type;
