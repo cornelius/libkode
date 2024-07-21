@@ -1,39 +1,52 @@
 name: build
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
 
 jobs:
   build:
+    runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
+        os:
+          - ubuntu-latest
+          - windows-latest
+          - macos-latest
         config:
-          - { os: macos-latest, cxx: "clang++" }
-          - { os: ubuntu-latest, cxx: "g++" }
-          - { os: windows-latest, cxx: "cl" }
-    runs-on: ${{ matrix.config.os }}
+          - qt_version: 5.15.2
+            macos_architectures: "x86_64"
+          - qt_version: 6.6.2
+            macos_architectures: "x86_64;arm64"
     steps:
       - name: Checkout
-        uses: actions/checkout@v1
-      - name: Cache Qt
-        id: cache-qt
-        uses: actions/cache@v1.2.0
-        with:
-          path: ../Qt
-          key: ${{ runner.os }}-QtCache
+        uses: actions/checkout@v4
+
       - name: Install Qt
-        uses: jurplel/install-qt-action@v2.12.1
+        uses: jurplel/install-qt-action@v4
         with:
-          cached: ${{ steps.cache-qt.outputs.cache-hit }}
-      - name: Build with CMake in ${{ matrix.config.os }} / ${{ matrix.config.cxx }}
-        env:
-          CXX: ${{ matrix.config.cxx }}
-        run: |
-          cmake -B cmake_build
-          cmake --build cmake_build -j2
-      - name: Build with QMake in ${{ matrix.config.os }} / ${{ matrix.config.cxx }}
-        if: matrix.config.os != 'windows-latest'
-        env:
-          CXX: ${{ matrix.config.cxx }}
-        run: |
-          qmake
-          make -j2
+          aqtversion: null # use whatever the default is
+          modules: ${{ matrix.config.qt_modules }}
+          version: ${{ matrix.config.qt_version }}
+          cache: true
+
+      - name: Install ninja-build tool (must be after Qt due PATH changes)
+        uses: turtlesec-no/get-ninja@main
+
+      - name: Make sure MSVC is found when Ninja generator is in use
+        if: ${{ runner.os == 'Windows' }}
+        uses: ilammy/msvc-dev-cmd@v1
+
+      - name: Configure project
+        run: >
+          cmake -S . -B ./build -G Ninja
+          -DCMAKE_OSX_ARCHITECTURES="${{ matrix.config.macos_architectures }}"
+          -Dlibkode_QT6=${{ startsWith(matrix.config.qt_version, '6.') }}
+
+      - name: Build project
+        run: cmake --build ./build
