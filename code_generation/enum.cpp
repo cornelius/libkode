@@ -32,6 +32,7 @@ public:
     QString mName;
     QStringList mEnums;
     bool mCombinable = false;
+    bool mTypedef = false;
     bool mIsQENUM = false;
 };
 
@@ -71,7 +72,10 @@ QString Enum::name() const
 
 void Enum::printDeclaration(Code &code) const
 {
-    code.addLine(QStringLiteral("enum %1 {").arg(d->mName));
+    if (d->mTypedef)
+        code.addLine(QStringLiteral("typedef enum {"));
+    else
+        code.addLine(QStringLiteral("enum %1 {").arg(d->mName));
     code.indent();
     auto last = (d->mEnums.count() - 1);
     for (int value = 0; value <= last; value++) {
@@ -88,7 +92,11 @@ void Enum::printDeclaration(Code &code) const
         }
     }
     code.unindent();
-    code.addLine("};");
+    if (d->mTypedef)
+        code.addLine(QString("} %1;").arg(d->mName));
+    else
+        code.addLine("};");
+
     if (d->mIsQENUM)
         code.addLine(QStringLiteral("Q_ENUM(%1)").arg(d->mName));
     code.newLine();
@@ -97,4 +105,9 @@ void Enum::printDeclaration(Code &code) const
 void Enum::setIsQENUM(bool qenum)
 {
     d->mIsQENUM = qenum;
+}
+
+void Enum::setTypedef(bool typeDef)
+{
+    d->mTypedef = typeDef;
 }
