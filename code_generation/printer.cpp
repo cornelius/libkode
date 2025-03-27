@@ -735,6 +735,13 @@ void Printer::printHeader(const File &file)
         (*enumIt).printDeclaration(out);
     }
 
+    // Create structs
+    Struct::List structs = file.structs();
+    Struct::List::ConstIterator structIt;
+    for (structIt = structs.constBegin(); structIt != structs.constEnd(); ++structIt) {
+        (*structIt).printDeclaration(out);
+    }
+
     // Create forward declarations
     QSet<QString> processed;
     Class::List::ConstIterator it;

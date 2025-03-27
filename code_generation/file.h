@@ -22,6 +22,7 @@
 #define KODE_FILE_H
 
 #include "class.h"
+#include "struct.h"
 #include "code.h"
 #include "license.h"
 #include "variable.h"
@@ -206,6 +207,16 @@ public:
      * Returns the list of all file enums.
      */
     Enum::List fileEnums() const;
+
+    /**
+     * Adds a file struct to the file.
+     */
+    void addStruct(const KODE::Struct &structValue);
+
+    /**
+     * Returns the list of all file enums.
+     */
+    KODE::Struct::List structs() const;
 
     /**
      * Adds an external C declaration to the file.
