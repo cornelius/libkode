@@ -41,6 +41,7 @@ public:
     Class::List mClasses;
     Variable::List mFileVariables;
     Function::List mFileFunctions;
+    Struct::List mStructs;
     Enum::List mFileEnums;
     QStringList mExternCDeclarations;
     Code mFileCode;
@@ -243,6 +244,16 @@ void File::addFileEnum(const Enum &enumValue)
 Enum::List File::fileEnums() const
 {
     return d->mFileEnums;
+}
+
+void File::addStruct(const Struct &structValue)
+{
+    d->mStructs.append(structValue);
+}
+
+Struct::List File::structs() const
+{
+    return d->mStructs;
 }
 
 void File::addExternCDeclaration(const QString &externalCDeclaration)
