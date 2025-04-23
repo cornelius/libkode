@@ -84,6 +84,14 @@ public:
      */
     void setIsQENUM(bool qenum = true);
 
+    /**
+     * @brief setTypedef
+     * This method can be used to generate typedef for the given enum.
+     * Using typedefs is mostly useful for C code and not recommended in C++ code.
+     * @param typeDef
+     */
+    void setTypedef(bool typeDef = true);
+
 private:
     class Private;
     Private *d;
