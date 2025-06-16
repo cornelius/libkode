@@ -1141,7 +1141,8 @@ void Parser::importSchema(ParserContext *context, const QString &location)
         }
 #else
         if (auto result = doc.setContent(&file); !result) {
-            qDebug("Error[%lld:%lld] %s", result.errorLine, result.errorColumn, qPrintable(result.errorMessage));
+            qDebug("Error[%lld:%lld] %s", result.errorLine, result.errorColumn,
+                   qPrintable(result.errorMessage));
             return;
         }
 #endif
@@ -1189,7 +1190,8 @@ void Parser::includeSchema(ParserContext *context, const QString &location)
         }
 #else
         if (auto result = doc.setContent(&file); !result) {
-            qDebug("Error[%lld:%lld] %s", result.errorLine, result.errorColumn, qPrintable(result.errorMessage));
+            qDebug("Error[%lld:%lld] %s", result.errorLine, result.errorColumn,
+                   qPrintable(result.errorMessage));
             return;
         }
 #endif
@@ -1424,7 +1426,8 @@ bool Parser::parse(ParserContext *context, QIODevice *sourceDevice)
     }
 #else
     if (auto result = doc.setContent(sourceDevice); !result) {
-        qDebug("%s at (%lld,%lld)", qPrintable(result.errorMessage), result.errorLine, result.errorColumn);
+        qDebug("%s at (%lld,%lld)", qPrintable(result.errorMessage), result.errorLine,
+               result.errorColumn);
         return false;
     }
 #endif
