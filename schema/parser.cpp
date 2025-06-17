@@ -1131,6 +1131,7 @@ void Parser::importSchema(ParserContext *context, const QString &location)
         }
 
         QDomDocument doc(QLatin1String("kwsdl"));
+#if QT_VERSION < QT_VERSION_CHECK(6, 5, 0)
         QString errorMsg;
         int errorLine, errorColumn;
         bool ok = doc.setContent(&file, false, &errorMsg, &errorLine, &errorColumn);
@@ -1138,6 +1139,13 @@ void Parser::importSchema(ParserContext *context, const QString &location)
             qDebug("Error[%d:%d] %s", errorLine, errorColumn, qPrintable(errorMsg));
             return;
         }
+#else
+        if (auto result = doc.setContent(&file); !result) {
+            qDebug("Error[%lld:%lld] %s", result.errorLine, result.errorColumn,
+                   qPrintable(result.errorMessage));
+            return;
+        }
+#endif
 
         QDomElement node = doc.documentElement();
 
@@ -1172,6 +1180,7 @@ void Parser::includeSchema(ParserContext *context, const QString &location)
         }
 
         QDomDocument doc(QLatin1String("kwsdl"));
+#if QT_VERSION < QT_VERSION_CHECK(6, 5, 0)
         QString errorMsg;
         int errorLine, errorColumn;
         bool ok = doc.setContent(&file, false, &errorMsg, &errorLine, &errorColumn);
@@ -1179,6 +1188,13 @@ void Parser::includeSchema(ParserContext *context, const QString &location)
             qDebug("Error[%d:%d] %s", errorLine, errorColumn, qPrintable(errorMsg));
             return;
         }
+#else
+        if (auto result = doc.setContent(&file); !result) {
+            qDebug("Error[%lld:%lld] %s", result.errorLine, result.errorColumn,
+                   qPrintable(result.errorMessage));
+            return;
+        }
+#endif
 
         QDomElement node = doc.documentElement();
         NSManager namespaceManager(context, node);
@@ -1400,13 +1416,21 @@ bool Parser::parse(ParserContext *context, QIODevice *sourceDevice)
 {
     QDomDocument document(QLatin1String("KWSDL"));
 
+    QDomDocument doc;
+#if QT_VERSION < QT_VERSION_CHECK(6, 5, 0)
     QString errorMsg;
     int errorLine, errorCol;
-    QDomDocument doc;
     if (!doc.setContent(sourceDevice, false, &errorMsg, &errorLine, &errorCol)) {
         qDebug("%s at (%d,%d)", qPrintable(errorMsg), errorLine, errorCol);
         return false;
     }
+#else
+    if (auto result = doc.setContent(sourceDevice); !result) {
+        qDebug("%s at (%lld,%lld)", qPrintable(result.errorMessage), result.errorLine,
+               result.errorColumn);
+        return false;
+    }
+#endif
 
     QDomElement element = doc.documentElement();
     const QName name = element.tagName();
