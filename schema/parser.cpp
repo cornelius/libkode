@@ -334,7 +334,7 @@ ComplexType Parser::parseComplexType(ParserContext *context, const QDomElement &
                    || name.localName() == QLatin1String("choice")) {
             Element::List elems;
             parseCompositor(context, childElement, newType.nameSpace(), &elems, &groups);
-            for (const Element &elem : qAsConst(elems)) {
+            for (const Element &elem : std::as_const(elems)) {
                 newType.addElement(elem);
             }
         } else if (name.localName() == QLatin1String("attribute")) {
@@ -909,10 +909,10 @@ void Parser::parseComplexContent(ParserContext *context, const QDomElement &elem
                         Group::List groups;
                         parseCompositor(context, ctElement, complexType.nameSpace(), &elems,
                                         &groups);
-                        for (const Element &elem : qAsConst(elems)) {
+                        for (const Element &elem : std::as_const(elems)) {
                             complexType.addElement(elem);
                         }
-                        for (const Group &group : qAsConst(groups)) {
+                        for (const Group &group : std::as_const(groups)) {
                             complexType.addGroup(group);
                         }
                     } else if (name.localName() == QLatin1String("attribute")) {
@@ -1222,7 +1222,7 @@ QString Parser::schemaUri()
 
 Element Parser::findElement(const QName &name) const
 {
-    for (const Element &e : qAsConst(d->mElements)) {
+    for (const Element &e : std::as_const(d->mElements)) {
         if (e.nameSpace() == name.nameSpace() && e.name() == name.localName()) {
             return e;
         }
@@ -1233,7 +1233,7 @@ Element Parser::findElement(const QName &name) const
 
 Group Parser::findGroup(const QName &name) const
 {
-    for (const Group &g : qAsConst(d->mGroups)) {
+    for (const Group &g : std::as_const(d->mGroups)) {
         if (g.nameSpace() == name.nameSpace() && g.name() == name.localName()) {
             return g;
         }
@@ -1244,7 +1244,7 @@ Group Parser::findGroup(const QName &name) const
 
 Attribute Parser::findAttribute(const QName &name) const
 {
-    for (const Attribute &attr : qAsConst(d->mAttributes)) {
+    for (const Attribute &attr : std::as_const(d->mAttributes)) {
         if (attr.nameSpace() == name.nameSpace() && attr.name() == name.localName()) {
             return attr;
         }
@@ -1255,7 +1255,7 @@ Attribute Parser::findAttribute(const QName &name) const
 
 AttributeGroup Parser::findAttributeGroup(const QName &name) const
 {
-    for (const AttributeGroup &g : qAsConst(d->mAttributeGroups)) {
+    for (const AttributeGroup &g : std::as_const(d->mAttributeGroups)) {
         if (g.nameSpace() == name.nameSpace() && g.name() == name.localName()) {
             return g;
         }
@@ -1363,7 +1363,7 @@ bool Parser::resolveForwardDeclarations()
             Q_ASSERT(!group.reference().isEmpty());
             AttributeGroup refAttributeGroup = findAttributeGroup(group.reference());
             Attribute::List groupAttributes = refAttributeGroup.attributes();
-            for (const Attribute &ga : qAsConst(groupAttributes)) {
+            for (const Attribute &ga : std::as_const(groupAttributes)) {
                 attributes.append(ga);
             }
         }
