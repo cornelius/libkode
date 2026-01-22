@@ -11,6 +11,7 @@ HEADERS += \
   $$PWD/namer.h \
   $$PWD/printer.h \
   $$PWD/statemachine.h \
+  $$PWD/struct.h \
   $$PWD/style.h \
   $$PWD/typedef.h \
   $$PWD/variable.h
@@ -27,6 +28,7 @@ SOURCES += \
   $$PWD/namer.cpp \
   $$PWD/printer.cpp \
   $$PWD/statemachine.cpp \
+  $$PWD/struct.cpp \
   $$PWD/style.cpp \
   $$PWD/typedef.cpp \
   $$PWD/variable.cpp
